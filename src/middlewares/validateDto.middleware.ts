@@ -4,7 +4,9 @@ import { NextFunction, Request, Response } from "express";
 
 export const validateDto = (dtoClass: any) => {
     return async (req: Request, res: Response, next: NextFunction) => {
-        const output = plainToInstance(dtoClass, req.body);
+        const output = plainToInstance(dtoClass, req.body ?? {}, {
+            enableImplicitConversion: true,
+        });
         const errors = await validate(output);
 
         if (errors.length > 0) {

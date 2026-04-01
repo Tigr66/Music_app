@@ -17,8 +17,8 @@ export class ArtistsRoutes {
     private initRoutes() {
         this.router.post(
             "/",
-            validateDto(CreateArtistDto),
             uploadArtistImage.single("photo"),
+            validateDto(CreateArtistDto),
             this.artistsController.createArtist,
         );
         this.router.get("/", this.artistsController.getArtists);

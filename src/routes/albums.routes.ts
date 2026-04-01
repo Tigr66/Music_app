@@ -17,8 +17,8 @@ export class AlbumsRoutes {
     private initRoutes() {
         this.router.post(
             "/",
-            validateDto(CreateAlbumDto),
             uploadArtistImage.single("cover"),
+            validateDto(CreateAlbumDto),
             this.albumsController.createAlbum,
         );
         this.router.get("/", this.albumsController.getAlbums);

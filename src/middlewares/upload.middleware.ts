@@ -2,9 +2,10 @@ import multer from "multer";
 import fs from "fs";
 import path from "path";
 import { randomUUID } from "crypto";
+import { uploadsPath } from "../config/path";
 
 const createUploader = (folder: string) => {
-    const dir = path.resolve(__dirname, `../../uploads/${folder}`);
+    const dir = path.resolve(uploadsPath, folder);
     fs.mkdirSync(dir, { recursive: true });
 
     return multer({
