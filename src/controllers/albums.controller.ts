@@ -23,8 +23,7 @@ export class AlbumsController {
                 title,
                 artistId: Number(artistId),
                 publishedAt: new Date(publishedAt),
-                cover: `
-                /uploads/albums/${cover.filename}`,
+                cover: `/uploads/albums/${cover.filename}`,
             };
 
             const result = await this.albumsService.create(newAlbum);
@@ -65,6 +64,13 @@ export class AlbumsController {
             }
 
             const result = await this.albumsService.getById(Number(id));
+
+            if (!result) {
+                res.status(400).json({
+                    message: "Album is not exist",
+                });
+                return;
+            }
 
             res.status(200).json(result);
         } catch {

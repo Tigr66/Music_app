@@ -1,3 +1,4 @@
+import { Type } from "class-transformer";
 import {
     IsDateString,
     IsInt,
@@ -14,6 +15,7 @@ export class CreateAlbumDto {
     })
     title!: string;
 
+    @Type(() => Number)
     @IsInt({ message: "artistId must be a number" })
     @IsPositive({ message: "artistId must be a positive number" })
     @Min(1, {
