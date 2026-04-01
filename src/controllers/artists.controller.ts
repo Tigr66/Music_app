@@ -26,7 +26,7 @@ export class ArtistsController {
                 photo: `/uploads/artists/${photo.filename}`,
             };
 
-            const result = this.artistsService.create(newArtist);
+            const result = await this.artistsService.create(newArtist);
 
             res.status(201).json(result);
         } catch {

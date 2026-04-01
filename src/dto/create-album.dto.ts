@@ -7,7 +7,7 @@ import {
     MinLength,
 } from "class-validator";
 
-export class CreatePostDto {
+export class CreateAlbumDto {
     @IsString({ message: "Title must be a string" })
     @MinLength(1, {
         message: "Title must not be empty",

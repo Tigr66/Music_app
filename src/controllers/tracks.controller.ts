@@ -13,33 +13,36 @@ export class TracksController {
         try {
             const { title, duration, albumId } = req.body;
 
-            const photo = req.file;
-
-            if (!photo) {
-                res.status(400).json({ message: "Photo is required" });
-                return;
-            }
-
-            const newArtist: Omit<ITrack, "id"> = {
+            const newTrack: Omit<ITrack, "id"> = {
                 title,
-                duration,
-                albumId,
+                duration: Number(duration),
+                albumId: Number(albumId),
             };
 
-            const result = this.tracksService.create(newArtist);
+            const result = await this.tracksService.create(newTrack);
 
             res.status(201).json(result);
         } catch {
-            res.status(500).json({ error: "Creating track failed" });
+            res.status(500).json({ message: "Creating track failed" });
         }
     };
-    getTracks = async (_: Request, res: Response) => {
+
+    getTracks = async (req: Request, res: Response) => {
         try {
-            const tracks = await this.tracksService.getAll();
+            const { album } = req.query;
+
+            if (album && isNaN(Number(album))) {
+                res.status(400).json({ message: "Album must be a number" });
+                return;
+            }
+
+            const tracks = album
+                ? await this.tracksService.getAlbumTracks(Number(album))
+                : await this.tracksService.getAll();
 
             res.status(200).json(tracks);
         } catch {
-            res.status(500).json({ error: "Getting tracks failed" });
+            res.status(500).json({ message: "Getting tracks failed" });
         }
     };
 }

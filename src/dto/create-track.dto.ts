@@ -1,6 +1,6 @@
 import { IsInt, IsPositive, IsString, Min, MinLength } from "class-validator";
 
-export class CreatePostDto {
+export class CreateTrackDto {
     @IsString({ message: "Title must be a string" })
     @MinLength(1, {
         message: "Title must not be empty",

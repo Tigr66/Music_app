@@ -1,6 +1,6 @@
 import { IsString, MinLength } from "class-validator";
 
-export class CreatePostDto {
+export class CreateArtistDto {
     @IsString({ message: "Name must be a string" })
     @MinLength(1, {
         message: "Name must not be empty",
