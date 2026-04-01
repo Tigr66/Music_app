@@ -1,18 +1,44 @@
-import { IArtist } from "../interfaces/artist.interface";
+import { IAlbumWithArtist } from "../interfaces/album-with-artist.interface";
+import { IAlbum } from "../interfaces/album.interface";
 import { prisma } from "../lib/prisma";
 
 export class AlbumsService {
-    async create(newArtist: Omit<IArtist, "id">): Promise<IArtist> {
-        return await prisma.artist.create({
+    async create(newAlbum: Omit<IAlbum, "id">): Promise<IAlbum> {
+        return await prisma.album.create({
             data: {
-                name: newArtist.name,
-                photo: newArtist.photo,
-                info: newArtist.info,
+                title: newAlbum.title,
+                artistId: newAlbum.artistId,
+                cover: newAlbum.cover,
+                publishedAt: newAlbum.publishedAt,
             },
         });
     }
 
-    async getAll(): Promise<IArtist[]> {
-        return await prisma.artist.findMany();
+    async getAll(): Promise<IAlbum[]> {
+        return await prisma.album.findMany();
+    }
+
+    async getArtistAlbums(artistId: number): Promise<IAlbum[]> {
+        return await prisma.album.findMany({
+            where: {
+                artistId,
+            },
+        });
+    }
+
+    async getById(id: number): Promise<IAlbumWithArtist | null> {
+        return await prisma.album.findUnique({
+            where: { id },
+            include: {
+                artist: {
+                    select: {
+                        id: true,
+                        name: true,
+                        photo: true,
+                        info: true,
+                    },
+                },
+            },
+        });
     }
 }

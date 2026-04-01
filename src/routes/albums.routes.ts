@@ -14,5 +14,6 @@ export class AlbumsRoutes {
     private initRoutes() {
         this.router.post("/", uploadArtistImage.single("image"));
         this.router.get("/");
+        this.router.get("/:id");
     }
 }

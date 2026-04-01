@@ -15,4 +15,12 @@ export class TracksService {
     async getAll(): Promise<ITrack[]> {
         return await prisma.track.findMany();
     }
+
+    async getAlbumTracks(albumId: number): Promise<ITrack[]> {
+        return await prisma.track.findMany({
+            where: {
+                albumId,
+            },
+        });
+    }
 }

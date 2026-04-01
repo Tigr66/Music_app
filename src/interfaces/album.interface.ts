@@ -1,7 +1,8 @@
+
 export interface IAlbum {
     id: number;
-    artistId: number,
+    artistId: number;
     title: string;
     cover: string;
-    publishedAt: string;
+    publishedAt: Date;
 }
