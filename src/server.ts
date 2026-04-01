@@ -4,12 +4,14 @@ import path from "path";
 import fs from "fs";
 import { ArtistsRoutes } from "./routes/artists.routes";
 import { TracksRoutes } from "./routes/tracks.routes";
+import { AlbumsRoutes } from "./routes/albums.routes";
 
 const app = express();
 const PORT = 8000;
 
 const artistsRoutes = new ArtistsRoutes();
 const tracksRoutes = new TracksRoutes();
+const albumsRoutes = new AlbumsRoutes();
 
 const albumsUploads = path.resolve(__dirname, "../uploads/album");
 fs.mkdirSync(albumsUploads, { recursive: true });
@@ -24,7 +26,8 @@ app.use("/uploads/albums", express.static(albumsUploads));
 app.use("/uploads/artists", express.static(artistsUploads));
 
 app.use("/artists", artistsRoutes.router);
-app.use("/albums", tracksRoutes.router);
+app.use("/tracks", tracksRoutes.router);
+app.use("/albums", albumsRoutes.router);
 
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);

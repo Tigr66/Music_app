@@ -1,17 +1,18 @@
 import { Router } from "express";
+import { TracksController } from "../controllers/tracks.controller";
 
 export class TracksRoutes {
     public router: Router;
-    // private linksController: LinksController;
+    private tracksController: TracksController;
 
     constructor() {
-        // this.linksController = new LinksController();
+        this.tracksController = new TracksController();
         this.router = Router();
         this.initRoutes();
     }
 
     private initRoutes() {
-        this.router.post("/");
-        this.router.get("/");
+        this.router.post("/", this.tracksController.createTrack);
+        this.router.get("/", this.tracksController.getTracks);
     }
 }
