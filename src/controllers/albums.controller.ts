@@ -15,7 +15,7 @@ export class AlbumsController {
             const cover = req.file;
 
             if (!cover) {
-                res.status(400).json({ message: "Cover is required" });
+                res.status(400).json({ error: "Cover is required" });
                 return;
             }
 
@@ -30,7 +30,7 @@ export class AlbumsController {
 
             res.status(201).json(result);
         } catch {
-            res.status(500).json({ message: "Creating album failed" });
+            res.status(500).json({ error: "Creating album failed" });
         }
     };
 
@@ -40,7 +40,7 @@ export class AlbumsController {
 
             if (artist && isNaN(Number(artist))) {
                 res.status(400).json({
-                    message: "Artist must be a number",
+                    error: "Artist must be a number",
                 });
                 return;
             }
@@ -51,7 +51,7 @@ export class AlbumsController {
 
             res.status(200).json(albums);
         } catch {
-            res.status(500).json({ message: "Getting albums failed" });
+            res.status(500).json({ error: "Getting albums failed" });
         }
     };
 
@@ -60,21 +60,21 @@ export class AlbumsController {
             const { id } = req.params;
 
             if (isNaN(Number(id))) {
-                return res.status(400).json({ message: "Id must be a number" });
+                return res.status(400).json({ error: "Id must be a number" });
             }
 
             const result = await this.albumsService.getById(Number(id));
 
             if (!result) {
                 res.status(400).json({
-                    message: "Album is not exist",
+                    error: "Album is not exist",
                 });
                 return;
             }
 
             res.status(200).json(result);
         } catch {
-            res.status(500).json({ message: "Getting album by id failed" });
+            res.status(500).json({ error: "Getting album by id failed" });
         }
     };
 }

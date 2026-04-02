@@ -16,7 +16,7 @@ export class ArtistsController {
             const photo = req.file;
 
             if (!photo) {
-                res.status(400).json({ message: "Photo is required" });
+                res.status(400).json({ error: "Photo is required" });
                 return;
             }
 

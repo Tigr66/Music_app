@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { uploadArtistImage } from "../middlewares/upload.middleware";
+import { uploadAlbumImage } from "../middlewares/upload.middleware";
 import { validateDto } from "../middlewares/validateDto.middleware";
 import { CreateAlbumDto } from "../dto/create-album.dto";
 import { AlbumsController } from "../controllers/albums.controller";
@@ -17,7 +17,7 @@ export class AlbumsRoutes {
     private initRoutes() {
         this.router.post(
             "/",
-            uploadArtistImage.single("cover"),
+            uploadAlbumImage.single("cover"),
             validateDto(CreateAlbumDto),
             this.albumsController.createAlbum,
         );

@@ -23,7 +23,7 @@ export class TracksController {
 
             res.status(201).json(result);
         } catch {
-            res.status(500).json({ message: "Creating track failed" });
+            res.status(500).json({ error: "Creating track failed" });
         }
     };
 
@@ -32,7 +32,7 @@ export class TracksController {
             const { album } = req.query;
 
             if (album && isNaN(Number(album))) {
-                res.status(400).json({ message: "Album must be a number" });
+                res.status(400).json({ error: "Album must be a number" });
                 return;
             }
 
@@ -42,7 +42,7 @@ export class TracksController {
 
             res.status(200).json(tracks);
         } catch {
-            res.status(500).json({ message: "Getting tracks failed" });
+            res.status(500).json({ error: "Getting tracks failed" });
         }
     };
 }
