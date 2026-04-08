@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { validateDto } from "../middlewares/validateDto.middleware";
 import { AlbumsController } from "../controllers/albums.controller";
+import { CreateUserDto } from "../dto/create-user.dto";
 
 export class UsersRoutes {
     public router: Router;
@@ -13,7 +14,15 @@ export class UsersRoutes {
     }
 
     private initRoutes() {
-        this.router.post("/", this.usersController.createAlbum);
-        this.router.post("/sessions", this.usersController.getAlbums);
+        this.router.post(
+            "/",
+            validateDto(CreateUserDto),
+            this.usersController.createAlbum,
+        );
+        this.router.post(
+            "/sessions",
+            validateDto(CreateUserDto),
+            this.usersController.getAlbums,
+        );
     }
 }
