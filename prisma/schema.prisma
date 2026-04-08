@@ -11,7 +11,7 @@ model Artist {
   id        Int     @id @default(autoincrement()) 
   name      String 
   photo     String
-  info      String  @db.Text
+  info      String   @db.Text
   albums    Album[]
 } 
 
@@ -19,9 +19,9 @@ model User {
   id        Int     @id @default(autoincrement()) 
   username  String  @unique
   password  String 
-  token     String 
+  token     String? 
 
-  trackHistories    TrackHistory[]
+  history   TrackHistory[]
 } 
 
 model Album { 
@@ -32,17 +32,17 @@ model Album {
   cover         String
   publishedAt   DateTime  @default(now())
 
-  tracks Track[]
+  tracks        Track[]
 } 
 
 model Track {
-  id        Int      @id @default(autoincrement())
+  id        Int             @id @default(autoincrement())
   title     String
   duration  Int
-  album     Album    @relation(fields: [albumId], references: [id]) 
+  album     Album           @relation(fields: [albumId], references: [id]) 
   albumId   Int
 
-  trackHistories    TrackHistory[]
+  history   TrackHistory[]
 
 }
 
@@ -53,6 +53,6 @@ model TrackHistory {
 
   track         Track       @relation(fields: [trackId], references: [id])
   trackId       Int
-  
+
   datetime      DateTime    @default(now())
 }
