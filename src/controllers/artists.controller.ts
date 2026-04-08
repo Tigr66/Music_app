@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { ArtistsService } from "../services/artists.service";
 import { IArtist } from "../interfaces/artist.interface";
 
@@ -9,7 +9,7 @@ export class ArtistsController {
         this.artistsService = new ArtistsService();
     }
 
-    createArtist = async (req: Request, res: Response) => {
+    createArtist = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { name, info } = req.body;
 
@@ -29,18 +29,18 @@ export class ArtistsController {
             const result = await this.artistsService.create(newArtist);
 
             res.status(201).json(result);
-        } catch {
-            res.status(500).json({ error: "Creating artist failed" });
+        } catch (err) {
+            next(err);
         }
     };
-    
-    getArtists = async (_: Request, res: Response) => {
+
+    getArtists = async (_: Request, res: Response, next: NextFunction) => {
         try {
             const artists = await this.artistsService.getAll();
 
             res.status(200).json(artists);
-        } catch {
-            res.status(500).json({ error: "Getting artists failed" });
+        } catch (err) {
+            next(err);
         }
     };
 }

@@ -15,7 +15,7 @@ export class UsersService {
         });
 
         if (existingUser) {
-            throw new Error("User with this username is already existing");
+            throw new Error("User with this username is already exist");
         }
 
         const saltRounds = 10;

@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { AlbumsService } from "../services/albums.service";
 
 export class AlbumsController {
@@ -8,7 +8,7 @@ export class AlbumsController {
         this.albumsService = new AlbumsService();
     }
 
-    createAlbum = async (req: Request, res: Response) => {
+    createAlbum = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { title, artistId, publishedAt } = req.body;
 
@@ -29,12 +29,12 @@ export class AlbumsController {
             const result = await this.albumsService.create(newAlbum);
 
             res.status(201).json(result);
-        } catch {
-            res.status(500).json({ error: "Creating album failed" });
+        } catch (err) {
+            next(err);
         }
     };
 
-    getAlbums = async (req: Request, res: Response) => {
+    getAlbums = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { artist } = req.query;
 
@@ -50,12 +50,12 @@ export class AlbumsController {
                 : await this.albumsService.getAll();
 
             res.status(200).json(albums);
-        } catch {
-            res.status(500).json({ error: "Getting albums failed" });
+        } catch (err) {
+            next(err);
         }
     };
 
-    getAlbumById = async (req: Request, res: Response) => {
+    getAlbumById = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params;
 
@@ -73,8 +73,8 @@ export class AlbumsController {
             }
 
             res.status(200).json(result);
-        } catch {
-            res.status(500).json({ error: "Getting album by id failed" });
+        } catch (err) {
+            next(err);
         }
     };
 }

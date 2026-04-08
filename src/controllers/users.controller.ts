@@ -1,24 +1,45 @@
-import { Request, Response } from "express";
-import { TracksService } from "../services/tracks.service";
+import { NextFunction, Request, Response } from "express";
+import { UsersService } from "../services/users.service";
+import { IUser } from "../interfaces/user.interface";
 
-export class TracksController {
-    private usersService: TracksService;
+export class UsersController {
+    private usersService: UsersService;
 
     constructor() {
-        this.usersService = new TracksService();
+        this.usersService = new UsersService();
     }
 
-    createUser = async (req: Request, res: Response) => {
+    registerUser = async (req: Request, res: Response, next: NextFunction) => {
         try {
-        } catch {
-            res.status(500).json({ error: "Creating user failed" });
+            const { username, password } = req.body;
+
+            const newUser: Omit<IUser, "id"> = {
+                username: username.trim(),
+                password: password.trim(),
+            };
+
+            const result = await this.usersService.register(newUser);
+
+            res.status(201).json(result);
+        } catch (err) {
+            next(err);
         }
     };
 
-    loginUser = async (req: Request, res: Response) => {
+    loginUser = async (req: Request, res: Response, next: NextFunction) => {
         try {
-        } catch {
-            res.status(500).json({ error: "Login user failed" });
+            const { username, password } = req.body;
+
+            const user: Omit<IUser, "id"> = {
+                username: username.trim(),
+                password: password.trim(),
+            };
+
+            const token = await this.usersService.login(user);
+
+            res.status(200).json({ token });
+        } catch (err) {
+            next(err);
         }
     };
 }

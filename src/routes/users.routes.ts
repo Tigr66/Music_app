@@ -1,14 +1,14 @@
 import { Router } from "express";
 import { validateDto } from "../middlewares/validateDto.middleware";
-import { AlbumsController } from "../controllers/albums.controller";
 import { CreateUserDto } from "../dto/create-user.dto";
+import { UsersController } from "../controllers/users.controller";
 
 export class UsersRoutes {
     public router: Router;
-    private usersController: AlbumsController;
+    private usersController: UsersController;
 
     constructor() {
-        this.usersController = new AlbumsController();
+        this.usersController = new UsersController();
         this.router = Router();
         this.initRoutes();
     }
@@ -17,12 +17,12 @@ export class UsersRoutes {
         this.router.post(
             "/",
             validateDto(CreateUserDto),
-            this.usersController.createAlbum,
+            this.usersController.registerUser,
         );
         this.router.post(
             "/sessions",
             validateDto(CreateUserDto),
-            this.usersController.getAlbums,
+            this.usersController.loginUser,
         );
     }
 }

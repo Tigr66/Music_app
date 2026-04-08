@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { ITrack } from "../interfaces/track.interface";
 import { TracksService } from "../services/tracks.service";
 
@@ -9,7 +9,7 @@ export class TracksController {
         this.tracksService = new TracksService();
     }
 
-    createTrack = async (req: Request, res: Response) => {
+    createTrack = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { title, duration, albumId } = req.body;
 
@@ -22,12 +22,12 @@ export class TracksController {
             const result = await this.tracksService.create(newTrack);
 
             res.status(201).json(result);
-        } catch {
-            res.status(500).json({ error: "Creating track failed" });
+        } catch (err) {
+            next(err);
         }
     };
 
-    getTracks = async (req: Request, res: Response) => {
+    getTracks = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { album } = req.query;
 
@@ -41,8 +41,8 @@ export class TracksController {
                 : await this.tracksService.getAll();
 
             res.status(200).json(tracks);
-        } catch {
-            res.status(500).json({ error: "Getting tracks failed" });
+        } catch (err) {
+            next(err);
         }
     };
 }
