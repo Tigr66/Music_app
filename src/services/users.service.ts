@@ -51,4 +51,12 @@ export class UsersService {
 
         return nanoid();
     }
+
+    async findUserByToken(token: string): Promise<IUser | null> {
+        return await prisma.user.findFirst({
+            where: {
+                token,
+            },
+        });
+    }
 }
