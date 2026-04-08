@@ -35,27 +35,71 @@ async function main() {
         },
     });
 
-    await prisma.track.createMany({
+    const track_one = await prisma.track.create({
+        data: {
+            title: "God's Plan",
+            duration: 198,
+            albumId: album_one.id,
+        },
+    });
+
+    const track_two = await prisma.track.create({
+        data: {
+            title: "In My Feelings",
+            duration: 217,
+            albumId: album_one.id,
+        },
+    });
+
+    const track_three = await prisma.track.create({
+        data: {
+            title: "SICKO MODE",
+            duration: 312,
+            albumId: album_two.id,
+        },
+    });
+
+    const track_four = await prisma.track.create({
+        data: {
+            title: "FE!N",
+            duration: 200,
+            albumId: album_two.id,
+        },
+    });
+
+    const user_one = await prisma.user.create({
+        data: {
+            username: "tigrgareev",
+            password: "hashed_password_1",
+            token: null,
+        },
+    });
+
+    const user_two = await prisma.user.create({
+        data: {
+            username: "super_user",
+            password: "hashed_password_2",
+            token: null,
+        },
+    });
+
+    await prisma.trackHistory.createMany({
         data: [
             {
-                title: "God's Plan",
-                duration: 198,
-                albumId: album_one.id,
+                userId: user_one.id,
+                trackId: track_one.id,
             },
             {
-                title: "In My Feelings",
-                duration: 217,
-                albumId: album_one.id,
+                userId: user_one.id,
+                trackId: track_three.id,
             },
             {
-                title: "SICKO MODE",
-                duration: 312,
-                albumId: album_two.id,
+                userId: user_two.id,
+                trackId: track_two.id,
             },
             {
-                title: "FE!N",
-                duration: 200,
-                albumId: album_two.id,
+                userId: user_two.id,
+                trackId: track_four.id,
             },
         ],
     });
