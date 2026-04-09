@@ -82,13 +82,6 @@ URL: http://localhost:8000/artists
 
 ## POST /albums
 
-Создание альбома.
-
-Method: POST  
-URL: http://localhost:8000/albums
-
----
-
 ### Формат запроса
 
 Используется multipart/form-data.
@@ -116,15 +109,17 @@ URL: http://localhost:8000/albums
 
 ## GET /albums
 
+```json
 [
-{
-"id": 1,
-"title": "Album Name",
-"artistId": 2,
-"publishedAt": "2024-01-01T00:00:00.000Z",
-"cover": "/uploads/albums/cover.jpg"
-}
+    {
+        "id": 1,
+        "title": "Album Name",
+        "artistId": 2,
+        "publishedAt": "2024-01-01T00:00:00.000Z",
+        "cover": "/uploads/albums/cover.jpg"
+    }
 ]
+```
 
 # Tracks
 
@@ -140,12 +135,14 @@ URL: http://localhost:8000/albums
 
 ### Ответ — 201
 
+```json
 {
-"id": number,
-"title": "string",
-"duration": number,
-"albumId": number
+    "id": 3,
+    "title": "My new track",
+    "duration": 233,
+    "albumId": 3
 }
+```
 
 ---
 
@@ -155,14 +152,16 @@ URL: http://localhost:8000/albums
 
 ### Ответ — 200
 
+```json
 [
-{
-"id": number,
-"title": "string",
-"duration": number,
-"albumId": number
-}
+    {
+        "id": 1,
+        "title": "God's Plan",
+        "duration": 198,
+        "albumId": 1
+    }
 ]
+```
 
 ---
 
@@ -178,11 +177,14 @@ URL: http://localhost:8000/albums
 
 ### Ответ — 201
 
+```json
 {
-"id": number,
-"trackId": number,
-"createdAt": "string"
+    "id": 1,
+    "trackId": 1,
+    "userId": 1,
+    "datetime": "2026-04-09T12:07:47.716Z"
 }
+```
 
 ---
 
@@ -199,10 +201,12 @@ URL: http://localhost:8000/albums
 
 ### Ответ — 201
 
+```json
 {
-"id": number,
-"username": "string"
+    "id": 1,
+    "username": "someone"
 }
+```
 
 ---
 
@@ -217,9 +221,11 @@ URL: http://localhost:8000/albums
 
 ### Ответ — 200
 
+```json
 {
-"token": "string"
+    "token": "$2b$10$DS6myfA16yZ.pGvkSyqNsuHEwet56jCev48VVnzqEEZaEPwouVhYK"
 }
+```
 
 ---
 
