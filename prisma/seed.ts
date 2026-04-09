@@ -70,18 +70,22 @@ async function main() {
     const user_one = await prisma.user.create({
         data: {
             username: "tigrgareev",
-            password: "hashed_password_1",
-            token: null,
+            password:
+                "$2b$10$DS6myfA16yZ.pGvkSyqNsuHEwet56jCev48VVnzqEEZaEPwouVhYK",
+            token: "pnm0R_eFcZF5QPunVTca0",
         },
     });
 
     const user_two = await prisma.user.create({
         data: {
             username: "super_user",
-            password: "hashed_password_2",
+            password:
+                "$2b$10$YwviWw9MhgkFo2au6kEk4OWvisbwEeWln7renojqrb9bBzaSv61q2",
             token: null,
         },
     });
+
+    // Пароли такие же как и username для проверки
 
     await prisma.trackHistory.createMany({
         data: [

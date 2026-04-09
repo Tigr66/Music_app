@@ -27,7 +27,6 @@ app.use("/uploads/albums", express.static(albumsUploads));
 
 app.use(express.json());
 app.use(cors({ origin: "http://localhost:5173" }));
-app.use(ErrorMiddleware.handle);
 
 app.use("/uploads/albums", express.static(albumsUploads));
 app.use("/uploads/artists", express.static(artistsUploads));
@@ -37,6 +36,8 @@ app.use("/tracks", tracksRoutes.router);
 app.use("/albums", albumsRoutes.router);
 app.use("/users", usersRoutes.router);
 app.use("/track_history", trackHistoryRoutes.router);
+
+app.use(ErrorMiddleware.handle);
 
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);

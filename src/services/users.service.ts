@@ -49,11 +49,22 @@ export class UsersService {
             throw new Error("Incorrect username or password");
         }
 
-        return nanoid();
+        const newToken = nanoid();
+
+        await prisma.user.update({
+            where: {
+                id: loginUser.id,
+            },
+            data: {
+                token: newToken,
+            },
+        });
+
+        return newToken;
     }
 
     async findUserByToken(token: string): Promise<IUser | null> {
-        return await prisma.user.findFirst({
+        return await prisma.user.findUnique({
             where: {
                 token,
             },

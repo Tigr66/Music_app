@@ -1,14 +1,14 @@
 import { Router } from "express";
-import { TracksController } from "../controllers/tracks.controller";
 import { validateDto } from "../middlewares/validateDto.middleware";
 import { CreateHistoryDto } from "../dto/create-history.dto";
+import { TrackHistoryController } from "../controllers/track_history.controllers";
 
 export class TrackHistoryRoutes {
     public router: Router;
-    private trackHistoryController: TracksController;
+    private trackHistoryController: TrackHistoryController;
 
     constructor() {
-        this.trackHistoryController = new TracksController();
+        this.trackHistoryController = new TrackHistoryController();
         this.router = Router();
         this.initRoutes();
     }
@@ -17,7 +17,7 @@ export class TrackHistoryRoutes {
         this.router.post(
             "/",
             validateDto(CreateHistoryDto),
-            this.trackHistoryController.createTrack,
+            this.trackHistoryController.createHistory,
         );
     }
 }
