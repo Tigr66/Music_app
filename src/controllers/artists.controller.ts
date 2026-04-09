@@ -16,8 +16,7 @@ export class ArtistsController {
             const photo = req.file;
 
             if (!photo) {
-                res.status(400).json({ error: "Photo is required" });
-                return;
+                return res.status(400).json({ error: "Photo is required" });
             }
 
             const newArtist: Omit<IArtist, "id"> = {

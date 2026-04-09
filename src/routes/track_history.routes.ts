@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { TracksController } from "../controllers/tracks.controller";
 import { validateDto } from "../middlewares/validateDto.middleware";
-import { CreateTrackDto } from "../dto/create-track.dto";
+import { CreateHistoryDto } from "../dto/create-history.dto";
 
 export class TrackHistoryRoutes {
     public router: Router;
@@ -16,7 +16,7 @@ export class TrackHistoryRoutes {
     private initRoutes() {
         this.router.post(
             "/",
-            validateDto(CreateTrackDto),
+            validateDto(CreateHistoryDto),
             this.trackHistoryController.createTrack,
         );
     }

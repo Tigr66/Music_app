@@ -39,10 +39,9 @@ export class AlbumsController {
             const { artist } = req.query;
 
             if (artist && isNaN(Number(artist))) {
-                res.status(400).json({
+                return res.status(400).json({
                     error: "Artist must be a number",
                 });
-                return;
             }
 
             const albums = artist
@@ -66,10 +65,9 @@ export class AlbumsController {
             const result = await this.albumsService.getById(Number(id));
 
             if (!result) {
-                res.status(400).json({
+                return res.status(400).json({
                     error: "Album is not exist",
                 });
-                return;
             }
 
             res.status(200).json(result);

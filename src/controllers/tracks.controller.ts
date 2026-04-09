@@ -32,8 +32,9 @@ export class TracksController {
             const { album } = req.query;
 
             if (album && isNaN(Number(album))) {
-                res.status(400).json({ error: "Album must be a number" });
-                return;
+                return res
+                    .status(400)
+                    .json({ error: "Album must be a number" });
             }
 
             const tracks = album

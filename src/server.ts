@@ -8,6 +8,7 @@ import { AlbumsRoutes } from "./routes/albums.routes";
 import { albumsUploads, artistsUploads } from "./config/path";
 import { UsersRoutes } from "./routes/users.routes";
 import { TrackHistoryRoutes } from "./routes/track_history.routes";
+import { ErrorMiddleware } from "./middlewares/error.middleware";
 
 const app = express();
 const PORT = 8000;
@@ -26,6 +27,7 @@ app.use("/uploads/albums", express.static(albumsUploads));
 
 app.use(express.json());
 app.use(cors({ origin: "http://localhost:5173" }));
+app.use(ErrorMiddleware.handle);
 
 app.use("/uploads/albums", express.static(albumsUploads));
 app.use("/uploads/artists", express.static(artistsUploads));
