@@ -93,7 +93,7 @@ URL: http://localhost:8000/artists
 - publishedAt (string, обязательно) — дата (ISO формат)
 - cover (file, обязательно) — обложка альбома
 
-## Ответ
+## Ответ - 201
 
 ```json
 {
@@ -108,6 +108,8 @@ URL: http://localhost:8000/artists
 ```
 
 ## GET /albums
+
+## Ответ - 200
 
 ```json
 [
@@ -127,7 +129,7 @@ URL: http://localhost:8000/artists
 
 Создание трека
 
-### Что принимает (JSON)
+Поля:
 
 - title (string, обязательно) — название трека
 - duration (number, обязательно) — длительность в секундах
@@ -171,7 +173,7 @@ URL: http://localhost:8000/artists
 
 Добавление прослушивания
 
-### Что принимает (JSON)
+Поля:
 
 - trackId (number, обязательно) — id трека
 
@@ -194,7 +196,7 @@ URL: http://localhost:8000/artists
 
 Регистрация пользователя
 
-### Что принимает (JSON)
+Поля:
 
 - username (string, обязательно)
 - password (string, обязательно)
@@ -214,7 +216,7 @@ URL: http://localhost:8000/artists
 
 Логин пользователя
 
-### Что принимает (JSON)
+Поля:
 
 - username (string, обязательно)
 - password (string, обязательно)
