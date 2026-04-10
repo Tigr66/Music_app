@@ -27,6 +27,8 @@ http://localhost:8000
 | POST  | /users          | Регистрация пользователя         |
 | POST  | /users/sessions | Авторизация пользователя (логин) |
 
+---
+
 # Artists
 
 ## POST /artists
@@ -35,8 +37,6 @@ http://localhost:8000
 
 Method: POST  
 URL: http://localhost:8000/artists
-
----
 
 ### Формат запроса
 
@@ -50,12 +50,10 @@ URL: http://localhost:8000/artists
 
 ```json
 {
-    {
-        "id": 3,
-        "name": "Me",
-        "info": "The best singer",
-        "photo": "/uploads/artists/87hdgwg-3e98-4445-a499-cf444e204a72.jpg"
-    }
+    "id": 3,
+    "name": "Me",
+    "info": "The best singer",
+    "photo": "/uploads/artists/87hdgwg-3e98-4445-a499-cf444e204a72.jpg"
 }
 ```
 
@@ -169,9 +167,13 @@ URL: http://localhost:8000/artists
 
 # Track History
 
-## POST /track-history
+## POST /track_history
 
 Добавление прослушивания
+
+Заголовки (Headers):
+
+- Authorization: Bearer <token> — обязательно
 
 Поля:
 
@@ -206,7 +208,8 @@ URL: http://localhost:8000/artists
 ```json
 {
     "id": 1,
-    "username": "someone"
+    "username": "someone",
+    "token": null
 }
 ```
 
@@ -246,33 +249,40 @@ URL: http://localhost:8000/artists
 
 ```bash
 npm install
+
+cd ./client
+npm install
+
+cd ../server
+npm install
+
 ```
 
-## 2. Настроить `.env`
+## 2. Настроить `.env` (В папке server)
 
 ```env
 DATABASE_URL="postgresql://johndoe:randompassword@localhost:5432/mydb?schema=public"
 ```
 
-## 3. Сгенерировать Prisma Client
+## 3. Сгенерировать Prisma Client (В папке server)
 
 ```bash
 npx prisma generate
 ```
 
-## 4. Применить миграции
+## 4. Применить миграции (В папке server)
 
 ```bash
 npx prisma migrate dev
 ```
 
-## 5. Заполнить базу тестовыми данными
+## 5. Заполнить базу тестовыми данными (В папке server)
 
 ```bash
 npx prisma db seed
 ```
 
-## 6. Запустить сервер
+## 6. Запустить проект (В корне проекта)
 
 ```bash
 npm run dev

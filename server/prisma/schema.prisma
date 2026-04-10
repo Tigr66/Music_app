@@ -39,11 +39,12 @@ model Track {
   id        Int             @id @default(autoincrement())
   title     String
   duration  Int
+  number    Int       
   album     Album           @relation(fields: [albumId], references: [id]) 
   albumId   Int
 
   history   TrackHistory[]
-
+  @@unique([albumId, number])
 }
 
 model TrackHistory {

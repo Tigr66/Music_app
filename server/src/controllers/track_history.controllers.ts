@@ -18,13 +18,15 @@ export class TrackHistoryController {
 
             const { authorization } = req.headers;
 
-            if (!authorization) {
+            const token = authorization ? authorization.split(" ")[1] : null;
+
+            if (!token) {
                 return res
                     .status(400)
                     .json({ error: "No authorization token" });
             }
 
-            const user = await this.usersService.findUserByToken(authorization);
+            const user = await this.usersService.findUserByToken(token);
 
             if (!user) {
                 return res.status(401).json({ error: "Unauthorized user" });
