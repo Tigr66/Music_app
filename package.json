@@ -1,24 +1,25 @@
 {
-  "name": "homework_87_gareyev_tigran",
-  "version": "1.0.0",
-  "description": "API для работы с артистами, альбомами, треками и пользователями.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@gitlab.com/ajs-24-gareev-tigran/homework_87_gareyev_tigran.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://gitlab.com/ajs-24-gareev-tigran/homework_87_gareyev_tigran/issues"
-  },
-  "homepage": "https://gitlab.com/ajs-24-gareev-tigran/homework_87_gareyev_tigran#readme",
-  "devDependencies": {
-    "ultra-runner": "^3.10.5"
-  }
+    "name": "homework_87_gareyev_tigran",
+    "version": "1.0.0",
+    "description": "API для работы с артистами, альбомами, треками и пользователями.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "ultra -r --parallel npm run dev"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@gitlab.com/ajs-24-gareev-tigran/homework_87_gareyev_tigran.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "bugs": {
+        "url": "https://gitlab.com/ajs-24-gareev-tigran/homework_87_gareyev_tigran/issues"
+    },
+    "homepage": "https://gitlab.com/ajs-24-gareev-tigran/homework_87_gareyev_tigran#readme",
+    "devDependencies": {
+        "ultra-runner": "^3.10.5"
+    }
 }

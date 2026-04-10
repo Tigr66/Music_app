@@ -32,6 +32,6 @@ const musicSlice = createSlice({
     },
 });
 
-export const {} = musicSlice.actions;
+export const { clearError } = musicSlice.actions;
 
 export default musicSlice.reducer;
