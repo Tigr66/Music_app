@@ -23,12 +23,12 @@ const AlbumsPage = () => {
             dispatch(getArtistAlbumsThunk(Number(id)));
             dispatch(setCurrentArtist(Number(id)));
         }
-    }, []);
+    }, [id]);
 
     return (
         <>
             <Title style={{ color: "#dcdadb" }}>
-                All albums {currentArtist && `by ${currentArtist}`}:
+                All albums {currentArtist && `by ${currentArtist.name}`}:
             </Title>
             {isLoading ? (
                 <Spinner />

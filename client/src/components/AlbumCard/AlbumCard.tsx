@@ -34,9 +34,15 @@ const AlbumCard = ({ album }: AlbumCardProps) => {
                     </span>
                 }
                 description={
-                    <span className={styles.album_card_text}>
-                        Realased at: {formatDate(new Date(album.publishedAt))}
-                    </span>
+                    <>
+                        <span className={styles.album_card_text}>
+                            Realased at:{" "}
+                            {formatDate(new Date(album.publishedAt))}
+                        </span>
+                        <span className={styles.album_card_text}>
+                            Tracks: {album.count}
+                        </span>
+                    </>
                 }
             />
         </Card>

@@ -1,8 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import type { IArtist } from "../../interfaces/IArtist";
 import type { AxiosError } from "axios";
-import { musicApi } from "../../api/musicApi";
+import type { IArtist } from "../../interfaces/IArtist";
 import type { IAlbum } from "../../interfaces/IAlbum";
+import type { ITrack } from "../../interfaces/ITrack";
+import { musicApi } from "../../api/musicApi";
 
 export const getArtistsThunk = createAsyncThunk<
     IArtist[],
@@ -29,6 +30,26 @@ export const getArtistAlbumsThunk = createAsyncThunk<
         const result = await musicApi.get("/albums", {
             params: {
                 artist: artistId,
+            },
+        });
+
+        return result.data;
+    } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        return rejectWithValue(error.response?.data?.error || "Unknown error");
+    }
+});
+
+export const getAlbumTracksThunk = createAsyncThunk<
+    ITrack[],
+    number,
+    { rejectValue: string }
+>("music-slice/get-tracks", async (albumId, { rejectWithValue }) => {
+    try {
+        const result = await musicApi.get("/tracks", {
+            params: {
+                album: albumId,
             },
         });
 

@@ -3,6 +3,7 @@ import { appRoutes } from "./routes/appRoutes";
 import MainLayout from "./layouts/MainLayout";
 import MainPage from "./pages/MainPage/MainPage";
 import AlbumsPage from "./pages/AlbumsPage/AlbumsPage";
+import TracksPage from "./pages/TracksPage/TracksPage";
 import "./App.css";
 
 const App = () => {
@@ -18,6 +19,10 @@ const App = () => {
                     <Route
                         path={appRoutes.ARTIST_ALBUMS_PAGE}
                         element={<AlbumsPage />}
+                    />
+                    <Route
+                        path={appRoutes.ALBUMS_TRACKS_PAGE}
+                        element={<TracksPage />}
                     />
                 </Route>
             </Routes>
