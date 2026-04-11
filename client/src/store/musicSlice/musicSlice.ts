@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { IMusicState } from "../../interfaces/IMusicState";
 import { getArtistAlbumsThunk, getArtistsThunk } from "./musicThunks";
 
@@ -7,6 +7,7 @@ const initialState: IMusicState = {
     artists: [],
     artistAlbums: [],
     isLoading: false,
+    currentArtist: null,
 };
 
 const musicSlice = createSlice({
@@ -16,12 +17,15 @@ const musicSlice = createSlice({
         clearError: (state) => {
             state.error = null;
         },
+        setCurrentArtist: (state, action: PayloadAction<number>) => {
+            const artist = state.artists.find((a) => a.id === action.payload);
+            if (artist) state.currentArtist = artist.name;
+        },
     },
     extraReducers(builder) {
         builder.addCase(getArtistsThunk.pending, (state) => {
             state.isLoading = true;
             state.error = null;
-            state.artists = [];
         });
         builder.addCase(getArtistsThunk.fulfilled, (state, action) => {
             state.isLoading = false;
@@ -34,7 +38,6 @@ const musicSlice = createSlice({
         builder.addCase(getArtistAlbumsThunk.pending, (state) => {
             state.isLoading = true;
             state.error = null;
-            state.artistAlbums = [];
         });
         builder.addCase(getArtistAlbumsThunk.fulfilled, (state, action) => {
             state.isLoading = false;
@@ -47,6 +50,6 @@ const musicSlice = createSlice({
     },
 });
 
-export const { clearError } = musicSlice.actions;
+export const { clearError, setCurrentArtist } = musicSlice.actions;
 
 export default musicSlice.reducer;

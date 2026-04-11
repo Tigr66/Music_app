@@ -16,9 +16,9 @@ const ArtistCard = ({ artist }: ArtistCardProps) => {
         <Card
             hoverable
             className={styles.artist_card}
-            onClick={() =>
-                navigate({ pathname: `/artists/${artist.id}/albums` })
-            }
+            onClick={() => {
+                navigate({ pathname: `/artists/${artist.id}/albums` });
+            }}
             cover={
                 <img
                     draggable={false}

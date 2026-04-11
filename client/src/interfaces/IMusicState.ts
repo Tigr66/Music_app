@@ -5,5 +5,6 @@ export interface IMusicState {
     error: string | null;
     isLoading: boolean;
     artists: IArtist[];
-    artistAlbums: IAlbum[]
+    artistAlbums: IAlbum[];
+    currentArtist: string | null;
 }

@@ -1,4 +1,4 @@
-import { Alert, Layout, Spin } from "antd";
+import { Alert, Layout } from "antd";
 import { Outlet } from "react-router-dom";
 import AppHeader from "../components/AppHeader/AppHeader";
 import { useAppDispatch, useAppSelector } from "../store/store";
@@ -9,7 +9,6 @@ const { Content } = Layout;
 const MainLayout = () => {
     const dispatch = useAppDispatch();
     const error = useAppSelector((state) => state.music.error);
-    const isLoading = useAppSelector((state) => state.music.isLoading);
 
     return (
         <Layout className={styles.main_layout}>
@@ -25,12 +24,6 @@ const MainLayout = () => {
                         showIcon
                     />
                 )}
-                <Spin
-                    spinning={isLoading}
-                    description="Loading"
-                    size="large"
-                    fullscreen
-                />
                 <Outlet />
             </Content>
         </Layout>

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import type { IAlbum } from "../../interfaces/IAlbum";
 const { Meta } = Card;
 import styles from "./AlbumCard.module.css";
+import { formatDate } from "../../utils/formatDate";
 
 interface AlbumCardProps {
     album: IAlbum;
@@ -16,9 +17,7 @@ const AlbumCard = ({ album }: AlbumCardProps) => {
         <Card
             hoverable
             className={styles.album_card}
-            onClick={() =>
-                navigate({ pathname: `/albums/${album.id}/tracks` })
-            }
+            onClick={() => navigate({ pathname: `/albums/${album.id}/tracks` })}
             cover={
                 <img
                     draggable={false}
@@ -34,11 +33,11 @@ const AlbumCard = ({ album }: AlbumCardProps) => {
                         {album.title}
                     </span>
                 }
-                // description={
-                //     <span className={styles.album_card_text}>
-                //         {album.info}
-                //     </span>
-                // }
+                description={
+                    <span className={styles.album_card_text}>
+                        Realased at: {formatDate(new Date(album.publishedAt))}
+                    </span>
+                }
             />
         </Card>
     );

@@ -1,10 +1,15 @@
 .app_header {
     background-color: rgba(255, 255, 255, 0.03);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .header_link {
     font-size: 36px;
     font-weight: 600;
     color: #dcdadb;
+    text-align: center;
 }
