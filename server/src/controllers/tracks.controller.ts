@@ -13,7 +13,7 @@ export class TracksController {
         try {
             const { title, duration, albumId } = req.body;
 
-            const newTrack: Omit<ITrack, "id"> = {
+            const newTrack: Omit<ITrack, "id" | "number"> = {
                 title,
                 duration: Number(duration),
                 albumId: Number(albumId),

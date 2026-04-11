@@ -1,6 +1,8 @@
 import { IAlbumWithArtist } from "../interfaces/album-with-artist.interface";
+import { IAlbumWithCount } from "../interfaces/album-with-count.interface";
 import { IAlbum } from "../interfaces/album.interface";
 import { prisma } from "../lib/prisma";
+import _ from "lodash";
 
 export class AlbumsService {
     async create(newAlbum: Omit<IAlbum, "id">): Promise<IAlbum> {
@@ -18,11 +20,21 @@ export class AlbumsService {
         return await prisma.album.findMany();
     }
 
-    async getArtistAlbums(artistId: number): Promise<IAlbum[]> {
-        return await prisma.album.findMany({
+    async getArtistAlbums(artistId: number): Promise<IAlbumWithCount[]> {
+        const albums = await prisma.album.findMany({
             where: {
                 artistId,
             },
+            include: {
+                _count: {
+                    select: { tracks: true },
+                },
+            },
+        });
+
+        return albums.map((a) => {
+            const album = { ...a, count: a._count.tracks };
+            return _.omit(album, ["_count"]);
         });
     }
 

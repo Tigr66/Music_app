@@ -40,6 +40,7 @@ async function main() {
             title: "God's Plan",
             duration: 198,
             albumId: album_one.id,
+            number: 1,
         },
     });
 
@@ -48,6 +49,7 @@ async function main() {
             title: "In My Feelings",
             duration: 217,
             albumId: album_one.id,
+            number: 2,
         },
     });
 
@@ -56,6 +58,7 @@ async function main() {
             title: "SICKO MODE",
             duration: 312,
             albumId: album_two.id,
+            number: 1,
         },
     });
 
@@ -64,6 +67,7 @@ async function main() {
             title: "FE!N",
             duration: 200,
             albumId: album_two.id,
+            number: 2,
         },
     });
 
