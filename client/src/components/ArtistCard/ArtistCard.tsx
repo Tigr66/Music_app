@@ -3,6 +3,7 @@ import type { IArtist } from "../../interfaces/IArtist";
 import { resolveImageUrl } from "../../utils/resolveImageUrl";
 import { useNavigate } from "react-router-dom";
 const { Meta } = Card;
+import styles from "./ArtistCard.module.css";
 
 interface ArtistCardProps {
     artist: IArtist;
@@ -14,24 +15,31 @@ const ArtistCard = ({ artist }: ArtistCardProps) => {
     return (
         <Card
             hoverable
-            style={{ width: 240 }}
+            className={styles.artist_card}
             onClick={() =>
                 navigate({ pathname: `/artists/${artist.id}/albums` })
             }
             cover={
                 <img
                     draggable={false}
-                    style={{
-                        objectFit: "cover",
-                        maxHeight: "300px",
-                        minHeight: "300px",
-                    }}
+                    className={styles.artist_card_image}
                     alt={artist.name}
                     src={resolveImageUrl(artist.photo)}
                 />
             }
         >
-            <Meta title={artist.name} description={artist.info} />
+            <Meta
+                title={
+                    <span className={styles.artist_card_text}>
+                        {artist.name}
+                    </span>
+                }
+                description={
+                    <span className={styles.artist_card_text}>
+                        {artist.info}
+                    </span>
+                }
+            />
         </Card>
     );
 };

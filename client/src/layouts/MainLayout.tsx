@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import AppHeader from "../components/AppHeader/AppHeader";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { clearError } from "../store/musicSlice/musicSlice";
+import styles from "./MainLayout.module.css";
 const { Content } = Layout;
 
 const MainLayout = () => {
@@ -11,23 +12,12 @@ const MainLayout = () => {
     const isLoading = useAppSelector((state) => state.music.isLoading);
 
     return (
-        <Layout style={{ minHeight: "100vh" }}>
+        <Layout className={styles.main_layout}>
             <AppHeader />
-            <Content
-                style={{
-                    backgroundColor: "#f5f5f5",
-                    flex: 1,
-                    position: "relative",
-                }}
-            >
+            <Content className={styles.content}>
                 {error && (
                     <Alert
-                        style={{
-                            position: "absolute",
-                            minWidth: 300,
-                            right: 10,
-                            top: 80,
-                        }}
+                        className={styles.app_alert}
                         onClick={() => dispatch(clearError())}
                         closable
                         description={error}
@@ -35,9 +25,13 @@ const MainLayout = () => {
                         showIcon
                     />
                 )}
-                <Spin spinning={isLoading}>
-                    <Outlet />
-                </Spin>
+                <Spin
+                    spinning={isLoading}
+                    description="Loading"
+                    size="large"
+                    fullscreen
+                />
+                <Outlet />
             </Content>
         </Layout>
     );

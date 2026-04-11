@@ -1,0 +1,25 @@
+.artist_card {
+    width: 320px;
+    background-color: rgba(255, 255, 255, 0.05);
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.artist_card:hover {
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.08);
+    transform: translateY(-5px);
+}
+
+.artist_card_text {
+    color: #dcdadb;
+    font-weight: 600;
+}
+
+.artist_card_image {
+    object-fit: cover;
+    min-height: 300px;
+    max-height: 300px;
+}

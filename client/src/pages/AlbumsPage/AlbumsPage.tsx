@@ -1,16 +1,15 @@
 import { Flex } from "antd";
+import ArtistCard from "../../components/ArtistCard/ArtistCard";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { useEffect } from "react";
-import { getArtistsThunk } from "../../store/musicSlice/musicThunks";
-import ArtistCard from "../../components/ArtistCard/ArtistCard";
 
-const MainPage = () => {
+const AlbumsPage = () => {
     const dispatch = useAppDispatch();
 
     const artists = useAppSelector((state) => state.music.artists);
 
     useEffect(() => {
-        dispatch(getArtistsThunk());
+        // dispatch(getArtistsThunk());
     }, []);
 
     return (
@@ -22,4 +21,4 @@ const MainPage = () => {
     );
 };
 
-export default MainPage;
+export default AlbumsPage;

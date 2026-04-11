@@ -1,8 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { appRoutes } from "./routes/appRoutes";
-import "./App.css";
-import MainPage from "./pages/MainPage/MainPage";
 import MainLayout from "./layouts/MainLayout";
+import MainPage from "./pages/MainPage/MainPage";
+import AlbumsPage from "./pages/AlbumsPage/AlbumsPage";
+import "./App.css";
 
 const App = () => {
     return (
@@ -13,6 +14,10 @@ const App = () => {
                     <Route
                         path={appRoutes.ARTISTS_PAGE}
                         element={<MainPage />}
+                    />
+                    <Route
+                        path={appRoutes.ARTIST_ALBUMS_PAGE}
+                        element={<AlbumsPage />}
                     />
                 </Route>
             </Routes>
