@@ -13,13 +13,8 @@
     transform: translateY(-5px);
 }
 
-.artist_card_text {
-    color: #dcdadb;
-    font-weight: 600;
-}
-
 .artist_card_image {
     object-fit: cover;
-    min-height: 300px;
-    max-height: 300px;
+    min-height: 320px;
+    max-height: 320px;
 }

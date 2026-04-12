@@ -11,13 +11,8 @@
     transform: scale(1.05);
 }
 
-.album_card_text {
-    color: #dcdadb;
-    font-weight: 700;
-}
-
 .album_card_image {
     object-fit: cover;
-    min-height: 300px;
-    max-height: 300px;
+    min-height: 400px;
+    max-height: 400px;
 }

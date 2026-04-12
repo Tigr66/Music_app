@@ -1,10 +1,11 @@
-import { Card, Flex } from "antd";
+import { Card, Flex, Typography } from "antd";
 import { resolveImageUrl } from "../../utils/resolveImageUrl";
 import { useNavigate } from "react-router-dom";
 import type { IAlbum } from "../../interfaces/IAlbum";
 const { Meta } = Card;
 import styles from "./AlbumCard.module.css";
 import { formatDate } from "../../utils/formatDate";
+const { Title, Text } = Typography;
 
 interface AlbumCardProps {
     album: IAlbum;
@@ -29,19 +30,17 @@ const AlbumCard = ({ album }: AlbumCardProps) => {
         >
             <Meta
                 title={
-                    <span className={styles.album_card_text}>
+                    <Title level={1} style={{ margin: 0 }}>
                         {album.title}
-                    </span>
+                    </Title>
                 }
                 description={
                     <Flex vertical>
-                        <span className={styles.album_card_text}>
+                        <Text>
                             Realased at:{" "}
                             {formatDate(new Date(album.publishedAt))}
-                        </span>
-                        <span className={styles.album_card_text}>
-                            Tracks: {album.count}
-                        </span>
+                        </Text>
+                        <Text>Tracks: {album.count}</Text>
                     </Flex>
                 }
             />

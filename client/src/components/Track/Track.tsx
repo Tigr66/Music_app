@@ -12,12 +12,10 @@ const Track = ({ track }: TrackProps) => {
     return (
         <Flex className={styles.track} justify="space-between">
             <Flex gap="medium">
-                <Text className={styles.track_text}>{track.number}</Text>
-                <Text className={styles.track_text}>{track.title}</Text>
+                <Text strong>{track.number}</Text>
+                <Text strong>{track.title}</Text>
             </Flex>
-            <Text className={styles.track_text}>
-                {formatTime(track.duration)}
-            </Text>
+            <Text strong>{formatTime(track.duration)}</Text>
         </Flex>
     );
 };

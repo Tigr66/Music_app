@@ -23,10 +23,6 @@ const musicSlice = createSlice({
         clearError: (state) => {
             state.error = null;
         },
-        clearCurrents: (state) => {
-            state.currentAlbum = null;
-            state.currentArtist = null;
-        },
         setCurrentArtist: (state, action: PayloadAction<number>) => {
             const artist = state.artists.find((a) => a.id === action.payload);
             if (artist) state.currentArtist = artist;
@@ -78,6 +74,7 @@ const musicSlice = createSlice({
     },
 });
 
-export const { clearError, setCurrentArtist, setCurrentAlbum, clearCurrents } = musicSlice.actions;
+export const { clearError, setCurrentArtist, setCurrentAlbum } =
+    musicSlice.actions;
 
 export default musicSlice.reducer;

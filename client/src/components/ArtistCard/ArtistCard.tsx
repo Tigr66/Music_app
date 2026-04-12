@@ -1,8 +1,9 @@
-import { Card } from "antd";
+import { Card, Typography } from "antd";
 import type { IArtist } from "../../interfaces/IArtist";
 import { resolveImageUrl } from "../../utils/resolveImageUrl";
 import { useNavigate } from "react-router-dom";
 const { Meta } = Card;
+const { Title, Text } = Typography;
 import styles from "./ArtistCard.module.css";
 
 interface ArtistCardProps {
@@ -30,15 +31,11 @@ const ArtistCard = ({ artist }: ArtistCardProps) => {
         >
             <Meta
                 title={
-                    <span className={styles.artist_card_text}>
+                    <Title level={2} style={{ margin: 0 }}>
                         {artist.name}
-                    </span>
+                    </Title>
                 }
-                description={
-                    <span className={styles.artist_card_text}>
-                        {artist.info}
-                    </span>
-                }
+                description={<Text>{artist.info}</Text>}
             />
         </Card>
     );

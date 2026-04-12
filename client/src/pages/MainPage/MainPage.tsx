@@ -5,7 +5,6 @@ import { getArtistsThunk } from "../../store/musicSlice/musicThunks";
 import ArtistCard from "../../components/ArtistCard/ArtistCard";
 import EmptyMessage from "../../components/EmptyMessage/EmptyMessage";
 import Spinner from "../../components/Spinner/Spinner";
-import { clearCurrents } from "../../store/musicSlice/musicSlice";
 const { Title } = Typography;
 
 const MainPage = () => {
@@ -16,12 +15,11 @@ const MainPage = () => {
 
     useEffect(() => {
         dispatch(getArtistsThunk());
-        dispatch(clearCurrents());
     }, [dispatch]);
 
     return (
         <>
-            <Title style={{ color: "#dcdadb" }}>All artists:</Title>
+            <Title>All artists:</Title>
             {isLoading ? (
                 <Spinner />
             ) : artists.length ? (

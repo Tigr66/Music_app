@@ -9,10 +9,8 @@ interface EmptyMessageProps {
 const EmptyMessage = ({ message }: EmptyMessageProps) => {
     return (
         <Result
-            icon={<FrownOutlined style={{ color: "#dcdadb" }} />}
-            title={
-                <Title style={{ color: "#dcdadb", margin: 0 }}>{message}</Title>
-            }
+            icon={<FrownOutlined />}
+            title={<Title style={{ margin: 0 }}>{message}</Title>}
         />
     );
 };

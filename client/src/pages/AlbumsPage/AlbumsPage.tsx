@@ -27,7 +27,7 @@ const AlbumsPage = () => {
 
     return (
         <>
-            <Title style={{ color: "#dcdadb" }}>
+            <Title>
                 All albums {currentArtist && `by ${currentArtist.name}`}:
             </Title>
             {isLoading ? (
