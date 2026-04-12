@@ -1,4 +1,4 @@
-# Music API Documentation
+# Music API
 
 API для работы с артистами, альбомами, треками и пользователями.
 
@@ -12,20 +12,18 @@ http://localhost:8000
 
 ## Эндпоинты API
 
-| Метод | Эндпоинт        | Описание                         |
-| ----- | --------------- | -------------------------------- |
-| POST  | /artists        | Отправка создание новго артиста  |
-| GET   | /artists        | Получение всех артистов          |
-| POST  | /albums         | Отправка создание нового альбома |
-| GET   | /albums/:id     | Получение альюома через id       |
-| GET   | /albums         | Получение всех альбомов          |
-| POST  | /tracks         | Отправка создание новго трека    |
-| GET   | /tracks         | Получение всех артистов          |
-| POST  | /tracks         | Создание нового трека            |
-| GET   | /tracks         | Получение всех треков            |
-| POST  | /track-history  | Добавление прослушивания трека   |
-| POST  | /users          | Регистрация пользователя         |
-| POST  | /users/sessions | Авторизация пользователя (логин) |
+| Метод | Эндпоинт        | Описание                      |
+| ----- | --------------- | ----------------------------- |
+| POST  | /artists        | Создать артиста               |
+| GET   | /artists        | Получить артистов             |
+| POST  | /albums         | Создать альбом                |
+| GET   | /albums         | Получить альбомы              |
+| GET   | /albums/:id     | Получить альбом по id         |
+| POST  | /tracks         | Создать трек                  |
+| GET   | /tracks         | Получить треки                |
+| POST  | /track-history  | Добавить прослушивание трека  |
+| POST  | /users          | Зарегистрировать пользователя |
+| POST  | /users/sessions | Авторизировать пользователя   |
 
 ---
 
@@ -33,20 +31,19 @@ http://localhost:8000
 
 ## POST /artists
 
-Отправляет новое сообщение.
-
-Method: POST  
-URL: http://localhost:8000/artists
+Создать артиста
 
 ### Формат запроса
 
-Используется multipart/form-data.
+multipart/form-data
 
-Поля:
+### Поля:
 
 - name (string, обязательно) - имя артиста
 - info (string, обязательно) - описание артиста
-- photo (file, обязательно) — фотка артиста
+- photo (file, обязательно) - фото артиста
+
+### Ответ - 201
 
 ```json
 {
@@ -57,11 +54,11 @@ URL: http://localhost:8000/artists
 }
 ```
 
----
-
 ## GET /artists
 
-### Ответ — 200
+Получить артистов
+
+### Ответ - 200
 
 ```json
 [
@@ -80,60 +77,95 @@ URL: http://localhost:8000/artists
 
 ## POST /albums
 
+Создать альбом
+
 ### Формат запроса
 
-Используется multipart/form-data.
+multipart/form-data
 
-Поля:
+### Поля:
 
-- title (string, обязательно) — название альбома
-- artistId (number, обязательно) — id артиста
-- publishedAt (string, обязательно) — дата (ISO формат)
-- cover (file, обязательно) — обложка альбома
+- title (string, обязательно) - название альбома
+- artistId (number, обязательно) - id артиста
+- publishedAt (string, обязательно) - дата (ISO формат)
+- cover (file, обязательно) - обложка альбома
 
-## Ответ - 201
+### Ответ - 201
 
 ```json
 {
-    {
-        "id": 1,
-        "title": "Album Name",
-        "artistId": 2,
-        "publishedAt": "2024-01-01T00:00:00.000Z",
-        "cover": "/uploads/albums/cover.jpg"
-    }
+    "id": 1,
+    "title": "Album Name",
+    "artistId": 3,
+    "publishedAt": "2024-01-01T00:00:00.000Z",
+    "cover": "/uploads/albums/V7mQk2aP9xLrT0uZs8dNfJ.jpg"
 }
 ```
 
 ## GET /albums
 
-## Ответ - 200
+Получить альбомы
+
+### Query параметры (опционально)
+
+- artist (number) - фильтр по id артиста
+
+### Примеры
+
+- `/albums` - все альбомы
+- `/albums?artist=2` - альбомы конкретного артиста
+
+### Ответ - 200
 
 ```json
 [
     {
         "id": 1,
         "title": "Album Name",
-        "artistId": 2,
+        "artistId": 3,
         "publishedAt": "2024-01-01T00:00:00.000Z",
-        "cover": "/uploads/albums/cover.jpg"
+        "cover": "/uploads/albums/V7mQk2aP9xLrT0uZs8dNfJ.jpg"
     }
 ]
 ```
+
+## GET /albums/:id
+
+Получить альбом по id
+
+### Ответ - 200
+
+```json
+{
+    "id": 1,
+    "title": "Album Name",
+    "artistId": 3,
+    "publishedAt": "2024-01-01T00:00:00.000Z",
+    "cover": "/uploads/albums/V7mQk2aP9xLrT0uZs8dNfJ.jpg",
+    "artist": {
+        "id": 3,
+        "name": "Me",
+        "info": "The best singer",
+        "photo": "/uploads/artists/87hdgwg-3e98-4445-a499-cf444e204a72.jpg"
+    }
+}
+```
+
+---
 
 # Tracks
 
 ## POST /tracks
 
-Создание трека
+Создать трек
 
-Поля:
+### Поля:
 
-- title (string, обязательно) — название трека
-- duration (number, обязательно) — длительность в секундах
-- albumId (number, обязательно) — id альбома
+- title (string, обязательно)
+- duration (number, обязательно) - длительность в секундах
+- albumId (number, обязательно)
 
-### Ответ — 201
+### Ответ - 201
 
 ```json
 {
@@ -144,13 +176,20 @@ URL: http://localhost:8000/artists
 }
 ```
 
----
-
 ## GET /tracks
 
-Получение всех треков
+Получить треки
 
-### Ответ — 200
+### Query параметры (опционально)
+
+- album (number) - если передан, возвращает треки только конкретного альбома
+
+### Примеры
+
+- `GET /tracks` - все треки
+- `GET /tracks?album=3` - треки только из альбома с id = 3
+
+### Ответ - 200
 
 ```json
 [
@@ -167,19 +206,21 @@ URL: http://localhost:8000/artists
 
 # Track History
 
-## POST /track_history
+## POST /track-history
 
-Добавление прослушивания
+Добавить прослушивание трека
 
-Заголовки (Headers):
+### Headers
 
-- Authorization: Bearer <token> — обязательно
+```bash
+Authorization: Bearer <token>
+```
 
-Поля:
+### Поля:
 
-- trackId (number, обязательно) — id трека
+- trackId (number, обязательно)
 
-### Ответ — 201
+### Ответ - 201
 
 ```json
 {
@@ -196,14 +237,14 @@ URL: http://localhost:8000/artists
 
 ## POST /users
 
-Регистрация пользователя
+Зарегистрировать пользователя
 
-Поля:
+### Поля:
 
 - username (string, обязательно)
 - password (string, обязательно)
 
-### Ответ — 201
+### Ответ - 201
 
 ```json
 {
@@ -213,22 +254,20 @@ URL: http://localhost:8000/artists
 }
 ```
 
----
-
 ## POST /users/sessions
 
-Логин пользователя
+Авторизировать пользователя
 
-Поля:
+### Поля:
 
 - username (string, обязательно)
 - password (string, обязательно)
 
-### Ответ — 200
+### Ответ - 200
 
 ```json
 {
-    "token": "$2b$10$DS6myfA16yZ.pGvkSyqNsuHEwet56jCev48VVnzqEEZaEPwouVhYK"
+    "token": "pnm0R_eFcZF5QPunVTca0"
 }
 ```
 
@@ -236,12 +275,14 @@ URL: http://localhost:8000/artists
 
 # Коды ответов
 
-- 200 — OK
-- 201 — Created
-- 400 — Bad Request
-- 401 — Unauthorized
-- 404 — Not found
-- 500 — Internal Server Error
+- 200 - OK
+- 201 - Created
+- 400 - Bad Request
+- 401 - Unauthorized
+- 404 - Not found
+- 500 - Internal Server Error
+
+---
 
 # Инструкция к запуску проекта
 
