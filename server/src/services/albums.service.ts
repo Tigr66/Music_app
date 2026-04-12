@@ -17,7 +17,11 @@ export class AlbumsService {
     }
 
     async getAll(): Promise<IAlbum[]> {
-        return await prisma.album.findMany();
+        return await prisma.album.findMany({
+            orderBy: {
+                publishedAt: "asc",
+            },
+        });
     }
 
     async getArtistAlbums(artistId: number): Promise<IAlbumWithCount[]> {
@@ -29,6 +33,9 @@ export class AlbumsService {
                 _count: {
                     select: { tracks: true },
                 },
+            },
+            orderBy: {
+                publishedAt: "asc",
             },
         });
 

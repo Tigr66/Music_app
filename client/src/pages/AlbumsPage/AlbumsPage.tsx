@@ -23,7 +23,7 @@ const AlbumsPage = () => {
             dispatch(getArtistAlbumsThunk(Number(id)));
             dispatch(setCurrentArtist(Number(id)));
         }
-    }, [id]);
+    }, [id, dispatch]);
 
     return (
         <>

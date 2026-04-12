@@ -1,4 +1,4 @@
-import { Card } from "antd";
+import { Card, Flex } from "antd";
 import { resolveImageUrl } from "../../utils/resolveImageUrl";
 import { useNavigate } from "react-router-dom";
 import type { IAlbum } from "../../interfaces/IAlbum";
@@ -34,7 +34,7 @@ const AlbumCard = ({ album }: AlbumCardProps) => {
                     </span>
                 }
                 description={
-                    <>
+                    <Flex vertical>
                         <span className={styles.album_card_text}>
                             Realased at:{" "}
                             {formatDate(new Date(album.publishedAt))}
@@ -42,7 +42,7 @@ const AlbumCard = ({ album }: AlbumCardProps) => {
                         <span className={styles.album_card_text}>
                             Tracks: {album.count}
                         </span>
-                    </>
+                    </Flex>
                 }
             />
         </Card>

@@ -1,14 +1,12 @@
 .album_card {
     width: 400px;
     background-color: rgba(255, 255, 255, 0.05);
-
     border: 1px solid rgba(255, 255, 255, 0.1);
-
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .album_card:hover {
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
     background-color: rgba(255, 255, 255, 0.08);
     transform: scale(1.05);
 }

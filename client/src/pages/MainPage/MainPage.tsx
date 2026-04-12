@@ -17,7 +17,7 @@ const MainPage = () => {
     useEffect(() => {
         dispatch(getArtistsThunk());
         dispatch(clearCurrents());
-    }, []);
+    }, [dispatch]);
 
     return (
         <>

@@ -29,13 +29,20 @@ export class TracksService {
     }
 
     async getAll(): Promise<ITrack[]> {
-        return await prisma.track.findMany();
+        return await prisma.track.findMany({
+            orderBy: {
+                number: "asc",
+            },
+        });
     }
 
     async getAlbumTracks(albumId: number): Promise<ITrack[]> {
         return await prisma.track.findMany({
             where: {
                 albumId,
+            },
+            orderBy: {
+                number: "asc",
             },
         });
     }
