@@ -1,9 +1,13 @@
 import { Flex, Spin } from "antd";
 
-const Spinner = () => {
+interface SpinnerProps {
+    title: string;
+}
+
+const Spinner = ({ title }: SpinnerProps) => {
     return (
-        <Flex justify="center" align="center" style={{ minHeight: "50vh" }}>
-            <Spin size="large" description="Loading" />
+        <Flex justify="center" align="center" style={{ minHeight: "10vh" }}>
+            <Spin size="large" description={title} />
         </Flex>
     );
 };

@@ -4,6 +4,7 @@ import type { IArtist } from "../../interfaces/IArtist";
 import type { IAlbum } from "../../interfaces/IAlbum";
 import type { ITrack } from "../../interfaces/ITrack";
 import { musicApi } from "../../api/musicApi";
+import type { IAlbumWithArtist } from "../../interfaces/IAlbumWithArtist";
 
 export const getArtistsThunk = createAsyncThunk<
     IArtist[],
@@ -32,6 +33,22 @@ export const getArtistAlbumsThunk = createAsyncThunk<
                 artist: artistId,
             },
         });
+
+        return result.data;
+    } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        return rejectWithValue(error.response?.data?.error || "Unknown error");
+    }
+});
+
+export const getAlbumById = createAsyncThunk<
+    IAlbumWithArtist,
+    number,
+    { rejectValue: string }
+>("music-slice/get-album-by-id", async (albumID, { rejectWithValue }) => {
+    try {
+        const result = await musicApi.get(`/albums/${albumID}`, {});
 
         return result.data;
     } catch (err) {

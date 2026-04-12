@@ -11,7 +11,9 @@ const MainPage = () => {
     const dispatch = useAppDispatch();
 
     const artists = useAppSelector((state) => state.music.artists);
-    const isLoading = useAppSelector((state) => state.music.isLoading);
+    const isLoadingArtists = useAppSelector(
+        (state) => state.music.isLoadingArtists,
+    );
 
     useEffect(() => {
         dispatch(getArtistsThunk());
@@ -20,8 +22,8 @@ const MainPage = () => {
     return (
         <>
             <Title>All artists:</Title>
-            {isLoading ? (
-                <Spinner />
+            {isLoadingArtists ? (
+                <Spinner title="Loading artists"/>
             ) : artists.length ? (
                 <Flex wrap gap="small">
                     {artists.map((a) => (

@@ -35,6 +35,15 @@ async function main() {
         },
     });
 
+    const album_three = await prisma.album.create({
+        data: {
+            title: "Astroworld",
+            artistId: travis.id,
+            cover: "/uploads/albums/6513a1f1079b2faddd422c10260d44b8.jpg",
+            publishedAt: new Date("2018-08-03"),
+        },
+    });
+
     const track_one = await prisma.track.create({
         data: {
             title: "God's Plan",
@@ -67,6 +76,42 @@ async function main() {
             title: "FE!N",
             duration: 200,
             albumId: album_two.id,
+            number: 2,
+        },
+    });
+
+    const track_five = await prisma.track.create({
+        data: {
+            title: "Nonstop",
+            duration: 238,
+            albumId: album_one.id,
+            number: 3,
+        },
+    });
+
+    const track_six = await prisma.track.create({
+        data: {
+            title: "Emotionless",
+            duration: 302,
+            albumId: album_one.id,
+            number: 4,
+        },
+    });
+
+    const track_seven = await prisma.track.create({
+        data: {
+            title: "STARGAZING",
+            duration: 270,
+            albumId: album_three.id,
+            number: 1,
+        },
+    });
+
+    const track_eight = await prisma.track.create({
+        data: {
+            title: "CAROUSEL",
+            duration: 180,
+            albumId: album_three.id,
             number: 2,
         },
     });
@@ -108,6 +153,22 @@ async function main() {
             {
                 userId: user_two.id,
                 trackId: track_four.id,
+            },
+            {
+                userId: user_two.id,
+                trackId: track_five.id,
+            },
+            {
+                userId: user_two.id,
+                trackId: track_six.id,
+            },
+            {
+                userId: user_one.id,
+                trackId: track_seven.id,
+            },
+            {
+                userId: user_one.id,
+                trackId: track_eight.id,
             },
         ],
     });

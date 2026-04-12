@@ -1,8 +1,11 @@
-import { Flex, Typography } from "antd";
+import { Flex, Skeleton, Typography } from "antd";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getArtistAlbumsThunk } from "../../store/musicSlice/musicThunks";
+import {
+    getArtistAlbumsThunk,
+    getArtistsThunk,
+} from "../../store/musicSlice/musicThunks";
 import { setCurrentArtist } from "../../store/musicSlice/musicSlice";
 import AlbumCard from "../../components/AlbumCard/AlbumCard";
 import EmptyMessage from "../../components/EmptyMessage/EmptyMessage";
@@ -16,22 +19,50 @@ const AlbumsPage = () => {
 
     const albums = useAppSelector((state) => state.music.artistAlbums);
     const currentArtist = useAppSelector((state) => state.music.currentArtist);
-    const isLoading = useAppSelector((state) => state.music.isLoading);
+    const isLoadingAlbums = useAppSelector(
+        (state) => state.music.isLoadingAlbums,
+    );
+    const isLoadingArtists = useAppSelector(
+        (state) => state.music.isLoadingArtists,
+    );
+    const artists = useAppSelector((state) => state.music.artists);
 
     useEffect(() => {
         if (id && !isNaN(Number(id))) {
+            dispatch(getArtistsThunk());
             dispatch(getArtistAlbumsThunk(Number(id)));
+        }
+
+        return () => {
+            dispatch(setCurrentArtist(null));
+        };
+    }, [id, dispatch]);
+
+    useEffect(() => {
+        if (id && !isNaN(Number(id))) {
             dispatch(setCurrentArtist(Number(id)));
         }
-    }, [id, dispatch]);
+    }, [id, artists]);
 
     return (
         <>
-            <Title>
-                All albums {currentArtist && `by ${currentArtist.name}`}:
-            </Title>
-            {isLoading ? (
-                <Spinner />
+            {isLoadingArtists ? (
+                <Skeleton
+                    active
+                    title={{
+                        width: 400,
+                    }}
+                    paragraph={false}
+                    style={{ height: 46 }}
+                />
+            ) : (
+                <Title>
+                    All albums {currentArtist && `by ${currentArtist.name}`}:
+                </Title>
+            )}
+
+            {isLoadingAlbums && !albums.length ? (
+                <Spinner title="Loading albums" />
             ) : albums.length ? (
                 <Flex wrap gap="small">
                     {albums.map((a) => (
