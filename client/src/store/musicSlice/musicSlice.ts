@@ -4,12 +4,16 @@ import {
     getAlbumTracksThunk,
     getArtistAlbumsThunk,
     getArtistsThunk,
+    loginUserThunk,
+    registerUserThunk,
 } from "./musicThunks";
 import type { IMusicState } from "../../interfaces/IMusicState";
 import type { IAlbumWithArtist } from "../../interfaces/IAlbumWithArtist";
 
 const initialState: IMusicState = {
+    success: null,
     error: null,
+    user: null,
     artists: [],
     artistAlbums: [],
     albumTracks: [],
@@ -17,6 +21,7 @@ const initialState: IMusicState = {
     isLoadingAlbum: false,
     isLoadingAlbums: false,
     isLoadingTracks: false,
+    isSending: false,
     currentArtist: null,
     currentAlbum: null,
 };
@@ -27,6 +32,9 @@ const musicSlice = createSlice({
     reducers: {
         clearError: (state) => {
             state.error = null;
+        },
+        clearSuccess: (state) => {
+            state.success = null;
         },
         setCurrentArtist: (state, action: PayloadAction<number | null>) => {
             if (action.payload === null) {
@@ -48,6 +56,7 @@ const musicSlice = createSlice({
         builder
             .addCase(getArtistsThunk.pending, (state) => {
                 state.isLoadingArtists = true;
+                state.success = null;
                 state.error = null;
             })
             .addCase(getArtistsThunk.fulfilled, (state, action) => {
@@ -60,6 +69,7 @@ const musicSlice = createSlice({
             })
             .addCase(getArtistAlbumsThunk.pending, (state) => {
                 state.isLoadingAlbums = true;
+                state.success = null;
                 state.error = null;
             })
             .addCase(getArtistAlbumsThunk.fulfilled, (state, action) => {
@@ -72,6 +82,7 @@ const musicSlice = createSlice({
             })
             .addCase(getAlbumById.pending, (state) => {
                 state.isLoadingAlbum = true;
+                state.success = null;
                 state.error = null;
             })
             .addCase(getAlbumById.fulfilled, (state, action) => {
@@ -84,6 +95,7 @@ const musicSlice = createSlice({
             })
             .addCase(getAlbumTracksThunk.pending, (state) => {
                 state.isLoadingTracks = true;
+                state.success = null;
                 state.error = null;
             })
             .addCase(getAlbumTracksThunk.fulfilled, (state, action) => {
@@ -93,11 +105,38 @@ const musicSlice = createSlice({
             .addCase(getAlbumTracksThunk.rejected, (state, action) => {
                 state.isLoadingTracks = false;
                 state.error = action.payload || "Error with getting albums";
+            })
+            .addCase(registerUserThunk.pending, (state) => {
+                state.isSending = true;
+                state.error = null;
+                state.success = null;
+            })
+            .addCase(registerUserThunk.fulfilled, (state) => {
+                state.isSending = false;
+                state.success = "Registration successful. Please log in";
+            })
+            .addCase(registerUserThunk.rejected, (state, action) => {
+                state.isSending = false;
+                state.error = action.payload || "Error with getting albums";
+            })
+            .addCase(loginUserThunk.pending, (state) => {
+                state.isSending = true;
+                state.error = null;
+                state.success = null;
+            })
+            .addCase(loginUserThunk.fulfilled, (state, action) => {
+                state.isSending = false;
+                state.success = "Welcome back!";
+                state.user = action.payload;
+            })
+            .addCase(loginUserThunk.rejected, (state, action) => {
+                state.isSending = false;
+                state.error = action.payload || "Error with getting albums";
             });
     },
 });
 
-export const { clearError, setCurrentArtist, setCurrentAlbum } =
+export const { clearError, setCurrentArtist, setCurrentAlbum, clearSuccess } =
     musicSlice.actions;
 
 export default musicSlice.reducer;

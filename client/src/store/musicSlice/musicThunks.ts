@@ -5,6 +5,8 @@ import type { IAlbum } from "../../interfaces/IAlbum";
 import type { ITrack } from "../../interfaces/ITrack";
 import { musicApi } from "../../api/musicApi";
 import type { IAlbumWithArtist } from "../../interfaces/IAlbumWithArtist";
+import type { IUser } from "../../interfaces/IUser";
+import type { IAuthUser } from "../../interfaces/IAuthUser";
 
 export const getArtistsThunk = createAsyncThunk<
     IArtist[],
@@ -69,6 +71,36 @@ export const getAlbumTracksThunk = createAsyncThunk<
                 album: albumId,
             },
         });
+
+        return result.data;
+    } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        return rejectWithValue(error.response?.data?.error || "Unknown error");
+    }
+});
+
+export const registerUserThunk = createAsyncThunk<
+    void,
+    IAuthUser,
+    { rejectValue: string }
+>("music-slice/register-user", async (newUser, { rejectWithValue }) => {
+    try {
+        await musicApi.post("/users", newUser);
+    } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        return rejectWithValue(error.response?.data?.error || "Unknown error");
+    }
+});
+
+export const loginUserThunk = createAsyncThunk<
+    IUser,
+    IAuthUser,
+    { rejectValue: string }
+>("music-slice/login-user", async (newUser, { rejectWithValue }) => {
+    try {
+        const result = await musicApi.post("/users/sessions", newUser);
 
         return result.data;
     } catch (err) {

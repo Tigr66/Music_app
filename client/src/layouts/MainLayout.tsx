@@ -1,15 +1,16 @@
+import { useEffect } from "react";
 import { Layout } from "antd";
 import { Outlet } from "react-router-dom";
-import AppHeader from "../components/AppHeader/AppHeader";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { clearError } from "../store/musicSlice/musicSlice";
-import styles from "./MainLayout.module.css";
+import { clearError, clearSuccess } from "../store/musicSlice/musicSlice";
 import { Bounce, toast, ToastContainer } from "react-toastify";
-import { useEffect } from "react";
+import AppHeader from "../components/AppHeader/AppHeader";
 const { Content } = Layout;
+import styles from "./MainLayout.module.css";
 
 const MainLayout = () => {
     const dispatch = useAppDispatch();
+    const success = useAppSelector((state) => state.music.success);
     const error = useAppSelector((state) => state.music.error);
 
     useEffect(() => {
@@ -18,6 +19,13 @@ const MainLayout = () => {
             dispatch(clearError());
         }
     }, [error, dispatch]);
+
+    useEffect(() => {
+        if (success) {
+            toast.success(success);
+            dispatch(clearSuccess());
+        }
+    }, [success, dispatch]);
 
     return (
         <Layout className={styles.main_layout}>
