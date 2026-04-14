@@ -1,0 +1,10 @@
+.auth_window {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(20, 18, 16, 0.6);
+    border-radius: 24px;
+    padding: 16px;
+}
+
+.auth_form_button {
+    width: 100%;
+}

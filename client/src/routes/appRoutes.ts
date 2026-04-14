@@ -1,6 +1,9 @@
 export const appRoutes = {
     MAIN_PAGE: "/",
+    LOGIN_PAGE: "/login",
+    REGISTER_PAGE: "/registration",
+    TRACK_HISTORY_PAGE: "/profile/track-history",
     ARTISTS_PAGE: "/artists",
     ARTIST_ALBUMS_PAGE: "/artists/:id/albums",
     ALBUMS_TRACKS_PAGE: "/albums/:id/tracks",
-} as const
+} as const;

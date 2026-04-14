@@ -5,6 +5,7 @@ import MainPage from "./pages/MainPage/MainPage";
 import AlbumsPage from "./pages/AlbumsPage/AlbumsPage";
 import TracksPage from "./pages/TracksPage/TracksPage";
 import "./App.css";
+import LoginPage from "./pages/LoginPage/LoginPage";
 
 const App = () => {
     return (
@@ -23,6 +24,10 @@ const App = () => {
                     <Route
                         path={appRoutes.ALBUMS_TRACKS_PAGE}
                         element={<TracksPage />}
+                    />
+                    <Route
+                        path={appRoutes.LOGIN_PAGE}
+                        element={<LoginPage />}
                     />
                 </Route>
             </Routes>

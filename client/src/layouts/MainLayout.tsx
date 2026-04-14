@@ -1,17 +1,22 @@
-import { useEffect } from "react";
-import { Layout } from "antd";
-import { Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Flex, Layout } from "antd";
+import { NavLink, Outlet } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { clearError, clearSuccess } from "../store/musicSlice/musicSlice";
 import { Bounce, toast, ToastContainer } from "react-toastify";
+import { HistoryOutlined, UserOutlined } from "@ant-design/icons";
+import { appRoutes } from "../routes/appRoutes";
 import AppHeader from "../components/AppHeader/AppHeader";
-const { Content } = Layout;
 import styles from "./MainLayout.module.css";
+const { Content, Sider } = Layout;
 
 const MainLayout = () => {
     const dispatch = useAppDispatch();
     const success = useAppSelector((state) => state.music.success);
     const error = useAppSelector((state) => state.music.error);
+    const user = useAppSelector((state) => state.music.user);
+
+    const [collapsed, setCollapsed] = useState(false);
 
     useEffect(() => {
         if (error) {
@@ -29,23 +34,56 @@ const MainLayout = () => {
 
     return (
         <Layout className={styles.main_layout}>
-            <AppHeader />
-            <Content className={styles.content}>
-                <ToastContainer
-                    position="top-right"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick={false}
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="colored"
-                    transition={Bounce}
-                />
-                <Outlet />
-            </Content>
+            <Sider
+                collapsible
+                collapsed={collapsed}
+                onCollapse={(value) => setCollapsed(value)}
+                className={styles.sider}
+                trigger={null}
+            >
+                <Flex vertical style={{ height: "100vh" }}>
+                    {!user && (
+                        <NavLink
+                            to={appRoutes.LOGIN_PAGE}
+                            className={styles.sidebar_link}
+                        >
+                            <UserOutlined />
+                        </NavLink>
+                    )}
+                    <NavLink
+                        to={appRoutes.TRACK_HISTORY_PAGE}
+                        className={styles.sidebar_link}
+                    >
+                        <HistoryOutlined />
+                    </NavLink>
+
+                    <button
+                        className={styles.toggle_button}
+                        onClick={() => setCollapsed(!collapsed)}
+                    >
+                        {collapsed ? ">" : "<"}
+                    </button>
+                </Flex>
+            </Sider>
+            <Layout style={{ background: "transparent" }}>
+                <AppHeader />
+                <Content className={styles.content}>
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick={false}
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="colored"
+                        transition={Bounce}
+                    />
+                    <Outlet />
+                </Content>
+            </Layout>
         </Layout>
     );
 };
