@@ -16,7 +16,7 @@ const MainLayout = () => {
     const error = useAppSelector((state) => state.music.error);
     const user = useAppSelector((state) => state.music.user);
 
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(true);
 
     useEffect(() => {
         if (error) {
@@ -40,6 +40,7 @@ const MainLayout = () => {
                 onCollapse={(value) => setCollapsed(value)}
                 className={styles.sider}
                 trigger={null}
+                width={collapsed ? 30 : 220}
             >
                 <Flex vertical style={{ height: "100vh" }}>
                     {!user && (
@@ -47,14 +48,14 @@ const MainLayout = () => {
                             to={appRoutes.LOGIN_PAGE}
                             className={styles.sidebar_link}
                         >
-                            <UserOutlined />
+                            <UserOutlined /> {!collapsed && "login"}
                         </NavLink>
                     )}
                     <NavLink
                         to={appRoutes.TRACK_HISTORY_PAGE}
                         className={styles.sidebar_link}
                     >
-                        <HistoryOutlined />
+                        <HistoryOutlined /> {!collapsed && "Track history"}
                     </NavLink>
 
                     <button

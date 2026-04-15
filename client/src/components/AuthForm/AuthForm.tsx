@@ -8,10 +8,10 @@ import {
     loginUserThunk,
     registerUserThunk,
 } from "../../store/musicSlice/musicThunks";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { appRoutes } from "../../routes/appRoutes";
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 interface AuthFormProps {
     isLogin: boolean;
@@ -43,7 +43,11 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
 
     useEffect(() => {
         if (success) {
-            navigate({ pathname: appRoutes.ARTISTS_PAGE});
+            navigate({
+                pathname: isLogin
+                    ? appRoutes.ARTISTS_PAGE
+                    : appRoutes.LOGIN_PAGE,
+            });
         }
     }, [success]);
 
@@ -54,7 +58,7 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
             justify="center"
             className={styles.auth_window}
         >
-            <Title>{isLogin ? "Log in" : "Register"}</Title>
+            <Title>{isLogin ? "Log in" : "Sign up"}</Title>
             <Form
                 form={form}
                 name="basic"
@@ -95,13 +99,26 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
                         type="primary"
                         htmlType="submit"
                         className={styles.auth_form_button}
-                        disabled={isSending}
                         loading={isSending}
                     >
                         Submit
                     </Button>
                 </Form.Item>
             </Form>
+            <Flex justify="center" align="center" gap={5}>
+                <Text>
+                    {isLogin
+                        ? "Don’t have an account?"
+                        : "Already have an account?"}
+                </Text>
+                <Link
+                    to={
+                        isLogin ? appRoutes.REGISTER_PAGE : appRoutes.LOGIN_PAGE
+                    }
+                >
+                    {isLogin ? "Sign up" : "Log in"}
+                </Link>
+            </Flex>
         </Flex>
     );
 };

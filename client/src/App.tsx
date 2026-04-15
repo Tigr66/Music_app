@@ -6,6 +6,7 @@ import AlbumsPage from "./pages/AlbumsPage/AlbumsPage";
 import TracksPage from "./pages/TracksPage/TracksPage";
 import "./App.css";
 import LoginPage from "./pages/LoginPage/LoginPage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
 
 const App = () => {
     return (
@@ -28,6 +29,10 @@ const App = () => {
                     <Route
                         path={appRoutes.LOGIN_PAGE}
                         element={<LoginPage />}
+                    />
+                    <Route
+                        path={appRoutes.REGISTER_PAGE}
+                        element={<RegisterPage />}
                     />
                 </Route>
             </Routes>
