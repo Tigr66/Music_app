@@ -1,5 +1,5 @@
 .main_layout {
-    min-height: 100vh;
+    max-height: 100vh;
     background: radial-gradient(circle, #1f1d1b 0%, #100e0d 100%);
 }
 
@@ -7,6 +7,20 @@
     flex: 1;
     position: relative;
     padding: 20px;
+    max-height: 100vh;
+    overflow-y: scroll;
+}
+
+.content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content::-webkit-scrollbar-track {
+    background: radial-gradient(circle, #1f1d1b 0%, #100e0d 100%);
+}
+.content::-webkit-scrollbar-thumb {
+    background-color: #2a2422;
+    border-radius: 10px;
 }
 
 .sider {
@@ -45,4 +59,3 @@
 .sidebar_link:hover {
     background: rgba(255, 255, 255, 0.08);
 }
-

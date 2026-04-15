@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { Avatar, Flex, Layout, Typography } from "antd";
 import { NavLink, Outlet } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { clearError, clearSuccess } from "../store/musicSlice/musicSlice";
+import {
+    clearError,
+    clearInfo,
+    clearSuccess,
+} from "../store/musicSlice/musicSlice";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import { HistoryOutlined, UserOutlined } from "@ant-design/icons";
 import { appRoutes } from "../routes/appRoutes";
@@ -15,6 +19,7 @@ const MainLayout = () => {
     const dispatch = useAppDispatch();
     const success = useAppSelector((state) => state.music.success);
     const error = useAppSelector((state) => state.music.error);
+    const info = useAppSelector((state) => state.music.info);
     const user = useAppSelector((state) => state.music.user);
 
     const [collapsed, setCollapsed] = useState(true);
@@ -32,6 +37,13 @@ const MainLayout = () => {
             dispatch(clearSuccess());
         }
     }, [success, dispatch]);
+
+    useEffect(() => {
+        if (info) {
+            toast.info(info);
+            dispatch(clearInfo());
+        }
+    }, [info, dispatch]);
 
     return (
         <Layout className={styles.main_layout}>

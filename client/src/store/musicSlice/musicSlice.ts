@@ -15,6 +15,7 @@ import type { IAlbumWithArtist } from "../../interfaces/IAlbumWithArtist";
 const initialState: IMusicState = {
     success: null,
     error: null,
+    info: null,
     user: null,
     artists: [],
     artistAlbums: [],
@@ -40,6 +41,9 @@ const musicSlice = createSlice({
         clearSuccess: (state) => {
             state.success = null;
         },
+        clearInfo: (state) => {
+            state.info = null;
+        },
         setCurrentArtist: (state, action: PayloadAction<number | null>) => {
             if (action.payload === null) {
                 state.currentArtist = null;
@@ -60,8 +64,6 @@ const musicSlice = createSlice({
         builder
             .addCase(getArtistsThunk.pending, (state) => {
                 state.isLoadingArtists = true;
-                state.success = null;
-                state.error = null;
             })
             .addCase(getArtistsThunk.fulfilled, (state, action) => {
                 state.isLoadingArtists = false;
@@ -73,8 +75,6 @@ const musicSlice = createSlice({
             })
             .addCase(getArtistAlbumsThunk.pending, (state) => {
                 state.isLoadingAlbums = true;
-                state.success = null;
-                state.error = null;
             })
             .addCase(getArtistAlbumsThunk.fulfilled, (state, action) => {
                 state.isLoadingAlbums = false;
@@ -86,8 +86,6 @@ const musicSlice = createSlice({
             })
             .addCase(getAlbumById.pending, (state) => {
                 state.isLoadingAlbum = true;
-                state.success = null;
-                state.error = null;
             })
             .addCase(getAlbumById.fulfilled, (state, action) => {
                 state.isLoadingAlbum = false;
@@ -99,8 +97,6 @@ const musicSlice = createSlice({
             })
             .addCase(getAlbumTracksThunk.pending, (state) => {
                 state.isLoadingTracks = true;
-                state.success = null;
-                state.error = null;
             })
             .addCase(getAlbumTracksThunk.fulfilled, (state, action) => {
                 state.isLoadingTracks = false;
@@ -112,8 +108,6 @@ const musicSlice = createSlice({
             })
             .addCase(registerUserThunk.pending, (state) => {
                 state.isSending = true;
-                state.error = null;
-                state.success = null;
             })
             .addCase(registerUserThunk.fulfilled, (state) => {
                 state.isSending = false;
@@ -125,8 +119,6 @@ const musicSlice = createSlice({
             })
             .addCase(loginUserThunk.pending, (state) => {
                 state.isSending = true;
-                state.error = null;
-                state.success = null;
             })
             .addCase(loginUserThunk.fulfilled, (state, action) => {
                 state.isSending = false;
@@ -139,12 +131,10 @@ const musicSlice = createSlice({
             })
             .addCase(addHistoryThunk.pending, (state) => {
                 state.isSending = true;
-                state.error = null;
-                state.success = null;
             })
             .addCase(addHistoryThunk.fulfilled, (state) => {
                 state.isSending = false;
-                state.success = "Hearing!";
+                state.info = "Added to history!";
             })
             .addCase(addHistoryThunk.rejected, (state, action) => {
                 state.isSending = false;
@@ -152,8 +142,6 @@ const musicSlice = createSlice({
             })
             .addCase(getHistoryThunk.pending, (state) => {
                 state.isLoadingHistory = true;
-                state.error = null;
-                state.success = null;
             })
             .addCase(getHistoryThunk.fulfilled, (state, action) => {
                 state.isLoadingHistory = false;
@@ -166,7 +154,12 @@ const musicSlice = createSlice({
     },
 });
 
-export const { clearError, setCurrentArtist, setCurrentAlbum, clearSuccess } =
-    musicSlice.actions;
+export const {
+    clearError,
+    setCurrentArtist,
+    setCurrentAlbum,
+    clearSuccess,
+    clearInfo,
+} = musicSlice.actions;
 
 export default musicSlice.reducer;

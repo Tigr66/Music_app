@@ -8,6 +8,7 @@ import type { IUser } from "./IUser";
 export interface IMusicState {
     success: string | null;
     error: string | null;
+    info: string | null;
     user: IUser | null;
     artists: IArtist[];
     artistAlbums: IAlbum[];

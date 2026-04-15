@@ -7,6 +7,7 @@ import TracksPage from "./pages/TracksPage/TracksPage";
 import "./App.css";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import TrackHistoryPage from "./pages/TrackHistoryPage/TrackHistoryPage";
 
 const App = () => {
     return (
@@ -33,6 +34,10 @@ const App = () => {
                     <Route
                         path={appRoutes.REGISTER_PAGE}
                         element={<RegisterPage />}
+                    />
+                    <Route
+                        path={appRoutes.TRACK_HISTORY_PAGE}
+                        element={<TrackHistoryPage />}
                     />
                 </Route>
             </Routes>

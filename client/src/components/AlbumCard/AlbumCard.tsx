@@ -38,7 +38,7 @@ const AlbumCard = ({ album }: AlbumCardProps) => {
                     <Flex vertical>
                         <Text>
                             Realased at:{" "}
-                            {formatDate(new Date(album.publishedAt))}
+                            {formatDate(new Date(album.publishedAt), false)}
                         </Text>
                         <Text>Tracks: {album.count}</Text>
                     </Flex>
