@@ -21,7 +21,7 @@ export class TrackHistoryController {
 
             if (!token) {
                 return res
-                    .status(400)
+                    .status(401)
                     .json({ error: "No authorization token" });
             }
 
@@ -41,6 +41,32 @@ export class TrackHistoryController {
             }
 
             res.status(201).json(result);
+        } catch (err) {
+            next(err);
+        }
+    };
+
+    getHistory = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { authorization } = req.headers;
+
+            const token = authorization ? authorization.split(" ")[1] : null;
+
+            if (!token) {
+                return res
+                    .status(401)
+                    .json({ error: "No authorization token" });
+            }
+
+            const user = await this.usersService.findUserByToken(token);
+
+            if (!user) {
+                return res.status(401).json({ error: "Unauthorized user" });
+            }
+
+            const result = await this.trackHistoryService.get(user.id);
+
+            res.status(200).json(result);
         } catch (err) {
             next(err);
         }

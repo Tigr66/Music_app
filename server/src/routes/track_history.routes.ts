@@ -19,5 +19,6 @@ export class TrackHistoryRoutes {
             validateDto(CreateHistoryDto),
             this.trackHistoryController.createHistory,
         );
+        this.router.get("/", this.trackHistoryController.getHistory);
     }
 }
