@@ -9,3 +9,15 @@
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+.play_button {
+    font-size: 24px;
+    transition: all 0.3s ease;
+}
+
+.play_button:hover {
+    color: #1677ff;
+}
+
+.play_button:disabled {
+    opacity: 0.5;
+}

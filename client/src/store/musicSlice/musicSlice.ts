@@ -1,9 +1,11 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import {
+    addHistoryThunk,
     getAlbumById,
     getAlbumTracksThunk,
     getArtistAlbumsThunk,
     getArtistsThunk,
+    getHistoryThunk,
     loginUserThunk,
     registerUserThunk,
 } from "./musicThunks";
@@ -17,10 +19,12 @@ const initialState: IMusicState = {
     artists: [],
     artistAlbums: [],
     albumTracks: [],
+    history: [],
     isLoadingArtists: false,
     isLoadingAlbum: false,
     isLoadingAlbums: false,
     isLoadingTracks: false,
+    isLoadingHistory: false,
     isSending: false,
     currentArtist: null,
     currentAlbum: null,
@@ -91,7 +95,7 @@ const musicSlice = createSlice({
             })
             .addCase(getAlbumById.rejected, (state, action) => {
                 state.isLoadingAlbum = false;
-                state.error = action.payload || "Error with getting albums";
+                state.error = action.payload || "Error with getting album";
             })
             .addCase(getAlbumTracksThunk.pending, (state) => {
                 state.isLoadingTracks = true;
@@ -104,7 +108,7 @@ const musicSlice = createSlice({
             })
             .addCase(getAlbumTracksThunk.rejected, (state, action) => {
                 state.isLoadingTracks = false;
-                state.error = action.payload || "Error with getting albums";
+                state.error = action.payload || "Error with getting tracks";
             })
             .addCase(registerUserThunk.pending, (state) => {
                 state.isSending = true;
@@ -117,7 +121,7 @@ const musicSlice = createSlice({
             })
             .addCase(registerUserThunk.rejected, (state, action) => {
                 state.isSending = false;
-                state.error = action.payload || "Error with getting albums";
+                state.error = action.payload || "Error with registrate";
             })
             .addCase(loginUserThunk.pending, (state) => {
                 state.isSending = true;
@@ -131,7 +135,33 @@ const musicSlice = createSlice({
             })
             .addCase(loginUserThunk.rejected, (state, action) => {
                 state.isSending = false;
-                state.error = action.payload || "Error with getting albums";
+                state.error = action.payload || "Error with login";
+            })
+            .addCase(addHistoryThunk.pending, (state) => {
+                state.isSending = true;
+                state.error = null;
+                state.success = null;
+            })
+            .addCase(addHistoryThunk.fulfilled, (state) => {
+                state.isSending = false;
+                state.success = "Hearing!";
+            })
+            .addCase(addHistoryThunk.rejected, (state, action) => {
+                state.isSending = false;
+                state.error = action.payload || "Error with add history";
+            })
+            .addCase(getHistoryThunk.pending, (state) => {
+                state.isLoadingHistory = true;
+                state.error = null;
+                state.success = null;
+            })
+            .addCase(getHistoryThunk.fulfilled, (state, action) => {
+                state.isLoadingHistory = false;
+                state.history = action.payload;
+            })
+            .addCase(getHistoryThunk.rejected, (state, action) => {
+                state.isLoadingHistory = false;
+                state.error = action.payload || "Error with getting history";
             });
     },
 });

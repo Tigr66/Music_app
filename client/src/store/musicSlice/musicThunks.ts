@@ -3,10 +3,12 @@ import type { AxiosError } from "axios";
 import type { IArtist } from "../../interfaces/IArtist";
 import type { IAlbum } from "../../interfaces/IAlbum";
 import type { ITrack } from "../../interfaces/ITrack";
-import { musicApi } from "../../api/musicApi";
 import type { IAlbumWithArtist } from "../../interfaces/IAlbumWithArtist";
 import type { IUser } from "../../interfaces/IUser";
 import type { IAuthUser } from "../../interfaces/IAuthUser";
+import type { ICreateHistory } from "../../interfaces/ICreateHistory";
+import type { ITrackHistory } from "../../interfaces/ITrackHistory";
+import { musicApi } from "../../api/musicApi";
 
 export const getArtistsThunk = createAsyncThunk<
     IArtist[],
@@ -101,6 +103,48 @@ export const loginUserThunk = createAsyncThunk<
 >("music-slice/login-user", async (newUser, { rejectWithValue }) => {
     try {
         const result = await musicApi.post("/users/sessions", newUser);
+
+        return result.data;
+    } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        return rejectWithValue(error.response?.data?.error || "Unknown error");
+    }
+});
+
+export const addHistoryThunk = createAsyncThunk<
+    void,
+    ICreateHistory,
+    { rejectValue: string }
+>("music-slice/add-history", async (history, { rejectWithValue }) => {
+    try {
+        await musicApi.post(
+            "/track_history",
+            { trackId: history.trackId },
+            {
+                headers: {
+                    Authorization: `Bearer ${history.token}`,
+                },
+            },
+        );
+    } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        return rejectWithValue(error.response?.data?.error || "Unknown error");
+    }
+});
+
+export const getHistoryThunk = createAsyncThunk<
+    ITrackHistory[],
+    string,
+    { rejectValue: string }
+>("music-slice/get-history", async (token, { rejectWithValue }) => {
+    try {
+        const result = await musicApi.get("/track_history", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
 
         return result.data;
     } catch (err) {

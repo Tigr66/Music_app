@@ -2,6 +2,7 @@ import type { IAlbum } from "./IAlbum";
 import type { IAlbumWithArtist } from "./IAlbumWithArtist";
 import type { IArtist } from "./IArtist";
 import type { ITrack } from "./ITrack";
+import type { ITrackHistory } from "./ITrackHistory";
 import type { IUser } from "./IUser";
 
 export interface IMusicState {
@@ -11,10 +12,12 @@ export interface IMusicState {
     artists: IArtist[];
     artistAlbums: IAlbum[];
     albumTracks: ITrack[];
+    history: ITrackHistory[];
     isLoadingArtists: boolean;
     isLoadingAlbum: boolean;
     isLoadingAlbums: boolean;
     isLoadingTracks: boolean;
+    isLoadingHistory: boolean;
     isSending: boolean;
     currentArtist: IArtist | null;
     currentAlbum: IAlbumWithArtist | null;
