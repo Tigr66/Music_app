@@ -1,4 +1,4 @@
-import { Button, Flex, Typography } from "antd";
+import { Flex, Typography } from "antd";
 import type { ITrack } from "../../interfaces/ITrack";
 import { formatTime } from "../../utils/formatTime";
 const { Text } = Typography;
@@ -8,6 +8,7 @@ import { CaretRightOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { appRoutes } from "../../routes/appRoutes";
+import { addHistoryThunk } from "../../store/musicSlice/musicThunks";
 
 interface TrackProps {
     track: ITrack;
@@ -27,21 +28,29 @@ const Track = ({ track }: TrackProps) => {
             return;
         }
 
-        // dispatch()
+        dispatch(
+            addHistoryThunk({
+                token: user.token ? user.token : "",
+                trackId: track.id,
+            }),
+        );
     };
 
     return (
-        <Flex className={styles.track} justify="space-between" align="center">
+        <Flex
+            className={styles.track}
+            justify="space-between"
+            align="center"
+            onClick={() => {
+                if (!isSending) handlePlay();
+            }}
+        >
             <Flex gap="medium">
                 <Text strong>{track.number}</Text>
                 <Text strong>{track.title}</Text>
             </Flex>
             <Flex gap={20} align="center">
-                <CaretRightOutlined
-                    onClick={handlePlay}
-                    className={styles.play_button}
-                    disabled={isSending}
-                />
+                <CaretRightOutlined className={styles.play_button} />
                 <Text strong>{formatTime(track.duration)}</Text>
             </Flex>
         </Flex>

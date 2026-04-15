@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Flex, Layout } from "antd";
+import { Avatar, Flex, Layout, Typography } from "antd";
 import { NavLink, Outlet } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { clearError, clearSuccess } from "../store/musicSlice/musicSlice";
@@ -9,6 +9,7 @@ import { appRoutes } from "../routes/appRoutes";
 import AppHeader from "../components/AppHeader/AppHeader";
 import styles from "./MainLayout.module.css";
 const { Content, Sider } = Layout;
+const { Title } = Typography;
 
 const MainLayout = () => {
     const dispatch = useAppDispatch();
@@ -42,8 +43,22 @@ const MainLayout = () => {
                 trigger={null}
                 width={collapsed ? 30 : 220}
             >
-                <Flex vertical style={{ height: "100vh" }}>
-                    {!user && (
+                <Flex vertical align="center" style={{ height: "100vh" }}>
+                    {user ? (
+                        <Flex
+                            vertical
+                            justify="center"
+                            align="center"
+                            style={{ paddingTop: 10 }}
+                        >
+                            <Avatar
+                                size={collapsed ? 48 : 72}
+                                icon={<UserOutlined />}
+                                style={{ backgroundColor: "#4f4f4f" }}
+                            />
+                            {!collapsed && <Title level={2}>Username</Title>}
+                        </Flex>
+                    ) : (
                         <NavLink
                             to={appRoutes.LOGIN_PAGE}
                             className={styles.sidebar_link}
