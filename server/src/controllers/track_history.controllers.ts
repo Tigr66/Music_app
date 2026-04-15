@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { ITrack } from "../interfaces/track.interface";
 import { TrackHistoryService } from "../services/track_history.service";
 import { UsersService } from "../services/users.service";
 

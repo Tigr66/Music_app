@@ -1,6 +1,6 @@
-export interface ITrackHistory {
+export interface IHistoryWithDetails {
     id: number;
     artistName: string;
     trackTitle: string;
-    datetime: string;
+    datetime: Date;
 }
