@@ -49,6 +49,8 @@ async function main() {
             title: "God's Plan",
             duration: 198,
             albumId: album_one.id,
+            youtubeUrl:
+                "https://www.youtube.com/embed/m1a_GqJf02M?autoplay=1&mute=1",
             number: 1,
         },
     });
@@ -58,6 +60,8 @@ async function main() {
             title: "In My Feelings",
             duration: 217,
             albumId: album_one.id,
+            youtubeUrl:
+                "https://www.youtube.com/embed/SD1tkI5-3dI?autoplay=1&mute=1",
             number: 2,
         },
     });
@@ -67,6 +71,8 @@ async function main() {
             title: "SICKO MODE",
             duration: 312,
             albumId: album_two.id,
+            youtubeUrl:
+                "https://www.youtube.com/embed/d-JBBNg8YKs?autoplay=1&mute=1",
             number: 1,
         },
     });
@@ -76,6 +82,8 @@ async function main() {
             title: "FE!N",
             duration: 200,
             albumId: album_two.id,
+            youtubeUrl:
+                "https://www.youtube.com/embed/B9synWjqBn8?autoplay=1&mute=1",
             number: 2,
         },
     });
@@ -85,6 +93,8 @@ async function main() {
             title: "Nonstop",
             duration: 238,
             albumId: album_one.id,
+            youtubeUrl:
+                "https://www.youtube.com/embed/QVqS3tB8OtE?autoplay=1&mute=1",
             number: 3,
         },
     });
@@ -94,6 +104,8 @@ async function main() {
             title: "Emotionless",
             duration: 302,
             albumId: album_one.id,
+            youtubeUrl:
+                "https://www.youtube.com/embed/w4MSbajRs_Y?autoplay=1&mute=1",
             number: 4,
         },
     });
@@ -103,6 +115,8 @@ async function main() {
             title: "STARGAZING",
             duration: 270,
             albumId: album_three.id,
+            youtubeUrl:
+                "https://www.youtube.com/embed/2a8PgqWrc_4?autoplay=1&mute=1",
             number: 1,
         },
     });
@@ -112,6 +126,8 @@ async function main() {
             title: "CAROUSEL",
             duration: 180,
             albumId: album_three.id,
+            youtubeUrl:
+                "https://www.youtube.com/embed/qe-gnV-lvfE?autoplay=1&mute=1",
             number: 2,
         },
     });
@@ -172,6 +188,8 @@ async function main() {
             },
         ],
     });
+
+    console.log("Successfully added");
 }
 
 main()
