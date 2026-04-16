@@ -35,9 +35,9 @@ export class UsersController {
                 password: password.trim(),
             };
 
-            const token = await this.usersService.login(user);
+            const result = await this.usersService.login(user);
 
-            res.status(200).json({ token });
+            res.status(200).json(result);
         } catch (err) {
             next(err);
         }

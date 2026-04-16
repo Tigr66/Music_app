@@ -23,4 +23,10 @@ export class CreateTrackDto {
         message: "AlbumId must be greater than 0",
     })
     albumId!: number;
+
+    @IsString({ message: "YoutubeUrl must be a string" })
+    @MinLength(1, {
+        message: "YoutubeUrl must not be empty",
+    })
+    youtubeUrl!: number;
 }

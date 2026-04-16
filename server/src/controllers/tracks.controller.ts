@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ITrack } from "../interfaces/track.interface";
 import { TracksService } from "../services/tracks.service";
+import { getYoutubeUrl } from "../utils/getYoutubeUrl";
 
 export class TracksController {
     private tracksService: TracksService;
@@ -11,12 +12,19 @@ export class TracksController {
 
     createTrack = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { title, duration, albumId } = req.body;
+            const { title, duration, albumId, youtubeUrl } = req.body;
+
+            const newYoutubeUrl = getYoutubeUrl(youtubeUrl);
+
+            if (!newYoutubeUrl) {
+                return res.status(400).json({ error: "Invalid YouTube URL" });
+            }
 
             const newTrack: Omit<ITrack, "id" | "number"> = {
                 title,
                 duration: Number(duration),
                 albumId: Number(albumId),
+                youtubeUrl: newYoutubeUrl,
             };
 
             const result = await this.tracksService.create(newTrack);

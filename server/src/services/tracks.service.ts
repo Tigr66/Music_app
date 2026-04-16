@@ -23,6 +23,7 @@ export class TracksService {
                 title: newTrack.title,
                 duration: newTrack.duration,
                 albumId: newTrack.albumId,
+                youtubeUrl: newTrack.youtubeUrl,
                 number: album._count.tracks + 1,
             },
         });

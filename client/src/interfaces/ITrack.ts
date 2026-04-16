@@ -3,5 +3,6 @@ export interface ITrack {
     title: string;
     duration: number;
     albumId: number;
+    youtubeUrl: string;
     number: number;
 }

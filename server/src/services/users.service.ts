@@ -32,7 +32,7 @@ export class UsersService {
         return _.omit(created, ["password"]);
     }
 
-    async login(user: Omit<IUser, "id">): Promise<string> {
+    async login(user: Omit<IUser, "id">): Promise<Omit<IUser, "password">> {
         const loginUser = await prisma.user.findUnique({
             where: {
                 username: user.username,
@@ -51,7 +51,7 @@ export class UsersService {
 
         const newToken = nanoid();
 
-        await prisma.user.update({
+        const updatedUser = await prisma.user.update({
             where: {
                 id: loginUser.id,
             },
@@ -60,7 +60,7 @@ export class UsersService {
             },
         });
 
-        return newToken;
+        return updatedUser;
     }
 
     async findUserByToken(token: string): Promise<IUser | null> {
