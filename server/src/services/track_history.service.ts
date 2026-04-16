@@ -30,6 +30,9 @@ export class TrackHistoryService {
             where: {
                 userId,
             },
+            orderBy: {
+                datetime: "desc",
+            },
             select: {
                 id: true,
                 datetime: true,

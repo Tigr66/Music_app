@@ -68,7 +68,9 @@ const MainLayout = () => {
                                 icon={<UserOutlined />}
                                 style={{ backgroundColor: "#4f4f4f" }}
                             />
-                            {!collapsed && <Title level={2}>Username</Title>}
+                            {!collapsed && (
+                                <Title level={2}>{user.username}</Title>
+                            )}
                         </Flex>
                     ) : (
                         <NavLink

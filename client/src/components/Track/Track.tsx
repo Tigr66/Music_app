@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { appRoutes } from "../../routes/appRoutes";
 import { addHistoryThunk } from "../../store/musicSlice/musicThunks";
+import { setCurrentTrack } from "../../store/musicSlice/musicSlice";
 
 interface TrackProps {
     track: ITrack;
@@ -28,6 +29,8 @@ const Track = ({ track }: TrackProps) => {
             return;
         }
 
+        dispatch(setCurrentTrack(track));
+        
         dispatch(
             addHistoryThunk({
                 token: user.token ? user.token : "",

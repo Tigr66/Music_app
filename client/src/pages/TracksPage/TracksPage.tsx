@@ -11,7 +11,11 @@ import Spinner from "../../components/Spinner/Spinner";
 import Track from "../../components/Track/Track";
 import AlbumPreview from "../../components/AlbumPreview/AlbumPreview";
 import AlbumPreviewSkeleton from "../../components/AlbumPreview/AlbumPreviewSkeleton";
-import { setCurrentAlbum } from "../../store/musicSlice/musicSlice";
+import {
+    setCurrentAlbum,
+    setCurrentTrack,
+} from "../../store/musicSlice/musicSlice";
+import YoutubeModal from "../../components/YoutubeModal/YoutubeModal";
 const { Text } = Typography;
 
 const TracksPage = () => {
@@ -34,6 +38,7 @@ const TracksPage = () => {
         }
         return () => {
             dispatch(setCurrentAlbum(null));
+            dispatch(setCurrentTrack(null));
         };
     }, [id, dispatch]);
 
@@ -60,6 +65,7 @@ const TracksPage = () => {
                     <EmptyMessage message="This album doesn't have any tracks" />
                 )}
             </Flex>
+            <YoutubeModal />
         </>
     );
 };

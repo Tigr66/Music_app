@@ -11,12 +11,14 @@ import {
 } from "./musicThunks";
 import type { IMusicState } from "../../interfaces/IMusicState";
 import type { IAlbumWithArtist } from "../../interfaces/IAlbumWithArtist";
+import type { ITrack } from "../../interfaces/ITrack";
 
 const initialState: IMusicState = {
     success: null,
     error: null,
     info: null,
     user: null,
+    currentTrack: null,
     artists: [],
     artistAlbums: [],
     albumTracks: [],
@@ -58,6 +60,9 @@ const musicSlice = createSlice({
             action: PayloadAction<IAlbumWithArtist | null>,
         ) => {
             state.currentAlbum = action.payload;
+        },
+        setCurrentTrack: (state, action: PayloadAction<ITrack | null>) => {
+            state.currentTrack = action.payload;
         },
     },
     extraReducers(builder) {
@@ -158,6 +163,7 @@ export const {
     clearError,
     setCurrentArtist,
     setCurrentAlbum,
+    setCurrentTrack,
     clearSuccess,
     clearInfo,
 } = musicSlice.actions;

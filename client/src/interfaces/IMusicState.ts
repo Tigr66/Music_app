@@ -10,6 +10,7 @@ export interface IMusicState {
     error: string | null;
     info: string | null;
     user: IUser | null;
+    currentTrack: ITrack | null;
     artists: IArtist[];
     artistAlbums: IAlbum[];
     albumTracks: ITrack[];
