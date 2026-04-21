@@ -63,10 +63,13 @@ export class UsersService {
         return _.omit(updatedUser, ["password"]);
     }
 
-    async findUserByToken(token: string): Promise<IUser | null> {
-        return await prisma.user.findUnique({
+    async logout(userId: number): Promise<void> {
+        await prisma.user.update({
             where: {
-                token,
+                id: userId,
+            },
+            data: {
+                token: null,
             },
         });
     }

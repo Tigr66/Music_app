@@ -2,6 +2,7 @@ import { Router } from "express";
 import { validateDto } from "../middlewares/validate-dto.middleware";
 import { CreateHistoryDto } from "../dto/create-history.dto";
 import { TrackHistoryController } from "../controllers/track_history.controllers";
+import { authMiddleware } from "../middlewares/auth.middleware";
 
 export class TrackHistoryRoutes {
     public router: Router;
@@ -16,9 +17,14 @@ export class TrackHistoryRoutes {
     private initRoutes() {
         this.router.post(
             "/",
+            authMiddleware,
             validateDto(CreateHistoryDto),
             this.trackHistoryController.createHistory,
         );
-        this.router.get("/", this.trackHistoryController.getHistory);
+        this.router.get(
+            "/",
+            authMiddleware,
+            this.trackHistoryController.getHistory,
+        );
     }
 }

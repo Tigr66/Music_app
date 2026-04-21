@@ -1,35 +1,23 @@
 import { NextFunction, Request, Response } from "express";
 import { TrackHistoryService } from "../services/track_history.service";
 import { UsersService } from "../services/users.service";
+import { AuthRequest } from "../types/auth.types";
 
 export class TrackHistoryController {
     private trackHistoryService: TrackHistoryService;
-    private usersService: UsersService;
 
     constructor() {
         this.trackHistoryService = new TrackHistoryService();
-        this.usersService = new UsersService();
     }
 
-    createHistory = async (req: Request, res: Response, next: NextFunction) => {
+    createHistory = async (
+        req: AuthRequest,
+        res: Response,
+        next: NextFunction,
+    ) => {
         try {
             const { trackId } = req.body;
-
-            const { authorization } = req.headers;
-
-            const token = authorization ? authorization.split(" ")[1] : null;
-
-            if (!token) {
-                return res
-                    .status(401)
-                    .json({ error: "No authorization token" });
-            }
-
-            const user = await this.usersService.findUserByToken(token);
-
-            if (!user) {
-                return res.status(401).json({ error: "Unauthorized user" });
-            }
+            const user = req.user!;
 
             const result = await this.trackHistoryService.create(
                 Number(trackId),
@@ -46,23 +34,13 @@ export class TrackHistoryController {
         }
     };
 
-    getHistory = async (req: Request, res: Response, next: NextFunction) => {
+    getHistory = async (
+        req: AuthRequest,
+        res: Response,
+        next: NextFunction,
+    ) => {
         try {
-            const { authorization } = req.headers;
-
-            const token = authorization ? authorization.split(" ")[1] : null;
-
-            if (!token) {
-                return res
-                    .status(401)
-                    .json({ error: "No authorization token" });
-            }
-
-            const user = await this.usersService.findUserByToken(token);
-
-            if (!user) {
-                return res.status(401).json({ error: "Unauthorized user" });
-            }
+            const user = req.user!;
 
             const result = await this.trackHistoryService.get(user.id);
 

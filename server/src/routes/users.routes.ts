@@ -2,6 +2,7 @@ import { Router } from "express";
 import { validateDto } from "../middlewares/validate-dto.middleware";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { UsersController } from "../controllers/users.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
 
 export class UsersRoutes {
     public router: Router;
@@ -23,6 +24,11 @@ export class UsersRoutes {
             "/sessions",
             validateDto(CreateUserDto),
             this.usersController.loginUser,
+        );
+        this.router.post(
+            "/logout",
+            authMiddleware,
+            this.usersController.logoutUser,
         );
     }
 }
