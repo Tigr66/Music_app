@@ -1,138 +1,186 @@
 import { prisma } from "../src/lib/prisma";
 
 async function main() {
-    const drake = await prisma.artist.create({
-        data: {
+    const ARTISTS = [
+        {
+            key: "drake",
             name: "Drake",
             info: "Canadian rapper and singer",
             photo: "/uploads/artists/484b47a1-be98-4195-a499-cf444e20ea72.jpg",
         },
-    });
-
-    const travis = await prisma.artist.create({
-        data: {
+        {
+            key: "travis",
             name: "Travis Scott",
             info: "American rapper and producer",
             photo: "/uploads/artists/9e1210a2-472b-4a2b-b6e4-31d98842e70b.jpg",
         },
-    });
+        {
+            key: "nirvana",
+            name: "Nirvana",
+            info: "American rock band",
+            photo: "/uploads/artists/ad80e08339c8cf5a005d267aab74ef64.jpg",
+        },
+    ];
 
-    const album_one = await prisma.album.create({
-        data: {
+    const artistMap: Record<string, number> = {};
+
+    for (const artist of ARTISTS) {
+        const { key, ...data } = artist;
+
+        const created = await prisma.artist.create({
+            data,
+        });
+
+        artistMap[key] = created.id;
+    }
+
+    const ALBUMS = [
+        {
+            key: "scorpion",
+            artistKey: "drake",
             title: "Scorpion",
-            artistId: drake.id,
             cover: "/uploads/albums/309b36b3-de80-4129-9043-33a9c0ea44bc.jpg",
-            publishedAt: new Date("2018-06-29"),
+            publishedAt: "2018-06-29",
         },
-    });
-
-    const album_two = await prisma.album.create({
-        data: {
+        {
+            key: "utopia",
+            artistKey: "travis",
             title: "Utopia",
-            artistId: travis.id,
             cover: "/uploads/albums/6e0a7aea-e49f-4b01-844a-2b52b2f6f162.jpg",
-            publishedAt: new Date("2023-07-28"),
+            publishedAt: "2023-07-28",
         },
-    });
-
-    const album_three = await prisma.album.create({
-        data: {
+        {
+            key: "astroworld",
+            artistKey: "travis",
             title: "Astroworld",
-            artistId: travis.id,
             cover: "/uploads/albums/6513a1f1079b2faddd422c10260d44b8.jpg",
-            publishedAt: new Date("2018-08-03"),
+            publishedAt: "2018-08-03",
         },
-    });
+        {
+            key: "in_utero",
+            artistKey: "nirvana",
+            title: "In Utero",
+            cover: "/uploads/albums/a3295dd270a855acd8b89b8fbc3dba2e.jpg",
+            publishedAt: "1993-09-13",
+        },
+    ];
 
-    const track_one = await prisma.track.create({
-        data: {
+    const albumsMap: Record<string, number> = {};
+
+    for (const album of ALBUMS) {
+        const { key, artistKey, publishedAt, ...data } = album;
+
+        const created = await prisma.album.create({
+            data: {
+                ...data,
+                artistId: artistMap[artistKey]!,
+                publishedAt: new Date(publishedAt),
+            },
+        });
+
+        albumsMap[key] = created.id;
+    }
+
+    const TRACKS = [
+        {
+            key: "gods_plan",
+            albumKey: "scorpion",
             title: "God's Plan",
             duration: 198,
-            albumId: album_one.id,
             youtubeUrl:
                 "https://www.youtube.com/embed/m1a_GqJf02M?autoplay=1&mute=1",
             number: 1,
         },
-    });
-
-    const track_two = await prisma.track.create({
-        data: {
+        {
+            key: "in_my_feelings",
+            albumKey: "scorpion",
             title: "In My Feelings",
             duration: 217,
-            albumId: album_one.id,
             youtubeUrl:
                 "https://www.youtube.com/embed/SD1tkI5-3dI?autoplay=1&mute=1",
             number: 2,
         },
-    });
-
-    const track_three = await prisma.track.create({
-        data: {
-            title: "SICKO MODE",
-            duration: 312,
-            albumId: album_two.id,
-            youtubeUrl:
-                "https://www.youtube.com/embed/d-JBBNg8YKs?autoplay=1&mute=1",
-            number: 1,
-        },
-    });
-
-    const track_four = await prisma.track.create({
-        data: {
-            title: "FE!N",
-            duration: 200,
-            albumId: album_two.id,
-            youtubeUrl:
-                "https://www.youtube.com/embed/B9synWjqBn8?autoplay=1&mute=1",
-            number: 2,
-        },
-    });
-
-    const track_five = await prisma.track.create({
-        data: {
+        {
+            key: "nonstop",
+            albumKey: "scorpion",
             title: "Nonstop",
             duration: 238,
-            albumId: album_one.id,
             youtubeUrl:
                 "https://www.youtube.com/embed/QVqS3tB8OtE?autoplay=1&mute=1",
             number: 3,
         },
-    });
-
-    const track_six = await prisma.track.create({
-        data: {
+        {
+            key: "emotionless",
+            albumKey: "scorpion",
             title: "Emotionless",
             duration: 302,
-            albumId: album_one.id,
             youtubeUrl:
                 "https://www.youtube.com/embed/w4MSbajRs_Y?autoplay=1&mute=1",
             number: 4,
         },
-    });
-
-    const track_seven = await prisma.track.create({
-        data: {
+        {
+            key: "sicko_mode",
+            albumKey: "utopia",
+            title: "SICKO MODE",
+            duration: 312,
+            youtubeUrl:
+                "https://www.youtube.com/embed/d-JBBNg8YKs?autoplay=1&mute=1",
+            number: 1,
+        },
+        {
+            key: "fein",
+            albumKey: "utopia",
+            title: "FE!N",
+            duration: 200,
+            youtubeUrl:
+                "https://www.youtube.com/embed/B9synWjqBn8?autoplay=1&mute=1",
+            number: 2,
+        },
+        {
+            key: "stargazing",
+            albumKey: "astroworld",
             title: "STARGAZING",
             duration: 270,
-            albumId: album_three.id,
             youtubeUrl:
                 "https://www.youtube.com/embed/2a8PgqWrc_4?autoplay=1&mute=1",
             number: 1,
         },
-    });
-
-    const track_eight = await prisma.track.create({
-        data: {
+        {
+            key: "carousel",
+            albumKey: "astroworld",
             title: "CAROUSEL",
             duration: 180,
-            albumId: album_three.id,
             youtubeUrl:
                 "https://www.youtube.com/embed/qe-gnV-lvfE?autoplay=1&mute=1",
             number: 2,
         },
-    });
+        {
+            key: "heart_shaped_box",
+            albumKey: "in_utero",
+            title: "Heart-Shaped Box",
+            duration: 281,
+            youtubeUrl:
+                "https://www.youtube.com/embed/n6P0SitRwy8?autoplay=1&mute=1",
+            number: 1,
+        },
+    ];
 
-    const user_one = await prisma.user.create({
+    const tracksMap: Record<string, number> = {};
+
+    for (const track of TRACKS) {
+        const { key, albumKey, ...data } = track;
+
+        const created = await prisma.track.create({
+            data: {
+                ...data,
+                albumId: albumsMap[albumKey]!,
+            },
+        });
+
+        tracksMap[key] = created.id;
+    }
+
+    const tigrgareev = await prisma.user.create({
         data: {
             username: "tigrgareev",
             password:
@@ -141,7 +189,7 @@ async function main() {
         },
     });
 
-    const user_two = await prisma.user.create({
+    const super_user = await prisma.user.create({
         data: {
             username: "super_user",
             password:
@@ -155,36 +203,16 @@ async function main() {
     await prisma.trackHistory.createMany({
         data: [
             {
-                userId: user_one.id,
-                trackId: track_one.id,
+                userId: tigrgareev.id,
+                trackId: tracksMap.heart_shaped_box!,
             },
             {
-                userId: user_one.id,
-                trackId: track_three.id,
+                userId: super_user.id,
+                trackId: tracksMap.carousel!,
             },
             {
-                userId: user_two.id,
-                trackId: track_two.id,
-            },
-            {
-                userId: user_two.id,
-                trackId: track_four.id,
-            },
-            {
-                userId: user_two.id,
-                trackId: track_five.id,
-            },
-            {
-                userId: user_two.id,
-                trackId: track_six.id,
-            },
-            {
-                userId: user_one.id,
-                trackId: track_seven.id,
-            },
-            {
-                userId: user_one.id,
-                trackId: track_eight.id,
+                userId: tigrgareev.id,
+                trackId: tracksMap.stargazing!,
             },
         ],
     });

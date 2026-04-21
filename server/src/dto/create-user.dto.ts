@@ -11,5 +11,5 @@ export class CreateUserDto {
     @MinLength(1, {
         message: "Password must not be empty",
     })
-    password!: number;
+    password!: string;
 }

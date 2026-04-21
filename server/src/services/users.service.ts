@@ -60,7 +60,7 @@ export class UsersService {
             },
         });
 
-        return updatedUser;
+        return _.omit(updatedUser, ["password"]);
     }
 
     async findUserByToken(token: string): Promise<IUser | null> {
