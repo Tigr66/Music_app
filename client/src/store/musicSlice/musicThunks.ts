@@ -6,7 +6,6 @@ import type { ITrack } from "../../interfaces/ITrack";
 import type { IAlbumWithArtist } from "../../interfaces/IAlbumWithArtist";
 import type { IUser } from "../../interfaces/IUser";
 import type { IAuthUser } from "../../interfaces/IAuthUser";
-import type { ICreateHistory } from "../../interfaces/ICreateHistory";
 import type { ITrackHistory } from "../../interfaces/ITrackHistory";
 import { musicApi } from "../../api/musicApi";
 
@@ -114,19 +113,11 @@ export const loginUserThunk = createAsyncThunk<
 
 export const addHistoryThunk = createAsyncThunk<
     void,
-    ICreateHistory,
+    number,
     { rejectValue: string }
->("music-slice/add-history", async (history, { rejectWithValue }) => {
+>("music-slice/add-history", async (trackId, { rejectWithValue }) => {
     try {
-        await musicApi.post(
-            "/track_history",
-            { trackId: history.trackId },
-            {
-                headers: {
-                    Authorization: `Bearer ${history.token}`,
-                },
-            },
-        );
+        await musicApi.post("/track_history", { trackId });
     } catch (err) {
         const error = err as AxiosError<{ error: string }>;
 
@@ -136,15 +127,11 @@ export const addHistoryThunk = createAsyncThunk<
 
 export const getHistoryThunk = createAsyncThunk<
     ITrackHistory[],
-    string,
+    void,
     { rejectValue: string }
->("music-slice/get-history", async (token, { rejectWithValue }) => {
+>("music-slice/get-history", async (_, { rejectWithValue }) => {
     try {
-        const result = await musicApi.get("/track_history", {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const result = await musicApi.get("/track_history");
 
         return result.data;
     } catch (err) {

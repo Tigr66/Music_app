@@ -80,12 +80,15 @@ const MainLayout = () => {
                             <UserOutlined /> {!collapsed && "login"}
                         </NavLink>
                     )}
-                    <NavLink
-                        to={appRoutes.TRACK_HISTORY_PAGE}
-                        className={styles.sidebar_link}
-                    >
-                        <HistoryOutlined /> {!collapsed && "Track history"}
-                    </NavLink>
+
+                    {user && (
+                        <NavLink
+                            to={appRoutes.TRACK_HISTORY_PAGE}
+                            className={styles.sidebar_link}
+                        >
+                            <HistoryOutlined /> {!collapsed && "Track history"}
+                        </NavLink>
+                    )}
 
                     <button
                         className={styles.toggle_button}

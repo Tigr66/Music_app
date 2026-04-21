@@ -127,8 +127,11 @@ const musicSlice = createSlice({
             })
             .addCase(loginUserThunk.fulfilled, (state, action) => {
                 state.isSending = false;
-                state.success = "Welcome back!";
                 state.user = action.payload;
+                state.success = "Welcome back!";
+                if (action.payload.token) {
+                    localStorage.setItem("user_token", action.payload.token);
+                }
             })
             .addCase(loginUserThunk.rejected, (state, action) => {
                 state.isSending = false;

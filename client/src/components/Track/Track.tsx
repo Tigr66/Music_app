@@ -30,13 +30,8 @@ const Track = ({ track }: TrackProps) => {
         }
 
         dispatch(setCurrentTrack(track));
-        
-        dispatch(
-            addHistoryThunk({
-                token: user.token ? user.token : "",
-                trackId: track.id,
-            }),
-        );
+
+        dispatch(addHistoryThunk(track.id));
     };
 
     return (
