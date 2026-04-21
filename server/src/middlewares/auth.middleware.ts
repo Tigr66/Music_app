@@ -11,7 +11,7 @@ export const authMiddleware = async (
         const authHeader = req.headers.authorization;
 
         if (!authHeader || typeof authHeader !== "string") {
-            res.status(401).json({ message: "No authorization token" });
+            res.status(401).json({ error: "No authorization token" });
             return;
         }
 
@@ -25,7 +25,7 @@ export const authMiddleware = async (
 
         if (!user) {
             res.status(401).json({
-                message: "Unauthorized user",
+                error: "Unauthorized user",
             });
             return;
         }
@@ -33,6 +33,6 @@ export const authMiddleware = async (
         req.user = user;
         next();
     } catch (err) {
-        res.status(401).json({ message: "Authorization failed" });
+        res.status(401).json({ error: "Authorization failed" });
     }
 };

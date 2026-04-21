@@ -7,6 +7,7 @@ import {
     getArtistsThunk,
     getHistoryThunk,
     loginUserThunk,
+    logoutUserThunk,
     registerUserThunk,
 } from "./musicThunks";
 import type { IMusicState } from "../../interfaces/IMusicState";
@@ -45,6 +46,9 @@ const musicSlice = createSlice({
         },
         clearInfo: (state) => {
             state.info = null;
+        },
+        clearUser: (state) => {
+            state.user = null;
         },
         setCurrentArtist: (state, action: PayloadAction<number | null>) => {
             if (action.payload === null) {
@@ -137,6 +141,19 @@ const musicSlice = createSlice({
                 state.isSending = false;
                 state.error = action.payload || "Error with login";
             })
+            .addCase(logoutUserThunk.pending, (state) => {
+                state.isSending = true;
+            })
+            .addCase(logoutUserThunk.fulfilled, (state, action) => {
+                state.isSending = false;
+                state.success = action.payload;
+                localStorage.removeItem("user_token");
+                state.user = null;
+            })
+            .addCase(logoutUserThunk.rejected, (state, action) => {
+                state.isSending = false;
+                state.error = action.payload || "Error with logout";
+            })
             .addCase(addHistoryThunk.pending, (state) => {
                 state.isSending = true;
             })
@@ -169,6 +186,7 @@ export const {
     setCurrentTrack,
     clearSuccess,
     clearInfo,
+    clearUser,
 } = musicSlice.actions;
 
 export default musicSlice.reducer;

@@ -1,4 +1,6 @@
 import axios, { type InternalAxiosRequestConfig } from "axios";
+import { store } from "../store/store";
+import { clearUser } from "../store/musicSlice/musicSlice";
 
 const BASE_URL: string = "http://localhost:8000";
 
@@ -21,6 +23,7 @@ musicApi.interceptors.response.use(
     (error) => {
         if (error.response?.status === 401) {
             localStorage.removeItem("user_token");
+            store.dispatch(clearUser());
         }
         return Promise.reject(error);
     },

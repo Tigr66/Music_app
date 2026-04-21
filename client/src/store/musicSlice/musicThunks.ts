@@ -111,6 +111,24 @@ export const loginUserThunk = createAsyncThunk<
     }
 });
 
+export const logoutUserThunk = createAsyncThunk<
+    string,
+    void,
+    { rejectValue: string }
+>("music-slice/logout-user", async (_, { rejectWithValue }) => {
+    try {
+        const result = await musicApi.post<{ message: string }>(
+            "/users/logout",
+        );
+
+        return result.data.message;
+    } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        return rejectWithValue(error.response?.data?.error || "Unknown error");
+    }
+});
+
 export const addHistoryThunk = createAsyncThunk<
     void,
     number,

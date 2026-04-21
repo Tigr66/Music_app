@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Avatar, Flex, Layout, Typography } from "antd";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import {
     clearError,
@@ -8,19 +8,27 @@ import {
     clearSuccess,
 } from "../store/musicSlice/musicSlice";
 import { Bounce, toast, ToastContainer } from "react-toastify";
-import { HistoryOutlined, UserOutlined } from "@ant-design/icons";
+import {
+    HistoryOutlined,
+    LoadingOutlined,
+    LogoutOutlined,
+    UserOutlined,
+} from "@ant-design/icons";
 import { appRoutes } from "../routes/appRoutes";
 import AppHeader from "../components/AppHeader/AppHeader";
 import styles from "./MainLayout.module.css";
+import { logoutUserThunk } from "../store/musicSlice/musicThunks";
 const { Content, Sider } = Layout;
 const { Title } = Typography;
 
 const MainLayout = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const success = useAppSelector((state) => state.music.success);
     const error = useAppSelector((state) => state.music.error);
     const info = useAppSelector((state) => state.music.info);
     const user = useAppSelector((state) => state.music.user);
+    const isSending = useAppSelector((state) => state.music.isSending);
 
     const [collapsed, setCollapsed] = useState(true);
 
@@ -44,6 +52,14 @@ const MainLayout = () => {
             dispatch(clearInfo());
         }
     }, [info, dispatch]);
+
+    useEffect(() => {
+        if (!user) {
+            navigate({
+                pathname: appRoutes.LOGIN_PAGE,
+            });
+        }
+    }, [user, dispatch]);
 
     return (
         <Layout className={styles.main_layout}>
@@ -76,8 +92,9 @@ const MainLayout = () => {
                         <NavLink
                             to={appRoutes.LOGIN_PAGE}
                             className={styles.sidebar_link}
+                            onClick={(e) => isSending && e.preventDefault()}
                         >
-                            <UserOutlined /> {!collapsed && "login"}
+                            <UserOutlined /> {!collapsed && "Login"}
                         </NavLink>
                     )}
 
@@ -85,9 +102,21 @@ const MainLayout = () => {
                         <NavLink
                             to={appRoutes.TRACK_HISTORY_PAGE}
                             className={styles.sidebar_link}
+                            onClick={(e) => isSending && e.preventDefault()}
                         >
                             <HistoryOutlined /> {!collapsed && "Track history"}
                         </NavLink>
+                    )}
+
+                    {user && (
+                        <button
+                            onClick={() => dispatch(logoutUserThunk())}
+                            disabled={isSending}
+                            className={styles.sidebar_button}
+                        >
+                            <LogoutOutlined /> {!collapsed && "Logout"}{" "}
+                            {isSending && <LoadingOutlined />}
+                        </button>
                     )}
 
                     <button

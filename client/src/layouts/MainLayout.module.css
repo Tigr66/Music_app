@@ -45,7 +45,6 @@
 }
 
 .sidebar_link {
-    gap: 5px;
     padding: 10px 12px;
     color: #dcdadb;
     text-decoration: none;
@@ -56,6 +55,25 @@
     text-align: center;
 }
 
-.sidebar_link:hover {
+.sidebar_button {
+    padding: 10px 12px;
+    color: #dcdadb;
+    border-radius: 8px;
+    transition: 0.2s;
+    width: 100%;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+.sidebar_button:disabled {
+    cursor: not-allowed;
+}
+
+.sidebar_link:hover,
+.sidebar_button:hover {
     background: rgba(255, 255, 255, 0.08);
+    color: #2196f3;
 }
