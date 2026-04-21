@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { uploadAlbumImage } from "../middlewares/upload.middleware";
-import { validateDto } from "../middlewares/validateDto.middleware";
+import { validateDto } from "../middlewares/validate-dto.middleware";
 import { CreateAlbumDto } from "../dto/create-album.dto";
 import { AlbumsController } from "../controllers/albums.controller";
 

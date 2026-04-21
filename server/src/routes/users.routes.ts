@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { validateDto } from "../middlewares/validateDto.middleware";
+import { validateDto } from "../middlewares/validate-dto.middleware";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { UsersController } from "../controllers/users.controller";
 

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { validateDto } from "../middlewares/validateDto.middleware";
+import { validateDto } from "../middlewares/validate-dto.middleware";
 import { CreateHistoryDto } from "../dto/create-history.dto";
 import { TrackHistoryController } from "../controllers/track_history.controllers";
 
