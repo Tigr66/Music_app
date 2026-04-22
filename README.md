@@ -24,6 +24,7 @@ http://localhost:8000
 | POST  | /track-history  | Добавить прослушивание трека  |
 | POST  | /users          | Зарегистрировать пользователя |
 | POST  | /users/sessions | Авторизировать пользователя   |
+| POST  | /users/logout   | Завершить сессию пользователя |
 
 ---
 
@@ -267,7 +268,27 @@ Authorization: Bearer <token>
 
 ```json
 {
+    "id": 1,
+    "username": "someone",
     "token": "pnm0R_eFcZF5QPunVTca0"
+}
+```
+
+## POST /users/logout
+
+Завершить сессию пользователя
+
+### Headers
+
+```bash
+Authorization: Bearer <token>
+```
+
+### Ответ - 200
+
+```json
+{
+    "message": "Logged out successfully"
 }
 ```
 
