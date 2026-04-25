@@ -41,7 +41,7 @@ model Artist {
 model Album { 
   id            Int       @id @default(autoincrement()) 
   title         String
-  artist        Artist    @relation(fields: [artistId], references: [id]) 
+  artist        Artist    @relation(fields: [artistId], references: [id], onDelete: Cascade) 
   artistId      Int
   cover         String
   publishedAt   DateTime  @default(now())
@@ -57,7 +57,7 @@ model Track {
   title         String
   duration      Int
   number        Int       
-  album         Album           @relation(fields: [albumId], references: [id]) 
+  album         Album           @relation(fields: [albumId], references: [id], onDelete: Cascade) 
   albumId       Int
   youtubeUrl    String
   isPublished   Boolean         @default(false)
@@ -74,7 +74,7 @@ model TrackHistory {
   user          User        @relation(fields: [userId], references: [id])
   userId        Int
 
-  track         Track       @relation(fields: [trackId], references: [id])
+  track         Track       @relation(fields: [trackId], references: [id], onDelete: Cascade)
   trackId       Int
 
   datetime      DateTime    @default(now())
