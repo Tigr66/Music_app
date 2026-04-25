@@ -77,4 +77,58 @@ export class ArtistsController {
             next(err);
         }
     };
+
+    publishArtist = async (
+        req: AuthRequest,
+        res: Response,
+        next: NextFunction,
+    ) => {
+        try {
+            const { id } = req.params;
+            const user = req.user!;
+
+            if (isNaN(Number(id))) {
+                return res.status(400).json({ error: "Id must be a number" });
+            }
+
+            if (user.role !== "ADMIN") {
+                return res
+                    .status(403)
+                    .json({ error: "Only admin can publish artist" });
+            }
+
+            const result = await this.artistsService.publishArtist(Number(id));
+
+            res.status(200).json(result);
+        } catch (err) {
+            next(err);
+        }
+    };
+
+    deleteArtist = async (
+        req: AuthRequest,
+        res: Response,
+        next: NextFunction,
+    ) => {
+        try {
+            const { id } = req.params;
+            const user = req.user!;
+
+            if (isNaN(Number(id))) {
+                return res.status(400).json({ error: "Id must be a number" });
+            }
+
+            if (user.role !== "ADMIN") {
+                return res
+                    .status(403)
+                    .json({ error: "Only admin can delete artist" });
+            }
+
+            await this.artistsService.deleteArtist(Number(id));
+
+            res.status(200).json({ message: "Succesfully deleted" });
+        } catch (err) {
+            next(err);
+        }
+    };
 }

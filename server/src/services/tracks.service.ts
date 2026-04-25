@@ -55,26 +55,35 @@ export class TracksService {
         });
     }
 
-    async publishTrack(trackId: number): Promise<ITrack> {
+    async publishTrack(id: number): Promise<ITrack> {
         const track = await prisma.track.findUnique({
-            where: { id: trackId },
+            where: { id },
+            include: {
+                album: true,
+            },
         });
 
         if (!track) {
             throw new Error("Track not found");
         }
 
+        if (!track.album.isPublished) {
+            throw new Error(
+                "Cannot publish track because album is not published",
+            );
+        }
+
         return await prisma.track.update({
-            where: { id: trackId },
+            where: { id },
             data: {
                 isPublished: true,
             },
         });
     }
 
-    async deleteTrack(trackId: number): Promise<void> {
+    async deleteTrack(id: number): Promise<void> {
         const track = await prisma.track.findUnique({
-            where: { id: trackId },
+            where: { id },
         });
 
         if (!track) {
@@ -82,7 +91,7 @@ export class TracksService {
         }
 
         await prisma.track.delete({
-            where: { id: trackId },
+            where: { id },
         });
     }
 }

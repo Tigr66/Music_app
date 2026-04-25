@@ -59,4 +59,44 @@ export class AlbumsService {
             },
         });
     }
+
+    async publishAlbum(id: number): Promise<IAlbum> {
+        const album = await prisma.album.findUnique({
+            where: { id },
+            include: {
+                artist: true,
+            },
+        });
+
+        if (!album) {
+            throw new Error("Album not found");
+        }
+
+        if (!album.artist.isPublished) {
+            throw new Error(
+                "Cannot publish album because artist is not published",
+            );
+        }
+
+        return await prisma.album.update({
+            where: { id },
+            data: {
+                isPublished: true,
+            },
+        });
+    }
+
+    async deleteAlbum(id: number): Promise<void> {
+        const album = await prisma.album.findUnique({
+            where: { id },
+        });
+
+        if (!album) {
+            throw new Error("Album not found");
+        }
+
+        await prisma.album.delete({
+            where: { id },
+        });
+    }
 }

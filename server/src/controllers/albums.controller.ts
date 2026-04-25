@@ -85,4 +85,58 @@ export class AlbumsController {
             next(err);
         }
     };
+
+    publishAlbum = async (
+        req: AuthRequest,
+        res: Response,
+        next: NextFunction,
+    ) => {
+        try {
+            const { id } = req.params;
+            const user = req.user!;
+
+            if (isNaN(Number(id))) {
+                return res.status(400).json({ error: "Id must be a number" });
+            }
+
+            if (user.role !== "ADMIN") {
+                return res
+                    .status(403)
+                    .json({ error: "Only admin can publish album" });
+            }
+
+            const result = await this.albumsService.publishAlbum(Number(id));
+
+            res.status(200).json(result);
+        } catch (err) {
+            next(err);
+        }
+    };
+
+    deleteAlbum = async (
+        req: AuthRequest,
+        res: Response,
+        next: NextFunction,
+    ) => {
+        try {
+            const { id } = req.params;
+            const user = req.user!;
+
+            if (isNaN(Number(id))) {
+                return res.status(400).json({ error: "Id must be a number" });
+            }
+
+            if (user.role !== "ADMIN") {
+                return res
+                    .status(403)
+                    .json({ error: "Only admin can delete album" });
+            }
+
+            await this.albumsService.deleteAlbum(Number(id));
+
+            res.status(200).json({ message: "Succesfully deleted" });
+        } catch (err) {
+            next(err);
+        }
+    };
 }

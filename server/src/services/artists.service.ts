@@ -25,4 +25,35 @@ export class ArtistsService {
             where: { id },
         });
     }
+
+    async publishArtist(id: number): Promise<IArtist> {
+        const artist = await prisma.artist.findUnique({
+            where: { id },
+        });
+
+        if (!artist) {
+            throw new Error("Artist not found");
+        }
+
+        return await prisma.artist.update({
+            where: { id },
+            data: {
+                isPublished: true,
+            },
+        });
+    }
+
+    async deleteArtist(id: number): Promise<void> {
+        const artist = await prisma.artist.findUnique({
+            where: { id },
+        });
+
+        if (!artist) {
+            throw new Error("Artist not found");
+        }
+
+        await prisma.artist.delete({
+            where: { id },
+        });
+    }
 }
