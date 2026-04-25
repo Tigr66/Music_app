@@ -5,4 +5,6 @@ export interface IAlbum {
     cover: string;
     publishedAt: string;
     count: number;
+    userId: number;
+    isPublished: boolean;
 }

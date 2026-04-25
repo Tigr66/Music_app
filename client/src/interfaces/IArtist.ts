@@ -3,4 +3,6 @@ export interface IArtist {
     name: string;
     photo: string;
     info: string;
+    userId: number;
+    isPublished: boolean;
 }

@@ -6,6 +6,8 @@ export interface IAlbumWithArtist {
     title: string;
     cover: string;
     publishedAt: Date;
+    userId: number;
+    isPublished: boolean;
 
     artist: IArtist;
 }

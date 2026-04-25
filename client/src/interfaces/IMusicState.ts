@@ -15,6 +15,7 @@ export interface IMusicState {
     artistAlbums: IAlbum[];
     albumTracks: ITrack[];
     history: ITrackHistory[];
+    isLoadingArtist: boolean;
     isLoadingArtists: boolean;
     isLoadingAlbum: boolean;
     isLoadingAlbums: boolean;

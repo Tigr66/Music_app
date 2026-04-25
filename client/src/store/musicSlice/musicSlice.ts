@@ -5,6 +5,7 @@ import {
     getAlbumTracksThunk,
     getArtistAlbumsThunk,
     getArtistsThunk,
+    getArtistThunk,
     getHistoryThunk,
     loginUserThunk,
     logoutUserThunk,
@@ -24,6 +25,7 @@ const initialState: IMusicState = {
     artistAlbums: [],
     albumTracks: [],
     history: [],
+    isLoadingArtist: false,
     isLoadingArtists: false,
     isLoadingAlbum: false,
     isLoadingAlbums: false,
@@ -81,6 +83,17 @@ const musicSlice = createSlice({
             .addCase(getArtistsThunk.rejected, (state, action) => {
                 state.isLoadingArtists = false;
                 state.error = action.payload || "Error with getting artists";
+            })
+            .addCase(getArtistThunk.pending, (state) => {
+                state.isLoadingArtist = true;
+            })
+            .addCase(getArtistThunk.fulfilled, (state, action) => {
+                state.isLoadingArtist = false;
+                state.currentArtist = action.payload;
+            })
+            .addCase(getArtistThunk.rejected, (state, action) => {
+                state.isLoadingArtist = false;
+                state.error = action.payload || "Error with getting artist";
             })
             .addCase(getArtistAlbumsThunk.pending, (state) => {
                 state.isLoadingAlbums = true;

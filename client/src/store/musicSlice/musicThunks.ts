@@ -25,6 +25,56 @@ export const getArtistsThunk = createAsyncThunk<
     }
 });
 
+export const getArtistThunk = createAsyncThunk<
+    IArtist,
+    number,
+    { rejectValue: string }
+>("music-slice/get-artist-by-id", async (artistId, { rejectWithValue }) => {
+    try {
+        const result = await musicApi.get(`/artists/${artistId}`);
+
+        return result.data;
+    } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        return rejectWithValue(error.response?.data?.error || "Unknown error");
+    }
+});
+
+export const publishArtistThunk = createAsyncThunk<
+    IArtist,
+    number,
+    { rejectValue: string }
+>("music-slice/publish-artist", async (artistId, { rejectWithValue }) => {
+    try {
+        const result = await musicApi.delete(`/artists/${artistId}/publish`);
+
+        return result.data;
+    } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        return rejectWithValue(error.response?.data?.error || "Unknown error");
+    }
+});
+
+export const deleteArtistThunk = createAsyncThunk<
+    string,
+    number,
+    { rejectValue: string }
+>("music-slice/delete-artist", async (artistId, { rejectWithValue }) => {
+    try {
+        const result = await musicApi.delete<{ message: string }>(
+            `/artists/${artistId}`,
+        );
+
+        return result.data.message;
+    } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        return rejectWithValue(error.response?.data?.error || "Unknown error");
+    }
+});
+
 export const getArtistAlbumsThunk = createAsyncThunk<
     IAlbum[],
     number,
@@ -61,6 +111,40 @@ export const getAlbumById = createAsyncThunk<
     }
 });
 
+export const publishAlbumThunk = createAsyncThunk<
+    IAlbum,
+    number,
+    { rejectValue: string }
+>("music-slice/publish-album", async (albumId, { rejectWithValue }) => {
+    try {
+        const result = await musicApi.delete(`/albums/${albumId}/publish`);
+
+        return result.data;
+    } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        return rejectWithValue(error.response?.data?.error || "Unknown error");
+    }
+});
+
+export const deleteAlbumThunk = createAsyncThunk<
+    string,
+    number,
+    { rejectValue: string }
+>("music-slice/delete-album", async (albumId, { rejectWithValue }) => {
+    try {
+        const result = await musicApi.delete<{ message: string }>(
+            `/albums/${albumId}`,
+        );
+
+        return result.data.message;
+    } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        return rejectWithValue(error.response?.data?.error || "Unknown error");
+    }
+});
+
 export const getAlbumTracksThunk = createAsyncThunk<
     ITrack[],
     number,
@@ -74,6 +158,40 @@ export const getAlbumTracksThunk = createAsyncThunk<
         });
 
         return result.data;
+    } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        return rejectWithValue(error.response?.data?.error || "Unknown error");
+    }
+});
+
+export const publishTrackThunk = createAsyncThunk<
+    IAlbum,
+    number,
+    { rejectValue: string }
+>("music-slice/publish-track", async (trackId, { rejectWithValue }) => {
+    try {
+        const result = await musicApi.delete(`/tracks/${trackId}/publish`);
+
+        return result.data;
+    } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        return rejectWithValue(error.response?.data?.error || "Unknown error");
+    }
+});
+
+export const deleteTrackThunk = createAsyncThunk<
+    string,
+    number,
+    { rejectValue: string }
+>("music-slice/delete-track", async (trackId, { rejectWithValue }) => {
+    try {
+        const result = await musicApi.delete<{ message: string }>(
+            `/tracks/${trackId}`,
+        );
+
+        return result.data.message;
     } catch (err) {
         const error = err as AxiosError<{ error: string }>;
 
