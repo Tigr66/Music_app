@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { AlbumsService } from "../services/albums.service";
+import { AuthRequest } from "../types/auth.types";
 
 export class AlbumsController {
     private albumsService: AlbumsService;
@@ -8,11 +9,17 @@ export class AlbumsController {
         this.albumsService = new AlbumsService();
     }
 
-    createAlbum = async (req: Request, res: Response, next: NextFunction) => {
+    createAlbum = async (
+        req: AuthRequest,
+        res: Response,
+        next: NextFunction,
+    ) => {
         try {
             const { title, artistId, publishedAt } = req.body;
 
             const cover = req.file;
+
+            const user = req.user!;
 
             if (!cover) {
                 res.status(400).json({ error: "Cover is required" });
@@ -24,6 +31,7 @@ export class AlbumsController {
                 artistId: Number(artistId),
                 publishedAt: new Date(publishedAt),
                 cover: `/uploads/albums/${cover.filename}`,
+                userId: user.id,
             };
 
             const result = await this.albumsService.create(newAlbum);
@@ -34,9 +42,11 @@ export class AlbumsController {
         }
     };
 
-    getAlbums = async (req: Request, res: Response, next: NextFunction) => {
+    getAlbums = async (req: AuthRequest, res: Response, next: NextFunction) => {
         try {
             const { artist } = req.query;
+
+            const user = req.user;
 
             if (artist && isNaN(Number(artist))) {
                 return res.status(400).json({
@@ -45,8 +55,8 @@ export class AlbumsController {
             }
 
             const albums = artist
-                ? await this.albumsService.getArtistAlbums(Number(artist))
-                : await this.albumsService.getAll();
+                ? await this.albumsService.getArtistAlbums(Number(artist), user)
+                : await this.albumsService.getAll(user);
 
             res.status(200).json(albums);
         } catch (err) {

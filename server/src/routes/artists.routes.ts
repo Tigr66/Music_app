@@ -3,6 +3,8 @@ import { uploadArtistImage } from "../middlewares/upload.middleware";
 import { ArtistsController } from "../controllers/artists.controller";
 import { validateDto } from "../middlewares/validate-dto.middleware";
 import { CreateArtistDto } from "../dto/create-artist.dto";
+import { authMiddleware } from "../middlewares/auth.middleware";
+import { optionalAuthMiddleware } from "../middlewares/optional-auth.middleware";
 
 export class ArtistsRoutes {
     public router: Router;
@@ -17,10 +19,26 @@ export class ArtistsRoutes {
     private initRoutes() {
         this.router.post(
             "/",
+            authMiddleware,
             uploadArtistImage.single("photo"),
             validateDto(CreateArtistDto),
             this.artistsController.createArtist,
         );
-        this.router.get("/", this.artistsController.getArtists);
+        this.router.get(
+            "/",
+            optionalAuthMiddleware,
+            this.artistsController.getArtists,
+        );
+        this.router.get("/:id", this.artistsController.getArtists);
+        this.router.post(
+            "/:id/publish",
+            authMiddleware,
+            this.artistsController.createArtist,
+        );
+        this.router.delete(
+            "/:id",
+            authMiddleware,
+            this.artistsController.createArtist,
+        );
     }
 }

@@ -1,33 +1,39 @@
+import { getContentWhere } from "../helpers/get-content-where.helper";
 import { IAlbumWithArtist } from "../interfaces/album-with-artist.interface";
 import { IAlbumWithCount } from "../interfaces/album-with-count.interface";
 import { IAlbum } from "../interfaces/album.interface";
+import { IUser } from "../interfaces/user.interface";
 import { prisma } from "../lib/prisma";
 import _ from "lodash";
 
 export class AlbumsService {
-    async create(newAlbum: Omit<IAlbum, "id">): Promise<IAlbum> {
+    async create(
+        newAlbum: Omit<IAlbum, "id" | "isPublished">,
+    ): Promise<IAlbum> {
         return await prisma.album.create({
             data: {
-                title: newAlbum.title,
-                artistId: newAlbum.artistId,
-                cover: newAlbum.cover,
-                publishedAt: newAlbum.publishedAt,
+                ...newAlbum,
             },
         });
     }
 
-    async getAll(): Promise<IAlbum[]> {
+    async getAll(user?: IUser): Promise<IAlbum[]> {
         return await prisma.album.findMany({
             orderBy: {
                 publishedAt: "asc",
             },
+            where: getContentWhere(user),
         });
     }
 
-    async getArtistAlbums(artistId: number): Promise<IAlbumWithCount[]> {
+    async getArtistAlbums(
+        artistId: number,
+        user?: IUser,
+    ): Promise<IAlbumWithCount[]> {
         const albums = await prisma.album.findMany({
             where: {
                 artistId,
+                ...getContentWhere(user),
             },
             include: {
                 _count: {
@@ -49,14 +55,7 @@ export class AlbumsService {
         return await prisma.album.findUnique({
             where: { id },
             include: {
-                artist: {
-                    select: {
-                        id: true,
-                        name: true,
-                        photo: true,
-                        info: true,
-                    },
-                },
+                artist: true,
             },
         });
     }

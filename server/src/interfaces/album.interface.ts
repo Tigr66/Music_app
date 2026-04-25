@@ -4,4 +4,6 @@ export interface IAlbum {
     title: string;
     cover: string;
     publishedAt: Date;
+    userId: number;
+    isPublished: boolean;
 }

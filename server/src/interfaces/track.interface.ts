@@ -5,4 +5,6 @@ export interface ITrack {
     albumId: number;
     youtubeUrl: string;
     number: number;
+    userId: number;
+    isPublished: boolean;
 }

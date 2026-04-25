@@ -4,6 +4,8 @@ export interface IAlbumWithCount {
     title: string;
     cover: string;
     publishedAt: Date;
+    userId: number;
+    isPublished: boolean;
 
     count: number;
 }
