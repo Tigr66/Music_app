@@ -58,16 +58,14 @@ export const publishArtistThunk = createAsyncThunk<
 });
 
 export const deleteArtistThunk = createAsyncThunk<
-    string,
+    number,
     number,
     { rejectValue: string }
 >("music-slice/delete-artist", async (artistId, { rejectWithValue }) => {
     try {
-        const result = await musicApi.delete<{ message: string }>(
-            `/artists/${artistId}`,
-        );
+        await musicApi.delete(`/artists/${artistId}`);
 
-        return result.data.message;
+        return artistId;
     } catch (err) {
         const error = err as AxiosError<{ error: string }>;
 
@@ -128,16 +126,14 @@ export const publishAlbumThunk = createAsyncThunk<
 });
 
 export const deleteAlbumThunk = createAsyncThunk<
-    string,
+    number,
     number,
     { rejectValue: string }
 >("music-slice/delete-album", async (albumId, { rejectWithValue }) => {
     try {
-        const result = await musicApi.delete<{ message: string }>(
-            `/albums/${albumId}`,
-        );
+        await musicApi.delete(`/albums/${albumId}`);
 
-        return result.data.message;
+        return albumId;
     } catch (err) {
         const error = err as AxiosError<{ error: string }>;
 
@@ -182,16 +178,14 @@ export const publishTrackThunk = createAsyncThunk<
 });
 
 export const deleteTrackThunk = createAsyncThunk<
-    string,
+    number,
     number,
     { rejectValue: string }
 >("music-slice/delete-track", async (trackId, { rejectWithValue }) => {
     try {
-        const result = await musicApi.delete<{ message: string }>(
-            `/tracks/${trackId}`,
-        );
+        await musicApi.delete(`/tracks/${trackId}`);
 
-        return result.data.message;
+        return trackId;
     } catch (err) {
         const error = err as AxiosError<{ error: string }>;
 
