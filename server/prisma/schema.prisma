@@ -7,22 +7,36 @@ datasource db {
   provider = "postgresql"
 }
 
-model Artist { 
-  id        Int     @id @default(autoincrement()) 
-  name      String 
-  photo     String
-  info      String   @db.Text
-  albums    Album[]
-} 
+enum Role {
+    USER
+    ADMIN
+}
 
 model User { 
-  id        Int     @id @default(autoincrement()) 
-  username  String  @unique
+  id        Int             @id @default(autoincrement()) 
+  username  String          @unique
   password  String 
-  token     String? @unique
+  token     String?         @unique
+  role      Role            @default(USER)
 
   history   TrackHistory[]
+  artists   Artist[]
+  albums    Album[]
+  tracks    Track[]
 } 
+
+model Artist { 
+  id            Int     @id @default(autoincrement()) 
+  name          String 
+  photo         String
+  info          String  @db.Text
+  isPublished   Boolean @default(false)
+  user          User    @relation(fields: [userId], references: [id]) 
+  userId        Int
+
+  albums        Album[]
+} 
+
 
 model Album { 
   id            Int       @id @default(autoincrement()) 
@@ -31,20 +45,27 @@ model Album {
   artistId      Int
   cover         String
   publishedAt   DateTime  @default(now())
+  isPublished   Boolean   @default(false)
+  user          User      @relation(fields: [userId], references: [id]) 
+  userId        Int
 
   tracks        Track[]
 } 
 
 model Track {
-  id         Int             @id @default(autoincrement())
-  title      String
-  duration   Int
-  number     Int       
-  album      Album           @relation(fields: [albumId], references: [id]) 
-  albumId    Int
-  youtubeUrl String
+  id            Int             @id @default(autoincrement())
+  title         String
+  duration      Int
+  number        Int       
+  album         Album           @relation(fields: [albumId], references: [id]) 
+  albumId       Int
+  youtubeUrl    String
+  isPublished   Boolean         @default(false)
+  user          User            @relation(fields: [userId], references: [id]) 
+  userId        Int
 
-  history   TrackHistory[]
+
+  history       TrackHistory[]
   @@unique([albumId, number])
 }
 
