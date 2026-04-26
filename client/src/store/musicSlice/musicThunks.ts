@@ -87,6 +87,20 @@ export const deleteArtistThunk = createAsyncThunk<
     }
 });
 
+export const addAlbumThunk = createAsyncThunk<
+    void,
+    FormData,
+    { rejectValue: string }
+>("music-slice/add-album", async (data, { rejectWithValue }) => {
+    try {
+        await musicApi.post(`/albums`, data);
+    } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        return rejectWithValue(error.response?.data?.error || "Unknown error");
+    }
+});
+
 export const getArtistAlbumsThunk = createAsyncThunk<
     IAlbum[],
     number,

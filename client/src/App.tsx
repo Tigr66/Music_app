@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import TrackHistoryPage from "./pages/TrackHistoryPage/TrackHistoryPage";
 import AddArtistPage from "./pages/AddArtistPage/AddArtistPage";
+import AddAlbumPage from "./pages/AddAlbumPage/AddAlbumPage";
 
 const App = () => {
     return (
@@ -43,6 +44,10 @@ const App = () => {
                     <Route
                         path={appRoutes.ADD_ARTIST_PAGE}
                         element={<AddArtistPage />}
+                    />
+                    <Route
+                        path={appRoutes.ADD_ALBUM_PAGE}
+                        element={<AddAlbumPage />}
                     />
                 </Route>
             </Routes>

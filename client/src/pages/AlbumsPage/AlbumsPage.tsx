@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
     getArtistAlbumsThunk,
-    getArtistsThunk,
+    getArtistThunk,
 } from "../../store/musicSlice/musicThunks";
 import { setCurrentArtist } from "../../store/musicSlice/musicSlice";
 import AlbumCard from "../../components/AlbumCard/AlbumCard";
@@ -22,13 +22,13 @@ const AlbumsPage = () => {
     const isLoadingAlbums = useAppSelector(
         (state) => state.music.isLoadingAlbums,
     );
-    const isLoadingArtists = useAppSelector(
-        (state) => state.music.isLoadingArtists,
+    const isLoadingArtist = useAppSelector(
+        (state) => state.music.isLoadingArtist,
     );
 
     useEffect(() => {
         if (id && !isNaN(Number(id))) {
-            dispatch(getArtistsThunk());
+            dispatch(getArtistThunk(Number(id)));
             dispatch(getArtistAlbumsThunk(Number(id)));
         }
 
@@ -39,7 +39,7 @@ const AlbumsPage = () => {
 
     return (
         <>
-            {isLoadingArtists ? (
+            {isLoadingArtist ? (
                 <Skeleton
                     active
                     title={{

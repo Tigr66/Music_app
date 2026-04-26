@@ -33,12 +33,12 @@ export class AlbumsRoutes {
         this.router.post(
             "/:id/publish",
             authMiddleware,
-            this.albumsController.createAlbum,
+            this.albumsController.publishAlbum,
         );
         this.router.delete(
             "/:id",
             authMiddleware,
-            this.albumsController.createAlbum,
+            this.albumsController.deleteAlbum,
         );
     }
 }

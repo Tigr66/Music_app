@@ -29,7 +29,7 @@ export class AlbumsController {
             const newAlbum = {
                 title,
                 artistId: Number(artistId),
-                publishedAt: new Date(publishedAt),
+                publishedAt: publishedAt ? new Date(publishedAt) : new Date(),
                 cover: `/uploads/albums/${cover.filename}`,
                 userId: user.id,
             };

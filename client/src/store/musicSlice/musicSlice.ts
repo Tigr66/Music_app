@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import {
+    addAlbumThunk,
     addArtistThunk,
     addHistoryThunk,
     deleteAlbumThunk,
@@ -135,6 +136,17 @@ const musicSlice = createSlice({
             .addCase(deleteArtistThunk.rejected, (state, action) => {
                 state.isSending = false;
                 state.error = action.payload || "Error with deleting";
+            })
+            .addCase(addAlbumThunk.pending, (state) => {
+                state.isSending = true;
+            })
+            .addCase(addAlbumThunk.fulfilled, (state) => {
+                state.isSending = false;
+                state.success = "Successfully added";
+            })
+            .addCase(addAlbumThunk.rejected, (state, action) => {
+                state.isSending = false;
+                state.error = action.payload || "Error adding artist";
             })
             .addCase(getArtistAlbumsThunk.pending, (state) => {
                 state.isLoadingAlbums = true;

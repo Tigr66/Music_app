@@ -29,16 +29,16 @@ export class ArtistsRoutes {
             optionalAuthMiddleware,
             this.artistsController.getArtists,
         );
-        this.router.get("/:id", this.artistsController.getArtists);
+        this.router.get("/:id", this.artistsController.getArtistById);
         this.router.post(
             "/:id/publish",
             authMiddleware,
-            this.artistsController.createArtist,
+            this.artistsController.publishArtist,
         );
         this.router.delete(
             "/:id",
             authMiddleware,
-            this.artistsController.createArtist,
+            this.artistsController.deleteArtist,
         );
     }
 }

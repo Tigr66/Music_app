@@ -2,6 +2,7 @@ import { Type } from "class-transformer";
 import {
     IsDateString,
     IsInt,
+    IsOptional,
     IsPositive,
     IsString,
     Min,
@@ -23,11 +24,12 @@ export class CreateAlbumDto {
     })
     artistId!: number;
 
+    @IsOptional()
     @IsDateString(
         {},
         {
             message: "publishedAt must be a valid ISO date string",
         },
     )
-    publishedAt!: string;
+    publishedAt?: string;
 }

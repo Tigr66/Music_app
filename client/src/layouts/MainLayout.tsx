@@ -9,6 +9,8 @@ import {
 } from "../store/musicSlice/musicSlice";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import {
+    CustomerServiceOutlined,
+    FolderOutlined,
     HistoryOutlined,
     LoadingOutlined,
     LogoutOutlined,
@@ -114,8 +116,22 @@ const MainLayout = () => {
                                 className={styles.sidebar_link}
                                 onClick={(e) => isSending && e.preventDefault()}
                             >
-                                <UserAddOutlined  />{" "}
-                                {!collapsed && "Add artist"}
+                                <UserAddOutlined /> {!collapsed && "Add artist"}
+                            </NavLink>
+                            <NavLink
+                                to={appRoutes.ADD_ALBUM_PAGE}
+                                className={styles.sidebar_link}
+                                onClick={(e) => isSending && e.preventDefault()}
+                            >
+                                <FolderOutlined /> {!collapsed && "Add album"}
+                            </NavLink>
+                            <NavLink
+                                to={appRoutes.ADD_ALBUM_PAGE}
+                                className={styles.sidebar_link}
+                                onClick={(e) => isSending && e.preventDefault()}
+                            >
+                                <CustomerServiceOutlined />{" "}
+                                {!collapsed && "Add track"}
                             </NavLink>
                         </>
                     )}
