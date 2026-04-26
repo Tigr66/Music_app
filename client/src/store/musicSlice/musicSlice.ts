@@ -131,7 +131,9 @@ const musicSlice = createSlice({
             })
             .addCase(deleteArtistThunk.fulfilled, (state, action) => {
                 state.isSending = false;
-                state.artists.filter((a) => a.id !== action.payload);
+                state.artists = state.artists.filter(
+                    (a) => a.id !== action.payload,
+                );
                 state.success = "Successfully deleted";
             })
             .addCase(deleteArtistThunk.rejected, (state, action) => {
@@ -192,7 +194,7 @@ const musicSlice = createSlice({
             })
             .addCase(deleteAlbumThunk.fulfilled, (state, action) => {
                 state.isSending = false;
-                state.artistAlbums.filter((a) => a.id !== action.payload);
+                state.artistAlbums = state.artistAlbums.filter((a) => a.id !== action.payload);
                 state.success = "Successfully deleted";
             })
             .addCase(deleteAlbumThunk.rejected, (state, action) => {
@@ -242,7 +244,7 @@ const musicSlice = createSlice({
             })
             .addCase(deleteTrackThunk.fulfilled, (state, action) => {
                 state.isSending = false;
-                state.albumTracks.filter((a) => a.id !== action.payload);
+                state.albumTracks = state.albumTracks.filter((a) => a.id !== action.payload);
                 state.success = "Successfully deleted";
             })
             .addCase(deleteTrackThunk.rejected, (state, action) => {

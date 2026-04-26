@@ -61,7 +61,7 @@ export const publishArtistThunk = createAsyncThunk<
     { rejectValue: string }
 >("music-slice/publish-artist", async (artistId, { rejectWithValue }) => {
     try {
-        const result = await musicApi.delete(`/artists/${artistId}/publish`);
+        const result = await musicApi.post(`/artists/${artistId}/publish`);
 
         return result.data;
     } catch (err) {
@@ -143,7 +143,7 @@ export const publishAlbumThunk = createAsyncThunk<
     { rejectValue: string }
 >("music-slice/publish-album", async (albumId, { rejectWithValue }) => {
     try {
-        const result = await musicApi.delete(`/albums/${albumId}/publish`);
+        const result = await musicApi.post(`/albums/${albumId}/publish`);
 
         return result.data;
     } catch (err) {
@@ -209,7 +209,7 @@ export const publishTrackThunk = createAsyncThunk<
     { rejectValue: string }
 >("music-slice/publish-track", async (trackId, { rejectWithValue }) => {
     try {
-        const result = await musicApi.delete(`/tracks/${trackId}/publish`);
+        const result = await musicApi.post(`/tracks/${trackId}/publish`);
 
         return result.data;
     } catch (err) {

@@ -1,14 +1,18 @@
-import { Flex, Typography } from "antd";
+import { Badge, Button, Flex, Typography } from "antd";
 import type { ITrack } from "../../interfaces/ITrack";
 import { formatTime } from "../../utils/formatTime";
 const { Text } = Typography;
 import styles from "./Track.module.css";
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { CaretRightOutlined } from "@ant-design/icons";
+import { CaretRightOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { appRoutes } from "../../routes/appRoutes";
-import { addHistoryThunk } from "../../store/musicSlice/musicThunks";
+import {
+    addHistoryThunk,
+    deleteTrackThunk,
+    publishTrackThunk,
+} from "../../store/musicSlice/musicThunks";
 import { setCurrentTrack } from "../../store/musicSlice/musicSlice";
 
 interface TrackProps {
@@ -31,6 +35,13 @@ const Track = ({ track }: TrackProps) => {
 
         dispatch(setCurrentTrack(track));
 
+        if (!track.isPublished) {
+            toast.info(
+                "This track is not published, so it won't be added to history",
+            );
+            return;
+        }
+
         dispatch(addHistoryThunk(track.id));
     };
 
@@ -40,15 +51,57 @@ const Track = ({ track }: TrackProps) => {
             justify="space-between"
             align="center"
             onClick={() => {
-                if (!isSending) handlePlay();
+                if (!isSending && user?.role === "USER") handlePlay();
             }}
         >
             <Flex gap="medium">
                 <Text strong>{track.number}</Text>
-                <Text strong>{track.title}</Text>
+                {track.isPublished ? (
+                    <Text strong>{track.title}</Text>
+                ) : (
+                    <Badge
+                        count={
+                            <ClockCircleOutlined style={{ color: "#f5222d" }} />
+                        }
+                    >
+                        <Text strong>{track.title}</Text>
+                    </Badge>
+                )}
             </Flex>
+            {user?.role === "ADMIN" && (
+                <Flex gap={10}>
+                    {!track.isPublished && (
+                        <Button
+                            type="primary"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                dispatch(publishTrackThunk(track.id));
+                            }}
+                            loading={isSending}
+                        >
+                            Publish
+                        </Button>
+                    )}
+                    <Button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            dispatch(deleteTrackThunk(track.id));
+                        }}
+                        type="primary"
+                        loading={isSending}
+                        danger
+                    >
+                        Delete
+                    </Button>
+                </Flex>
+            )}
             <Flex gap={20} align="center">
-                <CaretRightOutlined className={styles.play_button} />
+                <CaretRightOutlined
+                    onClick={() => {
+                        if (!isSending && user?.role === "ADMIN") handlePlay();
+                    }}
+                    className={styles.play_button}
+                />
                 <Text strong>{formatTime(track.duration)}</Text>
             </Flex>
         </Flex>

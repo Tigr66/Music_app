@@ -5,6 +5,7 @@ import { IAlbum } from "../interfaces/album.interface";
 import { IUser } from "../interfaces/user.interface";
 import { prisma } from "../lib/prisma";
 import _ from "lodash";
+import { removeFile } from "../utils/remove-file.util";
 
 export class AlbumsService {
     async create(
@@ -94,6 +95,8 @@ export class AlbumsService {
         if (!album) {
             throw new Error("Album not found");
         }
+
+        removeFile(album.cover);
 
         await prisma.album.delete({
             where: { id },

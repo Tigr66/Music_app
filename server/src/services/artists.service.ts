@@ -2,6 +2,7 @@ import { getContentWhere } from "../helpers/get-content-where.helper";
 import { IArtist } from "../interfaces/artist.interface";
 import { IUser } from "../interfaces/user.interface";
 import { prisma } from "../lib/prisma";
+import { removeFile } from "../utils/remove-file.util";
 
 export class ArtistsService {
     async create(
@@ -51,6 +52,8 @@ export class ArtistsService {
         if (!artist) {
             throw new Error("Artist not found");
         }
+
+        removeFile(artist.photo)
 
         await prisma.artist.delete({
             where: { id },

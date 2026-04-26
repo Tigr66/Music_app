@@ -17,6 +17,9 @@ export class TrackHistoryService {
             return null;
         }
 
+        if (!track.isPublished) {
+            throw new Error("Track is unpublished")
+        }
         return await prisma.trackHistory.create({
             data: {
                 trackId,

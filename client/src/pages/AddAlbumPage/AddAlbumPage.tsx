@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form } from "antd";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import type { UploadChangeParam, UploadFile } from "antd/es/upload";
 import { toast } from "react-toastify";
@@ -8,9 +8,11 @@ import {
     addAlbumThunk,
     getArtistsThunk,
 } from "../../store/musicSlice/musicThunks";
+import AppInput from "../../components/AppInput/AppInput";
 import AppUpload from "../../components/AppUpload/AppUpload";
 import AddFormWrapper from "../../components/AddFormWrapper/AddFormWrapper";
 import type { AlbumFormType } from "../../types/AlbumFormType";
+import AppSelect from "../../components/AppSelect/AppSelect";
 
 const AddAlbumPage = () => {
     const dispatch = useAppDispatch();
@@ -71,7 +73,7 @@ const AddAlbumPage = () => {
                         },
                     ]}
                 >
-                    <Input />
+                    <AppInput />
                 </Form.Item>
 
                 <Form.Item
@@ -84,7 +86,7 @@ const AddAlbumPage = () => {
                         },
                     ]}
                 >
-                    <Select
+                    <AppSelect
                         loading={isLoadingArtists}
                         options={artists.map((a) => {
                             return { label: a.name, value: a.id };
