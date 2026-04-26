@@ -12,6 +12,7 @@ import {
     HistoryOutlined,
     LoadingOutlined,
     LogoutOutlined,
+    UserAddOutlined,
     UserOutlined,
 } from "@ant-design/icons";
 import { appRoutes } from "../routes/appRoutes";
@@ -99,13 +100,24 @@ const MainLayout = () => {
                     )}
 
                     {user && (
-                        <NavLink
-                            to={appRoutes.TRACK_HISTORY_PAGE}
-                            className={styles.sidebar_link}
-                            onClick={(e) => isSending && e.preventDefault()}
-                        >
-                            <HistoryOutlined /> {!collapsed && "Track history"}
-                        </NavLink>
+                        <>
+                            <NavLink
+                                to={appRoutes.TRACK_HISTORY_PAGE}
+                                className={styles.sidebar_link}
+                                onClick={(e) => isSending && e.preventDefault()}
+                            >
+                                <HistoryOutlined />{" "}
+                                {!collapsed && "Track history"}
+                            </NavLink>
+                            <NavLink
+                                to={appRoutes.ADD_ARTIST_PAGE}
+                                className={styles.sidebar_link}
+                                onClick={(e) => isSending && e.preventDefault()}
+                            >
+                                <UserAddOutlined  />{" "}
+                                {!collapsed && "Add artist"}
+                            </NavLink>
+                        </>
                     )}
 
                     {user && (

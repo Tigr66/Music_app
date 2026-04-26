@@ -9,6 +9,20 @@ import type { IAuthUser } from "../../interfaces/IAuthUser";
 import type { ITrackHistory } from "../../interfaces/ITrackHistory";
 import { musicApi } from "../../api/musicApi";
 
+export const addArtistThunk = createAsyncThunk<
+    void,
+    FormData,
+    { rejectValue: string }
+>("music-slice/add-artist", async (data, { rejectWithValue }) => {
+    try {
+        await musicApi.post(`/artists`, data);
+    } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        return rejectWithValue(error.response?.data?.error || "Unknown error");
+    }
+});
+
 export const getArtistsThunk = createAsyncThunk<
     IArtist[],
     void,

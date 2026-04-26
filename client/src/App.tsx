@@ -8,6 +8,7 @@ import "./App.css";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import TrackHistoryPage from "./pages/TrackHistoryPage/TrackHistoryPage";
+import AddArtistPage from "./pages/AddArtistPage/AddArtistPage";
 
 const App = () => {
     return (
@@ -38,6 +39,10 @@ const App = () => {
                     <Route
                         path={appRoutes.TRACK_HISTORY_PAGE}
                         element={<TrackHistoryPage />}
+                    />
+                    <Route
+                        path={appRoutes.ADD_ARTIST_PAGE}
+                        element={<AddArtistPage />}
                     />
                 </Route>
             </Routes>

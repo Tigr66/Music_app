@@ -25,7 +25,6 @@ const AlbumsPage = () => {
     const isLoadingArtists = useAppSelector(
         (state) => state.music.isLoadingArtists,
     );
-    const artists = useAppSelector((state) => state.music.artists);
 
     useEffect(() => {
         if (id && !isNaN(Number(id))) {
@@ -37,12 +36,6 @@ const AlbumsPage = () => {
             dispatch(setCurrentArtist(null));
         };
     }, [id, dispatch]);
-
-    useEffect(() => {
-        if (id && !isNaN(Number(id))) {
-            dispatch(setCurrentArtist(Number(id)));
-        }
-    }, [id, artists]);
 
     return (
         <>

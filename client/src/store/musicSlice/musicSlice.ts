@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import {
+    addArtistThunk,
     addHistoryThunk,
     deleteAlbumThunk,
     deleteArtistThunk,
@@ -74,6 +75,17 @@ const musicSlice = createSlice({
     },
     extraReducers(builder) {
         builder
+            .addCase(addArtistThunk.pending, (state) => {
+                state.isSending = true;
+            })
+            .addCase(addArtistThunk.fulfilled, (state) => {
+                state.isSending = false;
+                state.success = "Successfully added";
+            })
+            .addCase(addArtistThunk.rejected, (state, action) => {
+                state.isSending = false;
+                state.error = action.payload || "Error adding artist";
+            })
             .addCase(getArtistsThunk.pending, (state) => {
                 state.isLoadingArtists = true;
             })
