@@ -80,7 +80,12 @@ export class AlbumsController {
 
             const result = await this.albumsService.getById(Number(id));
 
-            if (!result || result.id !== user?.id) {
+            if (
+                !result ||
+                (!result.isPublished &&
+                    result.userId !== user?.id &&
+                    user?.role !== "ADMIN")
+            ) {
                 return res.status(404).json({
                     error: "Album not found",
                 });

@@ -51,7 +51,8 @@ const Track = ({ track }: TrackProps) => {
             justify="space-between"
             align="center"
             onClick={() => {
-                if (!isSending && user?.role === "USER") handlePlay();
+                if (!isSending && (user?.role === "USER" || !user))
+                    handlePlay();
             }}
         >
             <Flex gap="medium">

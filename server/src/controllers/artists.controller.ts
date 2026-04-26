@@ -74,7 +74,9 @@ export class ArtistsController {
 
             if (
                 !result ||
-                (!result.isPublished && result.userId !== user?.id)
+                (!result.isPublished &&
+                    result.userId !== user?.id &&
+                    user?.role !== "ADMIN")
             ) {
                 return res.status(404).json({
                     error: "Artist not found",
