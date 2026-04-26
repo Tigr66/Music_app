@@ -3,6 +3,7 @@ import {
     addAlbumThunk,
     addArtistThunk,
     addHistoryThunk,
+    addTrackThunk,
     deleteAlbumThunk,
     deleteArtistThunk,
     deleteTrackThunk,
@@ -197,6 +198,17 @@ const musicSlice = createSlice({
             .addCase(deleteAlbumThunk.rejected, (state, action) => {
                 state.isSending = false;
                 state.error = action.payload || "Error with deleting";
+            })
+            .addCase(addTrackThunk.pending, (state) => {
+                state.isSending = true;
+            })
+            .addCase(addTrackThunk.fulfilled, (state) => {
+                state.isSending = false;
+                state.success = "Successfully added";
+            })
+            .addCase(addTrackThunk.rejected, (state, action) => {
+                state.isSending = false;
+                state.error = action.payload || "Error adding artist";
             })
             .addCase(getAlbumTracksThunk.pending, (state) => {
                 state.isLoadingTracks = true;

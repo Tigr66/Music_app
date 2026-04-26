@@ -169,6 +169,20 @@ export const deleteAlbumThunk = createAsyncThunk<
     }
 });
 
+export const addTrackThunk = createAsyncThunk<
+    void,
+    Omit<ITrack, "id" | "number" | "userId" | "isPublished">,
+    { rejectValue: string }
+>("music-slice/add-track", async (data, { rejectWithValue }) => {
+    try {
+        await musicApi.post(`/tracks`, data);
+    } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        return rejectWithValue(error.response?.data?.error || "Unknown error");
+    }
+});
+
 export const getAlbumTracksThunk = createAsyncThunk<
     ITrack[],
     number,

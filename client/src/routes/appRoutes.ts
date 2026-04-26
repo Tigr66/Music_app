@@ -7,5 +7,6 @@ export const appRoutes = {
     ADD_ARTIST_PAGE: "/artists/add",
     ADD_ALBUM_PAGE: "/albums/add",
     ARTIST_ALBUMS_PAGE: "/artists/:id/albums",
+    ADD_TRACK_PAGE: "/tracks/add",
     ALBUMS_TRACKS_PAGE: "/albums/:id/tracks",
 } as const;

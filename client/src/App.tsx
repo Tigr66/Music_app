@@ -4,12 +4,13 @@ import MainLayout from "./layouts/MainLayout";
 import MainPage from "./pages/MainPage/MainPage";
 import AlbumsPage from "./pages/AlbumsPage/AlbumsPage";
 import TracksPage from "./pages/TracksPage/TracksPage";
-import "./App.css";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import TrackHistoryPage from "./pages/TrackHistoryPage/TrackHistoryPage";
 import AddArtistPage from "./pages/AddArtistPage/AddArtistPage";
 import AddAlbumPage from "./pages/AddAlbumPage/AddAlbumPage";
+import AddTrackPage from "./pages/AddTrackPage/AddTrackPage";
+import "./App.css";
 
 const App = () => {
     return (
@@ -48,6 +49,10 @@ const App = () => {
                     <Route
                         path={appRoutes.ADD_ALBUM_PAGE}
                         element={<AddAlbumPage />}
+                    />
+                    <Route
+                        path={appRoutes.ADD_TRACK_PAGE}
+                        element={<AddTrackPage />}
                     />
                 </Route>
             </Routes>

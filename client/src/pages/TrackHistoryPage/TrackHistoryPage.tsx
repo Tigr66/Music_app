@@ -25,7 +25,7 @@ const TrackHistoryPage = () => {
             });
             return;
         }
-        dispatch(getHistoryThunk(user.token ?? ""));
+        dispatch(getHistoryThunk());
     }, []);
 
     return isLoadingHistory ? (

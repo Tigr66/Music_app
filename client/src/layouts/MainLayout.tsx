@@ -126,7 +126,7 @@ const MainLayout = () => {
                                 <FolderOutlined /> {!collapsed && "Add album"}
                             </NavLink>
                             <NavLink
-                                to={appRoutes.ADD_ALBUM_PAGE}
+                                to={appRoutes.ADD_TRACK_PAGE}
                                 className={styles.sidebar_link}
                                 onClick={(e) => isSending && e.preventDefault()}
                             >

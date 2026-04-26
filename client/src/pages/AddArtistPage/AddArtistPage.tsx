@@ -1,13 +1,11 @@
 import { useEffect } from "react";
-import { Button, Form } from "antd";
+import { Button, Form, Input } from "antd";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import type { ArtistFormType } from "../../types/ArtistFormType";
 import type { UploadChangeParam, UploadFile } from "antd/es/upload";
 import { toast } from "react-toastify";
 import { extractFile } from "../../utils/extractFile";
 import { addArtistThunk } from "../../store/musicSlice/musicThunks";
-import AppInput from "../../components/AppInput/AppInput";
-import AppTextArea from "../../components/AppTextArea/AppTextArea";
 import AppUpload from "../../components/AppUpload/AppUpload";
 import AddFormWrapper from "../../components/AddFormWrapper/AddFormWrapper";
 
@@ -62,7 +60,7 @@ const AddArtistPage = () => {
                         },
                     ]}
                 >
-                    <AppInput />
+                    <Input />
                 </Form.Item>
                 <Form.Item<ArtistFormType>
                     label="Info"
@@ -74,7 +72,7 @@ const AddArtistPage = () => {
                         },
                     ]}
                 >
-                    <AppTextArea />
+                    <Input.TextArea />
                 </Form.Item>
 
                 <Form.Item
