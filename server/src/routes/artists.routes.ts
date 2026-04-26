@@ -29,7 +29,11 @@ export class ArtistsRoutes {
             optionalAuthMiddleware,
             this.artistsController.getArtists,
         );
-        this.router.get("/:id", this.artistsController.getArtistById);
+        this.router.get(
+            "/:id",
+            optionalAuthMiddleware,
+            this.artistsController.getArtistById,
+        );
         this.router.post(
             "/:id/publish",
             authMiddleware,

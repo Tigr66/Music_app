@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import { AlbumsService } from "../services/albums.service";
 import { AuthRequest } from "../types/auth.types";
 
@@ -64,9 +64,15 @@ export class AlbumsController {
         }
     };
 
-    getAlbumById = async (req: Request, res: Response, next: NextFunction) => {
+    getAlbumById = async (
+        req: AuthRequest,
+        res: Response,
+        next: NextFunction,
+    ) => {
         try {
             const { id } = req.params;
+
+            const user = req.user;
 
             if (isNaN(Number(id))) {
                 return res.status(400).json({ error: "Id must be a number" });
@@ -74,9 +80,9 @@ export class AlbumsController {
 
             const result = await this.albumsService.getById(Number(id));
 
-            if (!result) {
-                return res.status(400).json({
-                    error: "Album is not exist",
+            if (!result || result.id !== user?.id) {
+                return res.status(404).json({
+                    error: "Album not found",
                 });
             }
 

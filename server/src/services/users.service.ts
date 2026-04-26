@@ -6,7 +6,7 @@ import _ from "lodash";
 
 export class UsersService {
     async register(
-        newUser: Omit<IUser, "id">,
+        newUser: Omit<IUser, "id" | "role">,
     ): Promise<Omit<IUser, "password">> {
         const existingUser = await prisma.user.findUnique({
             where: {
@@ -32,7 +32,9 @@ export class UsersService {
         return _.omit(created, ["password"]);
     }
 
-    async login(user: Omit<IUser, "id">): Promise<Omit<IUser, "password">> {
+    async login(
+        user: Omit<IUser, "id" | "role">,
+    ): Promise<Omit<IUser, "password">> {
         const loginUser = await prisma.user.findUnique({
             where: {
                 username: user.username,

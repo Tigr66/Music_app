@@ -14,7 +14,7 @@ export class UsersController {
         try {
             const { username, password } = req.body;
 
-            const newUser: Omit<IUser, "id"> = {
+            const newUser = {
                 username: username.trim(),
                 password: password.trim(),
             };
@@ -31,7 +31,7 @@ export class UsersController {
         try {
             const { username, password } = req.body;
 
-            const user: Omit<IUser, "id"> = {
+            const user = {
                 username: username.trim(),
                 password: password.trim(),
             };

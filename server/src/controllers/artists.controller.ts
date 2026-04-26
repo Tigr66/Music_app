@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import { ArtistsService } from "../services/artists.service";
 import { AuthRequest } from "../types/auth.types";
 
@@ -56,9 +56,15 @@ export class ArtistsController {
         }
     };
 
-    getArtistById = async (req: Request, res: Response, next: NextFunction) => {
+    getArtistById = async (
+        req: AuthRequest,
+        res: Response,
+        next: NextFunction,
+    ) => {
         try {
             const { id } = req.params;
+
+            const user = req.user;
 
             if (isNaN(Number(id))) {
                 return res.status(400).json({ error: "Id must be a number" });
@@ -66,9 +72,12 @@ export class ArtistsController {
 
             const result = await this.artistsService.getById(Number(id));
 
-            if (!result) {
-                return res.status(400).json({
-                    error: "Artist is not exist",
+            if (
+                !result ||
+                (!result.isPublished && result.userId !== user?.id)
+            ) {
+                return res.status(404).json({
+                    error: "Artist not found",
                 });
             }
 

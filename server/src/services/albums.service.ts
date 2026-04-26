@@ -11,6 +11,14 @@ export class AlbumsService {
     async create(
         newAlbum: Omit<IAlbum, "id" | "isPublished">,
     ): Promise<IAlbum> {
+        const artist = await prisma.artist.findUnique({
+            where: { id: newAlbum.artistId },
+        });
+
+        if (!artist) {
+            throw new Error("Artist not found");
+        }
+
         return await prisma.album.create({
             data: {
                 ...newAlbum,

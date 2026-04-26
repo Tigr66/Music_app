@@ -29,7 +29,11 @@ export class AlbumsRoutes {
             optionalAuthMiddleware,
             this.albumsController.getAlbums,
         );
-        this.router.get("/:id", this.albumsController.getAlbumById);
+        this.router.get(
+            "/:id",
+            optionalAuthMiddleware,
+            this.albumsController.getAlbumById,
+        );
         this.router.post(
             "/:id/publish",
             authMiddleware,

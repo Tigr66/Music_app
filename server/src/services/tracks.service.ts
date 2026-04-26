@@ -19,7 +19,7 @@ export class TracksService {
         });
 
         if (!album) {
-            throw new Error("Album with this id is not exist");
+            throw new Error("Album not found");
         }
 
         return await prisma.track.create({
