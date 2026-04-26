@@ -12,19 +12,60 @@ http://localhost:8000
 
 ## Эндпоинты API
 
-| Метод | Эндпоинт        | Описание                      |
-| ----- | --------------- | ----------------------------- |
-| POST  | /artists        | Создать артиста               |
-| GET   | /artists        | Получить артистов             |
-| POST  | /albums         | Создать альбом                |
-| GET   | /albums         | Получить альбомы              |
-| GET   | /albums/:id     | Получить альбом по id         |
-| POST  | /tracks         | Создать трек                  |
-| GET   | /tracks         | Получить треки                |
-| POST  | /track-history  | Добавить прослушивание трека  |
-| POST  | /users          | Зарегистрировать пользователя |
-| POST  | /users/sessions | Авторизировать пользователя   |
-| POST  | /users/logout   | Завершить сессию пользователя |
+| Метод  | Эндпоинт             | Описание                      |
+| ------ | -------------------- | ----------------------------- |
+| POST   | /artists             | Создать артиста               |
+| GET    | /artists             | Получить артистов             |
+| GET    | /artists/:id         | Получить артиста по id        |
+| DELETE | /artists/:id         | Удалить артиста               |
+| POST   | /artists/:id/publish | Опубликовать артиста          |
+| POST   | /albums              | Создать альбом                |
+| GET    | /albums              | Получить альбомы              |
+| GET    | /albums/:id          | Получить альбом по id         |
+| DELETE | /albums/:id          | Удалить альбом                |
+| POST   | /albums/:id/publish  | Опубликовать альбом           |
+| POST   | /tracks              | Создать трек                  |
+| GET    | /tracks              | Получить треки                |
+| DELETE | /tracks/:id          | Удалить трек                  |
+| POST   | /tracks/:id/publish  | Опубликовать трек             |
+| POST   | /track-history       | Добавить прослушивание трека  |
+| POST   | /users               | Зарегистрировать пользователя |
+| POST   | /users/sessions      | Авторизировать пользователя   |
+| POST   | /users/logout        | Завершить сессию пользователя |
+
+---
+
+## Доступ и авторизация
+
+Для защищённых эндпоинтов требуется токен:
+
+```bash
+Authorization: Bearer <token>
+```
+
+### Роли пользователей:
+
+- USER — обычный пользователь
+- ADMIN — администратор
+
+### Ограничения:
+
+Только ADMIN может удалять и публиковать артистов, альбомы и треки
+
+### Особенности GET запросов
+
+Токен передавать необязательно.
+
+Поведение зависит от пользователя:
+
+- Без токена:
+    - возвращаются только опубликованные данные
+
+- С токеном (USER):
+    - возвращаются опубликованные данные + неопубликованные, созданные текущим пользователем
+
+- С токеном (ADMIN):
+    - возвращаются все данные (и опубликованные, и неопубликованные)
 
 ---
 
@@ -37,6 +78,12 @@ http://localhost:8000
 ### Формат запроса
 
 multipart/form-data
+
+### Headers
+
+```bash
+Authorization: Bearer <token>
+```
 
 ### Поля:
 
@@ -51,13 +98,19 @@ multipart/form-data
     "id": 3,
     "name": "Me",
     "info": "The best singer",
-    "photo": "/uploads/artists/87hdgwg-3e98-4445-a499-cf444e204a72.jpg"
+    "photo": "/uploads/artists/87hdgwg-3e98-4445-a499-cf444e204a72.jpg",
+    "userId": 1,
+    "isPublished": false
 }
 ```
 
 ## GET /artists
 
 Получить артистов
+
+### Доступ:
+
+- Публичный (токен опционален)
 
 ### Ответ - 200
 
@@ -67,9 +120,69 @@ multipart/form-data
         "id": 1,
         "name": "Drake",
         "info": "Canadian rapper and singer",
-        "photo": "/uploads/artists/484b47a1-be98-4195-a499-cf444e20ea72.jpg"
+        "photo": "/uploads/artists/484b47a1-be98-4195-a499-cf444e20ea72.jpg",
+        "userId": 1,
+        "isPublished": true
     }
 ]
+```
+
+## GET /artists/:id
+
+Получить артиста по id
+
+### Доступ:
+
+- Публичный (токен опционален)
+
+### Ответ - 200
+
+```json
+{
+    "id": 1,
+    "name": "Drake",
+    "info": "Canadian rapper and singer",
+    "photo": "/uploads/artists/484b47a1-be98-4195-a499-cf444e20ea72.jpg",
+    "userId": 1,
+    "isPublished": true
+}
+```
+
+## DELETE /artists/:id
+
+Удалить артиста
+
+### Доступ:
+
+- ADMIN
+
+### Ответ - 200
+
+```json
+{
+    "message": "Successfully deleted"
+}
+```
+
+## POST /artists/:id/publish
+
+Опубликовать артиста
+
+### Доступ:
+
+- ADMIN
+
+### Ответ - 200
+
+```json
+{
+    "id": 1,
+    "name": "Drake",
+    "info": "Canadian rapper and singer",
+    "photo": "/uploads/artists/484b47a1-be98-4195-a499-cf444e20ea72.jpg",
+    "userId": 1,
+    "isPublished": true
+}
 ```
 
 ---
@@ -84,11 +197,17 @@ multipart/form-data
 
 multipart/form-data
 
+### Headers
+
+```bash
+Authorization: Bearer <token>
+```
+
 ### Поля:
 
 - title (string, обязательно) - название альбома
 - artistId (number, обязательно) - id артиста
-- publishedAt (string, обязательно) - дата (ISO формат)
+- publishedAt (string, необязательно) - дата (ISO формат)
 - cover (file, обязательно) - обложка альбома
 
 ### Ответ - 201
@@ -99,13 +218,19 @@ multipart/form-data
     "title": "Album Name",
     "artistId": 3,
     "publishedAt": "2024-01-01T00:00:00.000Z",
-    "cover": "/uploads/albums/V7mQk2aP9xLrT0uZs8dNfJ.jpg"
+    "cover": "/uploads/albums/V7mQk2aP9xLrT0uZs8dNfJ.jpg",
+    "userId": 1,
+    "isPublished": false
 }
 ```
 
 ## GET /albums
 
 Получить альбомы
+
+### Доступ:
+
+- Публичный (токен опционален)
 
 ### Query параметры (опционально)
 
@@ -114,7 +239,7 @@ multipart/form-data
 ### Примеры
 
 - `/albums` - все альбомы
-- `/albums?artist=2` - альбомы конкретного артиста
+- `/albums?artist=2` -альбомы конкретного артиста (добавляется поле count - кол-во треков)
 
 ### Ответ - 200
 
@@ -125,7 +250,10 @@ multipart/form-data
         "title": "Album Name",
         "artistId": 3,
         "publishedAt": "2024-01-01T00:00:00.000Z",
-        "cover": "/uploads/albums/V7mQk2aP9xLrT0uZs8dNfJ.jpg"
+        "cover": "/uploads/albums/V7mQk2aP9xLrT0uZs8dNfJ.jpg",
+        "userId": 1,
+        "isPublished": true,
+        "count": 10
     }
 ]
 ```
@@ -133,6 +261,10 @@ multipart/form-data
 ## GET /albums/:id
 
 Получить альбом по id
+
+### Доступ:
+
+- Публичный (токен опционален)
 
 ### Ответ - 200
 
@@ -143,12 +275,54 @@ multipart/form-data
     "artistId": 3,
     "publishedAt": "2024-01-01T00:00:00.000Z",
     "cover": "/uploads/albums/V7mQk2aP9xLrT0uZs8dNfJ.jpg",
+    "userId": 2,
+    "isPublished": true,
     "artist": {
         "id": 3,
         "name": "Me",
         "info": "The best singer",
-        "photo": "/uploads/artists/87hdgwg-3e98-4445-a499-cf444e204a72.jpg"
+        "photo": "/uploads/artists/87hdgwg-3e98-4445-a499-cf444e204a72.jpg",
+        "userId": 2,
+        "isPublished": true
     }
+}
+```
+
+## DELETE /albums/:id
+
+Удалить альбом
+
+### Доступ:
+
+- ADMIN
+
+### Ответ - 200
+
+```json
+{
+    "message": "Successfully deleted"
+}
+```
+
+## POST /albums/:id/publish
+
+Опубликовать альбом
+
+### Доступ:
+
+- ADMIN
+
+### Ответ - 200
+
+```json
+{
+    "id": 1,
+    "title": "Album Name",
+    "artistId": 3,
+    "publishedAt": "2024-01-01T00:00:00.000Z",
+    "cover": "/uploads/albums/V7mQk2aP9xLrT0uZs8dNfJ.jpg",
+    "userId": 1,
+    "isPublished": true
 }
 ```
 
@@ -159,6 +333,12 @@ multipart/form-data
 ## POST /tracks
 
 Создать трек
+
+### Headers
+
+```bash
+Authorization: Bearer <token>
+```
 
 ### Поля:
 
@@ -173,13 +353,19 @@ multipart/form-data
     "id": 3,
     "title": "My new track",
     "duration": 233,
-    "albumId": 3
+    "albumId": 3,
+    "userId": 1,
+    "isPublished": false
 }
 ```
 
 ## GET /tracks
 
 Получить треки
+
+### Доступ:
+
+- Публичный (токен опционален)
 
 ### Query параметры (опционально)
 
@@ -198,9 +384,48 @@ multipart/form-data
         "id": 1,
         "title": "God's Plan",
         "duration": 198,
-        "albumId": 1
+        "albumId": 1,
+        "userId": 1,
+        "isPublished": true
     }
 ]
+```
+
+## DELETE /tracks/:id
+
+Удалить трек
+
+### Доступ:
+
+- ADMIN
+
+### Ответ - 200
+
+```json
+{
+    "message": "Successfully deleted"
+}
+```
+
+## POST /tracks/:id/publish
+
+Опубликовать трек
+
+### Доступ:
+
+- ADMIN
+
+### Ответ - 200
+
+```json
+{
+    "id": 3,
+    "title": "My new track",
+    "duration": 233,
+    "albumId": 3,
+    "userId": 1,
+    "isPublished": true
+}
 ```
 
 ---
@@ -251,7 +476,8 @@ Authorization: Bearer <token>
 {
     "id": 1,
     "username": "someone",
-    "token": null
+    "token": null,
+    "role": "USER"
 }
 ```
 
@@ -270,7 +496,8 @@ Authorization: Bearer <token>
 {
     "id": 1,
     "username": "someone",
-    "token": "pnm0R_eFcZF5QPunVTca0"
+    "token": "pnm0R_eFcZF5QPunVTca0",
+    "role": "USER"
 }
 ```
 
@@ -300,6 +527,7 @@ Authorization: Bearer <token>
 - 201 - Created
 - 400 - Bad Request
 - 401 - Unauthorized
+- 403 - Forbidden
 - 404 - Not found
 - 500 - Internal Server Error
 
