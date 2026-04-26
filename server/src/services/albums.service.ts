@@ -96,7 +96,7 @@ export class AlbumsService {
             throw new Error("Album not found");
         }
 
-        removeFile(album.cover);
+        await removeFile(album.cover);
 
         await prisma.album.delete({
             where: { id },

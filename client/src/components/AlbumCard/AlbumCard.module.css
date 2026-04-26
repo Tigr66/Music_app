@@ -8,7 +8,7 @@
 .album_card:hover {
     transition: all 0.4s ease;
     background-color: rgba(255, 255, 255, 0.08);
-    transform: scale(1.05);
+    opacity: 0.9;
 }
 
 .album_card_image {

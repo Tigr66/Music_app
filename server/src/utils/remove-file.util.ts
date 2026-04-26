@@ -1,12 +1,14 @@
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 
-export const removeFile = (filePath?: string | null) => {
+export const removeFile = async (filePath?: string | null) => {
     if (!filePath) return;
 
     const fullPath = path.resolve("uploads", filePath.replace("/uploads/", ""));
 
-    if (fs.existsSync(fullPath)) {
-        fs.unlinkSync(fullPath);
+    try {
+        await fs.unlink(fullPath);
+    } catch (e) {
+        console.error("Error deleting file:", e);
     }
 };

@@ -47,13 +47,17 @@ export class ArtistsService {
     async deleteArtist(id: number): Promise<void> {
         const artist = await prisma.artist.findUnique({
             where: { id },
+            include: {
+                albums: true,
+            },
         });
 
         if (!artist) {
             throw new Error("Artist not found");
         }
 
-        removeFile(artist.photo)
+        await removeFile(artist.photo);
+        await Promise.all(artist.albums.map((a) => removeFile(a.cover)));
 
         await prisma.artist.delete({
             where: { id },
