@@ -1,6 +1,5 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import { TrackHistoryService } from "../services/track_history.service";
-import { UsersService } from "../services/users.service";
 import { AuthRequest } from "../types/auth.types";
 
 export class TrackHistoryController {

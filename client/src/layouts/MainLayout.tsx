@@ -31,7 +31,7 @@ const MainLayout = () => {
     const error = useAppSelector((state) => state.music.error);
     const info = useAppSelector((state) => state.music.info);
     const user = useAppSelector((state) => state.music.user);
-    const isSending = useAppSelector((state) => state.music.isSending);
+    const isLoggingOut = useAppSelector((state) => state.music.isLoggingOut);
 
     const [collapsed, setCollapsed] = useState(true);
 
@@ -95,7 +95,7 @@ const MainLayout = () => {
                         <NavLink
                             to={appRoutes.LOGIN_PAGE}
                             className={styles.sidebar_link}
-                            onClick={(e) => isSending && e.preventDefault()}
+                            onClick={(e) => isLoggingOut && e.preventDefault()}
                         >
                             <UserOutlined /> {!collapsed && "Login"}
                         </NavLink>
@@ -106,7 +106,7 @@ const MainLayout = () => {
                             <NavLink
                                 to={appRoutes.TRACK_HISTORY_PAGE}
                                 className={styles.sidebar_link}
-                                onClick={(e) => isSending && e.preventDefault()}
+                                onClick={(e) => isLoggingOut && e.preventDefault()}
                             >
                                 <HistoryOutlined />{" "}
                                 {!collapsed && "Track history"}
@@ -114,21 +114,21 @@ const MainLayout = () => {
                             <NavLink
                                 to={appRoutes.ADD_ARTIST_PAGE}
                                 className={styles.sidebar_link}
-                                onClick={(e) => isSending && e.preventDefault()}
+                                onClick={(e) => isLoggingOut && e.preventDefault()}
                             >
                                 <UserAddOutlined /> {!collapsed && "Add artist"}
                             </NavLink>
                             <NavLink
                                 to={appRoutes.ADD_ALBUM_PAGE}
                                 className={styles.sidebar_link}
-                                onClick={(e) => isSending && e.preventDefault()}
+                                onClick={(e) => isLoggingOut && e.preventDefault()}
                             >
                                 <FolderOutlined /> {!collapsed && "Add album"}
                             </NavLink>
                             <NavLink
                                 to={appRoutes.ADD_TRACK_PAGE}
                                 className={styles.sidebar_link}
-                                onClick={(e) => isSending && e.preventDefault()}
+                                onClick={(e) => isLoggingOut && e.preventDefault()}
                             >
                                 <CustomerServiceOutlined />{" "}
                                 {!collapsed && "Add track"}
@@ -139,11 +139,11 @@ const MainLayout = () => {
                     {user && (
                         <button
                             onClick={() => dispatch(logoutUserThunk())}
-                            disabled={isSending}
+                            disabled={isLoggingOut}
                             className={styles.sidebar_button}
                         >
                             <LogoutOutlined /> {!collapsed && "Logout"}{" "}
-                            {isSending && <LoadingOutlined />}
+                            {isLoggingOut && <LoadingOutlined />}
                         </button>
                     )}
 

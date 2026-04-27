@@ -42,6 +42,7 @@ const initialState: IMusicState = {
     isLoadingTracks: false,
     isLoadingHistory: false,
     isSending: false,
+    isLoggingOut: false,
     currentArtist: null,
     currentAlbum: null,
 };
@@ -194,7 +195,9 @@ const musicSlice = createSlice({
             })
             .addCase(deleteAlbumThunk.fulfilled, (state, action) => {
                 state.isSending = false;
-                state.artistAlbums = state.artistAlbums.filter((a) => a.id !== action.payload);
+                state.artistAlbums = state.artistAlbums.filter(
+                    (a) => a.id !== action.payload,
+                );
                 state.success = "Successfully deleted";
             })
             .addCase(deleteAlbumThunk.rejected, (state, action) => {
@@ -244,7 +247,9 @@ const musicSlice = createSlice({
             })
             .addCase(deleteTrackThunk.fulfilled, (state, action) => {
                 state.isSending = false;
-                state.albumTracks = state.albumTracks.filter((a) => a.id !== action.payload);
+                state.albumTracks = state.albumTracks.filter(
+                    (a) => a.id !== action.payload,
+                );
                 state.success = "Successfully deleted";
             })
             .addCase(deleteTrackThunk.rejected, (state, action) => {
@@ -278,16 +283,16 @@ const musicSlice = createSlice({
                 state.error = action.payload || "Error with login";
             })
             .addCase(logoutUserThunk.pending, (state) => {
-                state.isSending = true;
+                state.isLoggingOut = true;
             })
             .addCase(logoutUserThunk.fulfilled, (state, action) => {
-                state.isSending = false;
+                state.isLoggingOut = false;
                 state.success = action.payload;
                 localStorage.removeItem("user_token");
                 state.user = null;
             })
             .addCase(logoutUserThunk.rejected, (state, action) => {
-                state.isSending = false;
+                state.isLoggingOut = false;
                 state.error = action.payload || "Error with logout";
             })
             .addCase(addHistoryThunk.pending, (state) => {

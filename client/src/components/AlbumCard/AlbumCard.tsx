@@ -7,7 +7,10 @@ import styles from "./AlbumCard.module.css";
 import { formatDate } from "../../utils/formatDate";
 import PublishBadge from "../PublishBadge/PublishBadge";
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { publishAlbumThunk } from "../../store/musicSlice/musicThunks";
+import {
+    deleteAlbumThunk,
+    publishAlbumThunk,
+} from "../../store/musicSlice/musicThunks";
 const { Title, Text } = Typography;
 
 interface AlbumCardProps {
@@ -72,7 +75,7 @@ const AlbumCard = ({ album }: AlbumCardProps) => {
                         <Button
                             onClick={(e) => {
                                 e.stopPropagation();
-                                dispatch(publishAlbumThunk(album.id));
+                                dispatch(deleteAlbumThunk(album.id));
                             }}
                             type="primary"
                             style={{ width: "100%" }}

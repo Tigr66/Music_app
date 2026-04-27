@@ -1,4 +1,4 @@
-import { Flex } from "antd";
+import { Flex, Typography } from "antd";
 import type React from "react";
 import { useAppSelector } from "../../store/store";
 import { useEffect } from "react";
@@ -7,10 +7,11 @@ import { useNavigate } from "react-router-dom";
 import { appRoutes } from "../../routes/appRoutes";
 
 interface AddFormWrapperProps {
+    title: string;
     children: React.ReactNode;
 }
 
-const AddFormWrapper = ({ children }: AddFormWrapperProps) => {
+const AddFormWrapper = ({ title, children }: AddFormWrapperProps) => {
     const user = useAppSelector((state) => state.music.user);
     const navigate = useNavigate();
 
@@ -24,9 +25,12 @@ const AddFormWrapper = ({ children }: AddFormWrapperProps) => {
     }, []);
 
     return (
-        <Flex vertical align="left" justify="left">
-            {children}
-        </Flex>
+        <>
+            <Typography.Title>{title}</Typography.Title>
+            <Flex vertical align="left" justify="left">
+                {children}
+            </Flex>
+        </>
     );
 };
 

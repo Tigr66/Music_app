@@ -22,6 +22,7 @@ export interface IMusicState {
     isLoadingTracks: boolean;
     isLoadingHistory: boolean;
     isSending: boolean;
+    isLoggingOut: boolean;
     currentArtist: IArtist | null;
     currentAlbum: IAlbumWithArtist | null;
 }

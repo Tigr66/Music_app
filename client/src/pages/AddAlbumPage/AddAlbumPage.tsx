@@ -54,7 +54,7 @@ const AddAlbumPage = () => {
     }, [dispatch]);
 
     return (
-        <AddFormWrapper>
+        <AddFormWrapper title="Add Album">
             <Form
                 form={form}
                 name="basic"

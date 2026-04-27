@@ -18,6 +18,8 @@ const AddTrackPage = () => {
 
     const [form] = Form.useForm();
 
+    const artistId = Form.useWatch("artistId", form);
+
     const isSending = useAppSelector((state) => state.music.isSending);
     const success = useAppSelector((state) => state.music.success);
     const artists = useAppSelector((state) => state.music.artists);
@@ -49,7 +51,7 @@ const AddTrackPage = () => {
     }, [dispatch]);
 
     return (
-        <AddFormWrapper>
+        <AddFormWrapper title="Add Track">
             <Form
                 form={form}
                 name="basic"
@@ -92,7 +94,8 @@ const AddTrackPage = () => {
                             type: "number",
                             min: 1,
                             max: 200000000,
-                            message: "Duration should be between 1 second and 200,000,000 seconds",
+                            message:
+                                "Duration should be between 1 second and 200,000,000 seconds",
                         },
                     ]}
                 >
@@ -132,7 +135,7 @@ const AddTrackPage = () => {
                     ]}
                 >
                     <AppSelect
-                        disabled={!form.getFieldValue("artistId")}
+                        disabled={!artistId}
                         loading={isLoadingAlbums}
                         options={artistAlbums.map((a) => {
                             return { label: a.title, value: a.id };

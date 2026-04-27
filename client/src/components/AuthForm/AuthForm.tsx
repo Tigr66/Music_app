@@ -78,7 +78,7 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
                         },
                     ]}
                 >
-                    <Input />
+                    <Input autoComplete="username" />
                 </Form.Item>
 
                 <Form.Item<AuthFormType>
@@ -91,7 +91,7 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
                         },
                     ]}
                 >
-                    <Input.Password />
+                    <Input.Password autoComplete="current-password" />
                 </Form.Item>
 
                 <Form.Item label={null}>

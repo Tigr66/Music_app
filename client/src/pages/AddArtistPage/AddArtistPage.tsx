@@ -43,7 +43,7 @@ const AddArtistPage = () => {
     }, [success]);
 
     return (
-        <AddFormWrapper>
+        <AddFormWrapper title="Add Artist">
             <Form
                 form={form}
                 name="basic"

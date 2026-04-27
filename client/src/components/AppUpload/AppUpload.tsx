@@ -32,12 +32,12 @@ const AppUpload = (props: UploadProps) => {
             >
                 + Upload
             </Upload>
-            {previewImage && (
+            {previewOpen && (
                 <Image
                     style={{ display: "none" }}
                     preview={{
                         open: previewOpen,
-                        onVisibleChange: (v) => {
+                        onOpenChange: (v) => {
                             setPreviewOpen(v);
                             if (!v) setPreviewImage("");
                         },
