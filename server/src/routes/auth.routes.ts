@@ -31,5 +31,10 @@ export class AuthRoutes {
             authMiddleware,
             this.authController.logoutUser,
         );
+        this.router.post(
+            "/refresh",
+            authMiddleware,
+            this.authController.refreshAccessToken,
+        );
     }
 }

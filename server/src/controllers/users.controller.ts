@@ -37,7 +37,15 @@ export class AuthController {
 
             const result = await this.authService.login(user);
 
-            res.status(200).json(result);
+            const { refreshToken, ...userWithoutTokens } = result;
+
+            res.cookie("refresh_token", result.refreshToken, {
+                httpOnly: true,
+                sameSite: "lax",
+                maxAge: 7 * 24 * 60 * 60 * 1000,
+            });
+
+            res.status(200).json(userWithoutTokens);
         } catch (err) {
             next(err);
         }
@@ -54,6 +62,26 @@ export class AuthController {
 
             res.clearCookie("refresh_token");
             res.status(200).json({ message: "Logged out successfully" });
+        } catch (err) {
+            next(err);
+        }
+    };
+
+    refreshAccessToken = async (
+        req: AuthRequest,
+        res: Response,
+        next: NextFunction,
+    ) => {
+        try {
+            const { refreshToken } = req.cookies;
+
+            if (!refreshToken) {
+                return res.status(401).json({ error: "No refresh token provided" });
+            }
+
+            const newAccessToken = await this.authService.refreshAccessToken(refreshToken);
+
+            res.status(200).json({ accessToken: newAccessToken });
         } catch (err) {
             next(err);
         }

@@ -1,6 +1,8 @@
 import { Response, NextFunction } from "express";
-import { prisma } from "../lib/prisma";
 import { AuthRequest } from "../types/auth.types";
+import { JwtService } from "../services/jwt.service";
+
+const jwtService = new JwtService();
 
 export const authMiddleware = async (
     req: AuthRequest,
@@ -15,18 +17,17 @@ export const authMiddleware = async (
             return;
         }
 
-        const token = authHeader.startsWith("Bearer ")
-            ? authHeader.split(" ")[1]
-            : authHeader;
+        const [type, token] = authHeader.split(" ");
 
-        const user = await prisma.user.findUnique({
-            where: { token: token || "" },
-        });
+        if (type !== "Bearer" || !token) {
+            res.status(401).json({ error: "Invalid authorization format" });
+            return;
+        }
+
+        const user = jwtService.verifyAccessToken(token);
 
         if (!user) {
-            res.status(401).json({
-                error: "Unauthorized user",
-            });
+            res.status(401).json({ error: "Invalid authorization token" });
             return;
         }
 

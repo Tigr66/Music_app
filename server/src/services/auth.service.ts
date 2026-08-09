@@ -96,4 +96,26 @@ export class AuthService {
             },
         });
     }
+
+    async refreshAccessToken(refreshToken: string): Promise<string> {
+        const user = await prisma.user.findUnique({
+            where: {
+                refreshToken: refreshToken,
+            },
+        });
+
+        if (!user) {
+            throw new BadRequestError("Invalid refresh token");
+        }
+
+        const payload: AuthUser = {
+            id: user.id,
+            username: user.username,
+            role: user.role,
+        };
+
+        const accessToken = this.jwtService.setAccessToken(payload);
+
+        return accessToken;
+    }
 }
