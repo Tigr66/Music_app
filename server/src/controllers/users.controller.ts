@@ -1,13 +1,12 @@
 import { NextFunction, Request, Response } from "express";
-import { UsersService } from "../services/users.service";
-import { IUser } from "../interfaces/user.interface";
 import { AuthRequest } from "../types/auth.types";
+import { AuthService } from "../services/auth.service";
 
-export class UsersController {
-    private usersService: UsersService;
+export class AuthController {
+    private authService: AuthService;
 
     constructor() {
-        this.usersService = new UsersService();
+        this.authService = new AuthService();
     }
 
     registerUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -19,7 +18,7 @@ export class UsersController {
                 password: password.trim(),
             };
 
-            const result = await this.usersService.register(newUser);
+            const result = await this.authService.register(newUser);
 
             res.status(201).json(result);
         } catch (err) {
@@ -36,7 +35,7 @@ export class UsersController {
                 password: password.trim(),
             };
 
-            const result = await this.usersService.login(user);
+            const result = await this.authService.login(user);
 
             res.status(200).json(result);
         } catch (err) {
@@ -51,8 +50,9 @@ export class UsersController {
     ) => {
         try {
             const user = req.user!;
-            await this.usersService.logout(user.id);
+            await this.authService.logout(user.id);
 
+            res.clearCookie("refresh_token");
             res.status(200).json({ message: "Logged out successfully" });
         } catch (err) {
             next(err);

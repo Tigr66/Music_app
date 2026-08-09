@@ -6,7 +6,7 @@ import { ArtistsRoutes } from "./routes/artists.routes";
 import { TracksRoutes } from "./routes/tracks.routes";
 import { AlbumsRoutes } from "./routes/albums.routes";
 import { albumsUploads, artistsUploads } from "./config/path";
-import { UsersRoutes } from "./routes/users.routes";
+import { AuthRoutes } from "./routes/auth.routes";
 import { TrackHistoryRoutes } from "./routes/track_history.routes";
 import { ErrorMiddleware } from "./middlewares/error.middleware";
 
@@ -16,7 +16,7 @@ const PORT = 8000;
 const artistsRoutes = new ArtistsRoutes();
 const tracksRoutes = new TracksRoutes();
 const albumsRoutes = new AlbumsRoutes();
-const usersRoutes = new UsersRoutes();
+const authRoutes = new AuthRoutes();
 const trackHistoryRoutes = new TrackHistoryRoutes();
 
 fs.mkdirSync(artistsUploads, { recursive: true });
@@ -34,7 +34,7 @@ app.use("/uploads/artists", express.static(artistsUploads));
 app.use("/artists", artistsRoutes.router);
 app.use("/tracks", tracksRoutes.router);
 app.use("/albums", albumsRoutes.router);
-app.use("/users", usersRoutes.router);
+app.use("/auth", authRoutes.router);
 app.use("/track_history", trackHistoryRoutes.router);
 
 app.use(ErrorMiddleware.handle);

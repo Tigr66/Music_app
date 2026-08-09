@@ -1,34 +1,35 @@
 import { Router } from "express";
 import { validateDto } from "../middlewares/validate-dto.middleware";
 import { CreateUserDto } from "../dto/create-user.dto";
-import { UsersController } from "../controllers/users.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
+import { LoginUserDto } from "../dto/login-user.dto";
+import { AuthController } from "../controllers/users.controller";
 
-export class UsersRoutes {
+export class AuthRoutes {
     public router: Router;
-    private usersController: UsersController;
+    private authController: AuthController;
 
     constructor() {
-        this.usersController = new UsersController();
+        this.authController = new AuthController();
         this.router = Router();
         this.initRoutes();
     }
 
     private initRoutes() {
         this.router.post(
-            "/",
+            "/register",
             validateDto(CreateUserDto),
-            this.usersController.registerUser,
+            this.authController.registerUser,
         );
         this.router.post(
-            "/sessions",
-            validateDto(CreateUserDto),
-            this.usersController.loginUser,
+            "/login",
+            validateDto(LoginUserDto),
+            this.authController.loginUser,
         );
         this.router.post(
             "/logout",
             authMiddleware,
-            this.usersController.logoutUser,
+            this.authController.logoutUser,
         );
     }
 }
