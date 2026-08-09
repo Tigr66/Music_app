@@ -47,7 +47,7 @@ async function main() {
         },
     ];
 
-    const artistMap: Record<string, number> = {};
+    const artistMap: Record<string, string> = {};
 
     for (const artist of ARTISTS) {
         const { key, ...data } = artist;
@@ -97,7 +97,7 @@ async function main() {
         },
     ];
 
-    const albumsMap: Record<string, number> = {};
+    const albumsMap: Record<string, string> = {};
 
     for (const album of ALBUMS) {
         const { key, artistKey, publishedAt, ...data } = album;
@@ -207,7 +207,7 @@ async function main() {
         },
     ];
 
-    const tracksMap: Record<string, number> = {};
+    const tracksMap: Record<string, string> = {};
 
     for (const track of TRACKS) {
         const { key, albumKey, ...data } = track;
