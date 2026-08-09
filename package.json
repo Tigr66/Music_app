@@ -1,7 +1,7 @@
 {
-    "name": "homework_87_gareyev_tigran",
+    "name": "music_app",
     "version": "1.0.0",
-    "description": "API для работы с артистами, альбомами, треками и пользователями.",
+    "description": "API для работы с артистами, альбомами, треками и пользователями",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,16 +9,16 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+ssh://git@gitlab.com/ajs-24-gareev-tigran/homework_87_gareyev_tigran.git"
+        "url": "git@github.com:Tigr66/Music_app.git"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "type": "commonjs",
     "bugs": {
-        "url": "https://gitlab.com/ajs-24-gareev-tigran/homework_87_gareyev_tigran/issues"
+        "url": "git@github.com:Tigr66/Music_app.git/issues"
     },
-    "homepage": "https://gitlab.com/ajs-24-gareev-tigran/homework_87_gareyev_tigran#readme",
+    "homepage": "git@github.com:Tigr66/Music_app.git#readme",
     "devDependencies": {
         "ultra-runner": "^3.10.5"
     }
