@@ -12,7 +12,7 @@ export const authMiddleware = async (
     try {
         const authHeader = req.headers.authorization;
 
-        if (!authHeader || typeof authHeader !== "string") {
+        if (!authHeader) {
             res.status(401).json({ error: "No authorization token" });
             return;
         }
