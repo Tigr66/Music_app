@@ -274,8 +274,8 @@ const musicSlice = createSlice({
                 state.isSending = false;
                 state.user = action.payload;
                 state.success = "Welcome back!";
-                if (action.payload.token) {
-                    localStorage.setItem("user_token", action.payload.token);
+                if (action.payload.accessToken) {
+                    localStorage.setItem("access_token", action.payload.accessToken);
                 }
             })
             .addCase(loginUserThunk.rejected, (state, action) => {
@@ -288,7 +288,7 @@ const musicSlice = createSlice({
             .addCase(logoutUserThunk.fulfilled, (state, action) => {
                 state.isLoggingOut = false;
                 state.success = action.payload;
-                localStorage.removeItem("user_token");
+                localStorage.removeItem("access_token");
                 state.user = null;
             })
             .addCase(logoutUserThunk.rejected, (state, action) => {

@@ -241,7 +241,7 @@ export const registerUserThunk = createAsyncThunk<
     { rejectValue: string }
 >("music-slice/register-user", async (newUser, { rejectWithValue }) => {
     try {
-        await musicApi.post("/users", newUser);
+        await musicApi.post("/auth/register", newUser);
     } catch (err) {
         const error = err as AxiosError<{ error: string }>;
 
@@ -255,7 +255,7 @@ export const loginUserThunk = createAsyncThunk<
     { rejectValue: string }
 >("music-slice/login-user", async (newUser, { rejectWithValue }) => {
     try {
-        const result = await musicApi.post("/users/sessions", newUser);
+        const result = await musicApi.post("/auth/login", newUser);
 
         return result.data;
     } catch (err) {
@@ -272,7 +272,7 @@ export const logoutUserThunk = createAsyncThunk<
 >("music-slice/logout-user", async (_, { rejectWithValue }) => {
     try {
         const result = await musicApi.post<{ message: string }>(
-            "/users/logout",
+            "/auth/logout",
         );
 
         return result.data.message;

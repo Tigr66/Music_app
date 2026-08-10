@@ -4,5 +4,5 @@ export interface IUser {
     id: number;
     username: string;
     role: UserRole;
-    token: string | null;
+    accessToken: string | null;
 }
