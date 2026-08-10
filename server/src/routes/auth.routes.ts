@@ -4,6 +4,7 @@ import { CreateUserDto } from "../dto/create-user.dto";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { LoginUserDto } from "../dto/login-user.dto";
 import { AuthController } from "../controllers/users.controller";
+import { loginLimiter, registerLimiter } from "../config/rate-limit";
 
 export class AuthRoutes {
     public router: Router;
@@ -18,11 +19,13 @@ export class AuthRoutes {
     private initRoutes() {
         this.router.post(
             "/register",
+            registerLimiter,
             validateDto(CreateUserDto),
             this.authController.registerUser,
         );
         this.router.post(
             "/login",
+            loginLimiter,
             validateDto(LoginUserDto),
             this.authController.loginUser,
         );
