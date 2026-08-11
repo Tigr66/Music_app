@@ -24,12 +24,26 @@ import type { IMusicState } from "../../interfaces/IMusicState";
 import type { IAlbumWithArtist } from "../../interfaces/IAlbumWithArtist";
 import type { ITrack } from "../../interfaces/ITrack";
 import type { IArtist } from "../../interfaces/IArtist";
+import type { IUser } from "../../interfaces/IUser";
+import { jwtDecode } from "jwt-decode";
+
+const token = localStorage.getItem("access_token");
+
+let user: IUser | null = null;
+
+if (token) {
+    try {
+        user = jwtDecode<IUser>(token);
+    } catch {
+        localStorage.removeItem("access_token");
+    }
+}
 
 const initialState: IMusicState = {
     success: null,
     error: null,
     info: null,
-    user: null,
+    user,
     currentTrack: null,
     artists: [],
     artistAlbums: [],
@@ -275,7 +289,10 @@ const musicSlice = createSlice({
                 state.user = action.payload;
                 state.success = "Welcome back!";
                 if (action.payload.accessToken) {
-                    localStorage.setItem("access_token", action.payload.accessToken);
+                    localStorage.setItem(
+                        "access_token",
+                        action.payload.accessToken,
+                    );
                 }
             })
             .addCase(loginUserThunk.rejected, (state, action) => {
