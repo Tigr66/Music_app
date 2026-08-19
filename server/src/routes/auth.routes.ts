@@ -29,11 +29,7 @@ export class AuthRoutes {
             validateDto(LoginUserDto),
             this.authController.loginUser,
         );
-        this.router.post(
-            "/logout",
-            authMiddleware,
-            this.authController.logoutUser,
-        );
+        this.router.post("/logout", this.authController.logoutUser);
         this.router.post(
             "/refresh",
             authMiddleware,

@@ -1,39 +1,38 @@
-import { prisma } from "../lib/prisma";
 import { ConflictError } from "../errors/conflict-error";
 import { BadRequestError } from "../errors/bad-request-error";
 import { JwtService } from "./jwt.service";
 import { AuthUser, loginUser } from "../types/auth.types";
 import { LoginUserDto } from "../dto/login-user.dto";
 import { CreateUserDto } from "../dto/create-user.dto";
+import { AuthRepository } from "../repositories/auth.repository";
 import bcrypt from "bcrypt";
 
 export class AuthService {
     private jwtService: JwtService;
+    private authRepository: AuthRepository;
+
+    private readonly saltRounds: number = 10;
 
     constructor() {
         this.jwtService = new JwtService();
+        this.authRepository = new AuthRepository();
     }
 
     async register(newUser: CreateUserDto): Promise<AuthUser> {
-        const existingUser = await prisma.user.findUnique({
-            where: {
-                username: newUser.username,
-            },
-        });
+        const existingUser = await this.authRepository.getByUsername(
+            newUser.username,
+        );
 
         if (existingUser) {
             throw new ConflictError("User with this username is already exist");
         }
 
-        const saltRounds = 10;
-        const salt = await bcrypt.genSalt(saltRounds);
+        const salt = await bcrypt.genSalt(this.saltRounds);
         const hashedPassword = await bcrypt.hash(newUser.password, salt);
 
-        const created = await prisma.user.create({
-            data: {
-                username: newUser.username,
-                password: hashedPassword,
-            },
+        const created = await this.authRepository.create({
+            username: newUser.username,
+            password: hashedPassword,
         });
 
         const { password, ...userWithoutPassword } = created;
@@ -42,11 +41,9 @@ export class AuthService {
     }
 
     async login(user: LoginUserDto): Promise<loginUser> {
-        const loginUser = await prisma.user.findUnique({
-            where: {
-                username: user.username,
-            },
-        });
+        const loginUser = await this.authRepository.getByUsername(
+            user.username,
+        );
 
         if (!loginUser) {
             throw new BadRequestError("Incorrect username or password");
@@ -68,14 +65,10 @@ export class AuthService {
 
         const accessToken = this.jwtService.setAccessToken(payload);
 
-        const updatedUser = await prisma.user.update({
-            where: {
-                id: loginUser.id,
-            },
-            data: {
-                refreshToken: refreshToken,
-            },
-        });
+        const updatedUser = await this.authRepository.updateRefreshToken(
+            loginUser.id,
+            refreshToken,
+        );
 
         return {
             id: updatedUser.id,
@@ -86,23 +79,8 @@ export class AuthService {
         };
     }
 
-    async logout(userId: string): Promise<void> {
-        await prisma.user.update({
-            where: {
-                id: userId,
-            },
-            data: {
-                refreshToken: null,
-            },
-        });
-    }
-
     async refreshAccessToken(refreshToken: string): Promise<string> {
-        const user = await prisma.user.findUnique({
-            where: {
-                refreshToken: refreshToken,
-            },
-        });
+        const user = await this.authRepository.getByRefreshToken(refreshToken);
 
         if (!user) {
             throw new BadRequestError("Invalid refresh token");

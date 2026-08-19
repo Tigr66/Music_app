@@ -8,51 +8,42 @@ import {
     AlbumWithCount,
     CreateAlbumData,
 } from "../types/album.types";
+import { AlbumRepository } from "../repositories/album.repository";
+import { ArtistRepository } from "../repositories/artist.repository";
+import { BadRequestError } from "../errors/bad-request-error";
+import { NotFoundError } from "../errors/not-found-error";
 
 export class AlbumsService {
+    private albumRepository: AlbumRepository;
+    private artistRepository: ArtistRepository;
+
+    constructor() {
+        this.albumRepository = new AlbumRepository();
+        this.artistRepository = new ArtistRepository();
+    }
+
     async create(newAlbum: CreateAlbumData): Promise<Album> {
-        const artist = await prisma.artist.findUnique({
-            where: { id: newAlbum.artistId },
-        });
+        const artist = await this.artistRepository.getById(newAlbum.artistId);
 
         if (!artist) {
             throw new Error("Artist not found");
         }
 
-        return await prisma.album.create({
-            data: {
-                ...newAlbum,
-            },
-        });
+        return await this.albumRepository.create(newAlbum);
     }
 
     async getAll(user?: AuthUser): Promise<Album[]> {
-        return await prisma.album.findMany({
-            orderBy: {
-                publishedAt: "asc",
-            },
-            where: getContentWhere(user),
-        });
+        return await this.albumRepository.getAll(user);
     }
 
     async getArtistAlbums(
         artistId: string,
         user?: AuthUser,
     ): Promise<AlbumWithCount[]> {
-        const albums = await prisma.album.findMany({
-            where: {
-                artistId,
-                ...getContentWhere(user),
-            },
-            include: {
-                _count: {
-                    select: { tracks: true },
-                },
-            },
-            orderBy: {
-                publishedAt: "asc",
-            },
-        });
+        const albums = await this.albumRepository.getArtistAlbums(
+            artistId,
+            user,
+        );
 
         return albums.map((a) => {
             const { _count, ...album } = a;
@@ -64,58 +55,35 @@ export class AlbumsService {
         });
     }
 
-    async getById(id?: string): Promise<AlbumWithArtist | null> {
-        if (!id) {
-            return null;
-        }
-
-        return await prisma.album.findUnique({
-            where: { id },
-            include: {
-                artist: true,
-            },
-        });
+    async getById(id: string): Promise<AlbumWithArtist | null> {
+        return await this.albumRepository.getById(id);
     }
 
     async publishAlbum(id: string): Promise<Album> {
-        const album = await prisma.album.findUnique({
-            where: { id },
-            include: {
-                artist: true,
-            },
-        });
+        const album = await this.albumRepository.getById(id);
 
         if (!album) {
-            throw new Error("Album not found");
+            throw new NotFoundError("Album not found");
         }
 
         if (!album.artist.isPublished) {
-            throw new Error(
+            throw new BadRequestError(
                 "Cannot publish album because artist is not published",
             );
         }
 
-        return await prisma.album.update({
-            where: { id },
-            data: {
-                isPublished: true,
-            },
-        });
+        return await this.albumRepository.publishAlbum(id);
     }
 
     async deleteAlbum(id: string): Promise<void> {
-        const album = await prisma.album.findUnique({
-            where: { id },
-        });
+        const album = await this.albumRepository.getById(id);
 
         if (!album) {
-            throw new Error("Album not found");
+            throw new NotFoundError("Album not found");
         }
 
         await removeFile(album.cover);
 
-        await prisma.album.delete({
-            where: { id },
-        });
+        await this.albumRepository.deleteById(id);
     }
 }

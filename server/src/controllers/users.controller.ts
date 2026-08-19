@@ -52,14 +52,11 @@ export class AuthController {
     };
 
     logoutUser = async (
-        req: AuthRequest,
+        _: AuthRequest,
         res: Response,
         next: NextFunction,
     ) => {
         try {
-            const user = req.user!;
-            await this.authService.logout(user.id);
-
             res.clearCookie("refresh_token");
             res.status(200).json({ message: "Logged out successfully" });
         } catch (err) {
@@ -76,10 +73,13 @@ export class AuthController {
             const { refreshToken } = req.cookies;
 
             if (!refreshToken) {
-                return res.status(401).json({ error: "No refresh token provided" });
+                return res
+                    .status(401)
+                    .json({ error: "No refresh token provided" });
             }
 
-            const newAccessToken = await this.authService.refreshAccessToken(refreshToken);
+            const newAccessToken =
+                await this.authService.refreshAccessToken(refreshToken);
 
             res.status(200).json({ accessToken: newAccessToken });
         } catch (err) {
