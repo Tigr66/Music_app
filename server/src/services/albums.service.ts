@@ -1,16 +1,16 @@
 import { getContentWhere } from "../helpers/get-content-where.helper";
-import { IAlbumWithArtist } from "../interfaces/album-with-artist.interface";
-import { IAlbumWithCount } from "../interfaces/album-with-count.interface";
-import { IAlbum } from "../interfaces/album.interface";
-import { IUser } from "../interfaces/user.interface";
 import { prisma } from "../lib/prisma";
-import _ from "lodash";
 import { removeFile } from "../utils/remove-file.util";
+import { Album } from "../../generated/prisma/client";
+import { AuthUser } from "../types/auth.types";
+import {
+    AlbumWithArtist,
+    AlbumWithCount,
+    CreateAlbumData,
+} from "../types/album.types";
 
 export class AlbumsService {
-    async create(
-        newAlbum: Omit<IAlbum, "id" | "isPublished">,
-    ): Promise<IAlbum> {
+    async create(newAlbum: CreateAlbumData): Promise<Album> {
         const artist = await prisma.artist.findUnique({
             where: { id: newAlbum.artistId },
         });
@@ -26,7 +26,7 @@ export class AlbumsService {
         });
     }
 
-    async getAll(user?: IUser): Promise<IAlbum[]> {
+    async getAll(user?: AuthUser): Promise<Album[]> {
         return await prisma.album.findMany({
             orderBy: {
                 publishedAt: "asc",
@@ -36,9 +36,9 @@ export class AlbumsService {
     }
 
     async getArtistAlbums(
-        artistId: number,
-        user?: IUser,
-    ): Promise<IAlbumWithCount[]> {
+        artistId: string,
+        user?: AuthUser,
+    ): Promise<AlbumWithCount[]> {
         const albums = await prisma.album.findMany({
             where: {
                 artistId,
@@ -55,12 +55,20 @@ export class AlbumsService {
         });
 
         return albums.map((a) => {
-            const album = { ...a, count: a._count.tracks };
-            return _.omit(album, ["_count"]);
+            const { _count, ...album } = a;
+
+            return {
+                ...album,
+                count: _count.tracks,
+            };
         });
     }
 
-    async getById(id: number): Promise<IAlbumWithArtist | null> {
+    async getById(id?: string): Promise<AlbumWithArtist | null> {
+        if (!id) {
+            return null;
+        }
+
         return await prisma.album.findUnique({
             where: { id },
             include: {
@@ -69,7 +77,7 @@ export class AlbumsService {
         });
     }
 
-    async publishAlbum(id: number): Promise<IAlbum> {
+    async publishAlbum(id: string): Promise<Album> {
         const album = await prisma.album.findUnique({
             where: { id },
             include: {
@@ -95,7 +103,7 @@ export class AlbumsService {
         });
     }
 
-    async deleteAlbum(id: number): Promise<void> {
+    async deleteAlbum(id: string): Promise<void> {
         const album = await prisma.album.findUnique({
             where: { id },
         });

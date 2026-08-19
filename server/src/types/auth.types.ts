@@ -1,10 +1,10 @@
 import { Request } from "express";
 
-export interface AuthUser {
+export type AuthUser = {
     id: string;
     username: string;
     role: string;
-}
+};
 
 export type loginUser = {
     id: string;

@@ -28,7 +28,7 @@ export class AlbumsController {
 
             const newAlbum = {
                 title,
-                artistId: Number(artistId),
+                artistId: artistId,
                 publishedAt: publishedAt ? new Date(publishedAt) : new Date(),
                 cover: `/uploads/albums/${cover.filename}`,
                 userId: user.id,
@@ -48,15 +48,10 @@ export class AlbumsController {
 
             const user = req.user;
 
-            if (artist && isNaN(Number(artist))) {
-                return res.status(400).json({
-                    error: "Artist must be a number",
-                });
-            }
-
-            const albums = artist
-                ? await this.albumsService.getArtistAlbums(Number(artist), user)
-                : await this.albumsService.getAll(user);
+            const albums =
+                typeof artist === "string"
+                    ? await this.albumsService.getArtistAlbums(artist, user)
+                    : await this.albumsService.getAll(user);
 
             res.status(200).json(albums);
         } catch (err) {
@@ -74,11 +69,11 @@ export class AlbumsController {
 
             const user = req.user;
 
-            if (isNaN(Number(id))) {
-                return res.status(400).json({ error: "Id must be a number" });
+            if (typeof id !== "string") {
+                return res.status(400).json({ error: "Id must be a string" });
             }
 
-            const result = await this.albumsService.getById(Number(id));
+            const result = await this.albumsService.getById(id);
 
             if (
                 !result ||
@@ -106,8 +101,8 @@ export class AlbumsController {
             const { id } = req.params;
             const user = req.user!;
 
-            if (isNaN(Number(id))) {
-                return res.status(400).json({ error: "Id must be a number" });
+            if (typeof id !== "string") {
+                return res.status(400).json({ error: "Id must be a string" });
             }
 
             if (user.role !== "ADMIN") {
@@ -116,7 +111,7 @@ export class AlbumsController {
                     .json({ error: "Only admin can publish album" });
             }
 
-            const result = await this.albumsService.publishAlbum(Number(id));
+            const result = await this.albumsService.publishAlbum(id);
 
             res.status(200).json(result);
         } catch (err) {
@@ -131,10 +126,11 @@ export class AlbumsController {
     ) => {
         try {
             const { id } = req.params;
+
             const user = req.user!;
 
-            if (isNaN(Number(id))) {
-                return res.status(400).json({ error: "Id must be a number" });
+            if (typeof id !== "string") {
+                return res.status(400).json({ error: "Id must be a string" });
             }
 
             if (user.role !== "ADMIN") {
@@ -143,7 +139,7 @@ export class AlbumsController {
                     .json({ error: "Only admin can delete album" });
             }
 
-            await this.albumsService.deleteAlbum(Number(id));
+            await this.albumsService.deleteAlbum(id);
 
             res.status(200).json({ message: "Succesfully deleted" });
         } catch (err) {

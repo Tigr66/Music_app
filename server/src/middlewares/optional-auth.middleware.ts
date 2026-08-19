@@ -1,6 +1,8 @@
 import { NextFunction, Response } from "express";
-import { prisma } from "../lib/prisma";
 import { AuthRequest } from "../types/auth.types";
+import { JwtService } from "../services/jwt.service";
+
+const jwtService = new JwtService();
 
 export const optionalAuthMiddleware = async (
     req: AuthRequest,
@@ -10,18 +12,9 @@ export const optionalAuthMiddleware = async (
     try {
         const authHeader = req.headers.authorization;
 
-        if (!authHeader) {
-            next();
-            return;
-        }
+        const [_, token] = authHeader ? authHeader.split(" ") : [];
 
-        const token = authHeader.startsWith("Bearer ")
-            ? authHeader.split(" ")[1]
-            : authHeader;
-
-        const user = await prisma.user.findUnique({
-            where: { token: token || "" },
-        });
+        const user = token ? jwtService.verifyAccessToken(token) : null;
 
         if (user) req.user = user;
 
