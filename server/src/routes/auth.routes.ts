@@ -3,7 +3,7 @@ import { validateDto } from "../middlewares/validate-dto.middleware";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { LoginUserDto } from "../dto/login-user.dto";
-import { AuthController } from "../controllers/users.controller";
+import { AuthController } from "../controllers/auth.controller";
 import { loginLimiter, registerLimiter } from "../config/rate-limit";
 
 export class AuthRoutes {
