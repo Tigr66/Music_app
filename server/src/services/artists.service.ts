@@ -1,66 +1,50 @@
-import { getContentWhere } from "../helpers/get-content-where.helper";
-import { IArtist } from "../interfaces/artist.interface";
-import { IUser } from "../interfaces/user.interface";
-import { prisma } from "../lib/prisma";
+import { Artist } from "../../generated/prisma/client";
+import { NotFoundError } from "../errors/not-found-error";
+import { ArtistRepository } from "../repositories/artist.repository";
+import { CreateArtistData } from "../types/artist.types";
+import { AuthUser } from "../types/auth.types";
 import { removeFile } from "../utils/remove-file.util";
 
 export class ArtistsService {
-    async create(
-        newArtist: Omit<IArtist, "id" | "isPublished">,
-    ): Promise<IArtist> {
-        return await prisma.artist.create({
-            data: {
-                ...newArtist,
-            },
-        });
+    private artistRepository: ArtistRepository;
+
+    constructor() {
+        this.artistRepository = new ArtistRepository();
     }
 
-    async getAll(user?: IUser): Promise<IArtist[]> {
-        return await prisma.artist.findMany({
-            where: getContentWhere(user),
-        });
+    async create(newArtist: CreateArtistData): Promise<Artist> {
+        return await this.artistRepository.create(newArtist);
     }
 
-    async getById(id: number): Promise<IArtist | null> {
-        return await prisma.artist.findUnique({
-            where: { id },
-        });
+    async getAll(user?: AuthUser): Promise<Artist[]> {
+        return await this.artistRepository.getAll(user);
     }
 
-    async publishArtist(id: number): Promise<IArtist> {
-        const artist = await prisma.artist.findUnique({
-            where: { id },
-        });
+    async getById(id: string): Promise<Artist | null> {
+        return await this.artistRepository.getById(id);
+    }
+
+    async publishArtist(id: string): Promise<Artist> {
+        const artist = await this.artistRepository.getById(id);
 
         if (!artist) {
-            throw new Error("Artist not found");
+            throw new NotFoundError("Artist not found");
         }
 
-        return await prisma.artist.update({
-            where: { id },
-            data: {
-                isPublished: true,
-            },
-        });
+        return await this.artistRepository.publishArtist(id);
     }
 
-    async deleteArtist(id: number): Promise<void> {
-        const artist = await prisma.artist.findUnique({
-            where: { id },
-            include: {
-                albums: true,
-            },
-        });
+    async deleteArtist(id: string): Promise<void> {
+        const artist = await this.artistRepository.getByIdWithAlbums(id);
 
         if (!artist) {
-            throw new Error("Artist not found");
+            throw new NotFoundError("Artist not found");
         }
 
         await removeFile(artist.photo);
+        
         await Promise.all(artist.albums.map((a) => removeFile(a.cover)));
 
-        await prisma.artist.delete({
-            where: { id },
-        });
+        await this.artistRepository.deleteArtist(id);
     }
 }

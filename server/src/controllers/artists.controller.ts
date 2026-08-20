@@ -66,11 +66,11 @@ export class ArtistsController {
 
             const user = req.user;
 
-            if (isNaN(Number(id))) {
-                return res.status(400).json({ error: "Id must be a number" });
+            if (typeof id !== "string") {
+                return res.status(400).json({ error: "Id must be a string" });
             }
 
-            const result = await this.artistsService.getById(Number(id));
+            const result = await this.artistsService.getById(id);
 
             if (
                 !result ||
@@ -98,8 +98,8 @@ export class ArtistsController {
             const { id } = req.params;
             const user = req.user!;
 
-            if (isNaN(Number(id))) {
-                return res.status(400).json({ error: "Id must be a number" });
+            if (typeof id !== "string") {
+                return res.status(400).json({ error: "Id must be a string" });
             }
 
             if (user.role !== "ADMIN") {
@@ -108,7 +108,7 @@ export class ArtistsController {
                     .json({ error: "Only admin can publish artist" });
             }
 
-            const result = await this.artistsService.publishArtist(Number(id));
+            const result = await this.artistsService.publishArtist(id);
 
             res.status(200).json(result);
         } catch (err) {
@@ -125,8 +125,8 @@ export class ArtistsController {
             const { id } = req.params;
             const user = req.user!;
 
-            if (isNaN(Number(id))) {
-                return res.status(400).json({ error: "Id must be a number" });
+            if (typeof id !== "string") {
+                return res.status(400).json({ error: "Id must be a string" });
             }
 
             if (user.role !== "ADMIN") {
@@ -135,7 +135,7 @@ export class ArtistsController {
                     .json({ error: "Only admin can delete artist" });
             }
 
-            await this.artistsService.deleteArtist(Number(id));
+            await this.artistsService.deleteArtist(id);
 
             res.status(200).json({ message: "Succesfully deleted" });
         } catch (err) {

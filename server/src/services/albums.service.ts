@@ -1,5 +1,3 @@
-import { getContentWhere } from "../helpers/get-content-where.helper";
-import { prisma } from "../lib/prisma";
 import { removeFile } from "../utils/remove-file.util";
 import { Album } from "../../generated/prisma/client";
 import { AuthUser } from "../types/auth.types";
