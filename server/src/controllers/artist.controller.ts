@@ -1,12 +1,12 @@
 import { NextFunction, Response } from "express";
-import { ArtistsService } from "../services/artist.service";
+import { ArtistService } from "../services/artist.service";
 import { AuthRequest } from "../types/auth.types";
 
-export class ArtistsController {
-    private artistsService: ArtistsService;
+export class ArtistController {
+    private artistService: ArtistService;
 
     constructor() {
-        this.artistsService = new ArtistsService();
+        this.artistService = new ArtistService();
     }
 
     createArtist = async (
@@ -32,7 +32,7 @@ export class ArtistsController {
                 userId: user.id,
             };
 
-            const result = await this.artistsService.create(newArtist);
+            const result = await this.artistService.create(newArtist);
 
             res.status(201).json(result);
         } catch (err) {
@@ -48,7 +48,7 @@ export class ArtistsController {
         try {
             const user = req.user;
 
-            const artists = await this.artistsService.getAll(user);
+            const artists = await this.artistService.getAll(user);
 
             res.status(200).json(artists);
         } catch (err) {
@@ -70,7 +70,7 @@ export class ArtistsController {
                 return res.status(400).json({ error: "Id must be a string" });
             }
 
-            const result = await this.artistsService.getById(id);
+            const result = await this.artistService.getById(id);
 
             if (
                 !result ||
@@ -108,7 +108,7 @@ export class ArtistsController {
                     .json({ error: "Only admin can publish artist" });
             }
 
-            const result = await this.artistsService.publishArtist(id);
+            const result = await this.artistService.publishArtist(id);
 
             res.status(200).json(result);
         } catch (err) {
@@ -135,7 +135,7 @@ export class ArtistsController {
                     .json({ error: "Only admin can delete artist" });
             }
 
-            await this.artistsService.deleteArtist(id);
+            await this.artistService.deleteArtist(id);
 
             res.status(200).json({ message: "Succesfully deleted" });
         } catch (err) {

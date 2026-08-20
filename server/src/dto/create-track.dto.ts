@@ -16,17 +16,15 @@ export class CreateTrackDto {
     })
     duration!: number;
 
-    @Type(() => Number)
-    @IsInt({ message: "AlbumId must be a number" })
-    @IsPositive({ message: "AlbumId must be a positive number" })
-    @Min(1, {
-        message: "AlbumId must be greater than 0",
-    })
-    albumId!: number;
-
-    @IsString({ message: "YoutubeUrl must be a string" })
+    @IsString({ message: "Album ID must be a string" })
     @MinLength(1, {
-        message: "YoutubeUrl must not be empty",
+        message: "Album ID must not be empty",
     })
-    youtubeUrl!: number;
+    albumId!: string;
+
+    @IsString({ message: "Youtube URL must be a string" })
+    @MinLength(1, {
+        message: "Youtube URL must not be empty",
+    })
+    youtubeUrl!: string;
 }

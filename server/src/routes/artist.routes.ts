@@ -1,17 +1,17 @@
 import { Router } from "express";
 import { uploadArtistImage } from "../middlewares/upload.middleware";
-import { ArtistsController } from "../controllers/artist.controller";
+import { ArtistController } from "../controllers/artist.controller";
 import { validateDto } from "../middlewares/validate-dto.middleware";
 import { CreateArtistDto } from "../dto/create-artist.dto";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { optionalAuthMiddleware } from "../middlewares/optional-auth.middleware";
 
-export class ArtistsRoutes {
+export class ArtistRoutes {
     public router: Router;
-    private artistsController: ArtistsController;
+    private artistController: ArtistController;
 
     constructor() {
-        this.artistsController = new ArtistsController();
+        this.artistController = new ArtistController();
         this.router = Router();
         this.initRoutes();
     }
@@ -22,27 +22,27 @@ export class ArtistsRoutes {
             authMiddleware,
             uploadArtistImage.single("photo"),
             validateDto(CreateArtistDto),
-            this.artistsController.createArtist,
+            this.artistController.createArtist,
         );
         this.router.get(
             "/",
             optionalAuthMiddleware,
-            this.artistsController.getArtists,
+            this.artistController.getArtists,
         );
         this.router.get(
             "/:id",
             optionalAuthMiddleware,
-            this.artistsController.getArtistById,
+            this.artistController.getArtistById,
         );
         this.router.post(
             "/:id/publish",
             authMiddleware,
-            this.artistsController.publishArtist,
+            this.artistController.publishArtist,
         );
         this.router.delete(
             "/:id",
             authMiddleware,
-            this.artistsController.deleteArtist,
+            this.artistController.deleteArtist,
         );
     }
 }

@@ -5,12 +5,10 @@ import { AuthUser } from "../types/auth.types";
 import { BaseRepository } from "./base.repository";
 
 export class ArtistRepository extends BaseRepository {
-    async create(newArtist: CreateArtistData): Promise<Artist> {
+    async create(data: CreateArtistData): Promise<Artist> {
         try {
             return await this.prisma.artist.create({
-                data: {
-                    ...newArtist,
-                },
+                data,
             });
         } catch (e) {
             this.handleError(e, "Ошибка при создании артиста");
@@ -24,29 +22,6 @@ export class ArtistRepository extends BaseRepository {
             });
         } catch (e) {
             this.handleError(e, "Ошибка при получении всех артистов");
-        }
-    }
-
-    async publishArtist(id: string): Promise<Artist> {
-        try {
-            return await this.prisma.artist.update({
-                where: { id },
-                data: {
-                    isPublished: true,
-                },
-            });
-        } catch (e) {
-            this.handleError(e, "Ошибка при публикации артиста");
-        }
-    }
-
-    async deleteArtist(id: string): Promise<void> {
-        try {
-            await this.prisma.artist.delete({
-                where: { id },
-            });
-        } catch (e) {
-            this.handleError(e, "Ошибка при удалении артиста");
         }
     }
 
@@ -70,6 +45,29 @@ export class ArtistRepository extends BaseRepository {
             });
         } catch (e) {
             this.handleError(e, "Ошибка при получении артиста по id");
+        }
+    }
+
+    async publish(id: string): Promise<Artist> {
+        try {
+            return await this.prisma.artist.update({
+                where: { id },
+                data: {
+                    isPublished: true,
+                },
+            });
+        } catch (e) {
+            this.handleError(e, "Ошибка при публикации артиста");
+        }
+    }
+
+    async deleteById(id: string): Promise<void> {
+        try {
+            await this.prisma.artist.delete({
+                where: { id },
+            });
+        } catch (e) {
+            this.handleError(e, "Ошибка при удалении артиста");
         }
     }
 }

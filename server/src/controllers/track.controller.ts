@@ -1,14 +1,13 @@
 import { NextFunction, Response } from "express";
-import { ITrack } from "../interfaces/track.interface";
-import { TracksService } from "../services/track.service";
+import { TrackService } from "../services/track.service";
 import { getYoutubeUrl } from "../utils/get-youtube-url.util";
 import { AuthRequest } from "../types/auth.types";
 
-export class TracksController {
-    private tracksService: TracksService;
+export class TrackController {
+    private trackService: TrackService;
 
     constructor() {
-        this.tracksService = new TracksService();
+        this.trackService = new TrackService();
     }
 
     createTrack = async (
@@ -28,14 +27,14 @@ export class TracksController {
             }
 
             const newTrack = {
-                title,
+                title: title.trim(),
                 duration: Number(duration),
-                albumId: Number(albumId),
+                albumId: albumId,
                 youtubeUrl: newYoutubeUrl,
                 userId: user.id,
             };
 
-            const result = await this.tracksService.create(newTrack);
+            const result = await this.trackService.create(newTrack);
 
             res.status(201).json(result);
         } catch (err) {
@@ -49,15 +48,15 @@ export class TracksController {
 
             const user = req.user;
 
-            if (album && isNaN(Number(album))) {
+            if (typeof album !== "string") {
                 return res
                     .status(400)
-                    .json({ error: "Album must be a number" });
+                    .json({ error: "Album ID must be a string" });
             }
 
             const tracks = album
-                ? await this.tracksService.getAlbumTracks(Number(album), user)
-                : await this.tracksService.getAll(user);
+                ? await this.trackService.getAlbumTracks(album, user)
+                : await this.trackService.getAll(user);
 
             res.status(200).json(tracks);
         } catch (err) {
@@ -74,8 +73,8 @@ export class TracksController {
             const { id } = req.params;
             const user = req.user!;
 
-            if (isNaN(Number(id))) {
-                return res.status(400).json({ error: "Id must be a number" });
+            if (typeof id !== "string") {
+                return res.status(400).json({ error: "Id must be a string" });
             }
 
             if (user.role !== "ADMIN") {
@@ -84,7 +83,7 @@ export class TracksController {
                     .json({ error: "Only admin can publish track" });
             }
 
-            const result = await this.tracksService.publishTrack(Number(id));
+            const result = await this.trackService.publishTrack(id);
 
             res.status(200).json(result);
         } catch (err) {
@@ -101,8 +100,8 @@ export class TracksController {
             const { id } = req.params;
             const user = req.user!;
 
-            if (isNaN(Number(id))) {
-                return res.status(400).json({ error: "Id must be a number" });
+            if (typeof id !== "string") {
+                return res.status(400).json({ error: "Id must be a string" });
             }
 
             if (user.role !== "ADMIN") {
@@ -111,7 +110,7 @@ export class TracksController {
                     .json({ error: "Only admin can delete track" });
             }
 
-            await this.tracksService.deleteTrack(Number(id));
+            await this.trackService.deleteTrack(id);
 
             res.status(200).json({ message: "Succesfully deleted" });
         } catch (err) {

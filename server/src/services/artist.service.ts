@@ -5,7 +5,7 @@ import { CreateArtistData } from "../types/artist.types";
 import { AuthUser } from "../types/auth.types";
 import { removeFile } from "../utils/remove-file.util";
 
-export class ArtistsService {
+export class ArtistService {
     private artistRepository: ArtistRepository;
 
     constructor() {
@@ -31,7 +31,7 @@ export class ArtistsService {
             throw new NotFoundError("Artist not found");
         }
 
-        return await this.artistRepository.publishArtist(id);
+        return await this.artistRepository.publish(id);
     }
 
     async deleteArtist(id: string): Promise<void> {
@@ -45,6 +45,6 @@ export class ArtistsService {
         
         await Promise.all(artist.albums.map((a) => removeFile(a.cover)));
 
-        await this.artistRepository.deleteArtist(id);
+        await this.artistRepository.deleteById(id);
     }
 }

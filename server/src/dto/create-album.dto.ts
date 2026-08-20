@@ -1,13 +1,4 @@
-import { Type } from "class-transformer";
-import {
-    IsDateString,
-    IsInt,
-    IsOptional,
-    IsPositive,
-    IsString,
-    Min,
-    MinLength,
-} from "class-validator";
+import { IsDateString, IsOptional, IsString, MinLength } from "class-validator";
 
 export class CreateAlbumDto {
     @IsString({ message: "Title must be a string" })
@@ -16,13 +7,11 @@ export class CreateAlbumDto {
     })
     title!: string;
 
-    @Type(() => Number)
-    @IsInt({ message: "artistId must be a number" })
-    @IsPositive({ message: "artistId must be a positive number" })
-    @Min(1, {
-        message: "artistId must be greater than 0",
+    @IsString({ message: "Artist ID must be a string" })
+    @MinLength(1, {
+        message: "Artist ID must not be empty",
     })
-    artistId!: number;
+    artistId!: string;
 
     @IsOptional()
     @IsDateString(

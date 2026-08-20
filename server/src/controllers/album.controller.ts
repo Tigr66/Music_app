@@ -1,12 +1,12 @@
 import { NextFunction, Response } from "express";
-import { AlbumsService } from "../services/album.service";
+import { AlbumService } from "../services/album.service";
 import { AuthRequest } from "../types/auth.types";
 
-export class AlbumsController {
-    private albumsService: AlbumsService;
+export class AlbumController {
+    private albumService: AlbumService;
 
     constructor() {
-        this.albumsService = new AlbumsService();
+        this.albumService = new AlbumService();
     }
 
     createAlbum = async (
@@ -34,7 +34,7 @@ export class AlbumsController {
                 userId: user.id,
             };
 
-            const result = await this.albumsService.create(newAlbum);
+            const result = await this.albumService.create(newAlbum);
 
             res.status(201).json(result);
         } catch (err) {
@@ -50,8 +50,8 @@ export class AlbumsController {
 
             const albums =
                 typeof artist === "string"
-                    ? await this.albumsService.getArtistAlbums(artist, user)
-                    : await this.albumsService.getAll(user);
+                    ? await this.albumService.getArtistAlbums(artist, user)
+                    : await this.albumService.getAll(user);
 
             res.status(200).json(albums);
         } catch (err) {
@@ -73,7 +73,7 @@ export class AlbumsController {
                 return res.status(400).json({ error: "Id must be a string" });
             }
 
-            const result = await this.albumsService.getById(id);
+            const result = await this.albumService.getById(id);
 
             if (
                 !result ||
@@ -111,7 +111,7 @@ export class AlbumsController {
                     .json({ error: "Only admin can publish album" });
             }
 
-            const result = await this.albumsService.publishAlbum(id);
+            const result = await this.albumService.publishAlbum(id);
 
             res.status(200).json(result);
         } catch (err) {
@@ -139,7 +139,7 @@ export class AlbumsController {
                     .json({ error: "Only admin can delete album" });
             }
 
-            await this.albumsService.deleteAlbum(id);
+            await this.albumService.deleteAlbum(id);
 
             res.status(200).json({ message: "Succesfully deleted" });
         } catch (err) {

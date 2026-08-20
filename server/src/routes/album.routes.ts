@@ -2,16 +2,16 @@ import { Router } from "express";
 import { uploadAlbumImage } from "../middlewares/upload.middleware";
 import { validateDto } from "../middlewares/validate-dto.middleware";
 import { CreateAlbumDto } from "../dto/create-album.dto";
-import { AlbumsController } from "../controllers/album.controller";
+import { AlbumController } from "../controllers/album.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { optionalAuthMiddleware } from "../middlewares/optional-auth.middleware";
 
-export class AlbumsRoutes {
+export class AlbumRoutes {
     public router: Router;
-    private albumsController: AlbumsController;
+    private albumController: AlbumController;
 
     constructor() {
-        this.albumsController = new AlbumsController();
+        this.albumController = new AlbumController();
         this.router = Router();
         this.initRoutes();
     }
@@ -22,27 +22,27 @@ export class AlbumsRoutes {
             authMiddleware,
             uploadAlbumImage.single("cover"),
             validateDto(CreateAlbumDto),
-            this.albumsController.createAlbum,
+            this.albumController.createAlbum,
         );
         this.router.get(
             "/",
             optionalAuthMiddleware,
-            this.albumsController.getAlbums,
+            this.albumController.getAlbums,
         );
         this.router.get(
             "/:id",
             optionalAuthMiddleware,
-            this.albumsController.getAlbumById,
+            this.albumController.getAlbumById,
         );
         this.router.post(
             "/:id/publish",
             authMiddleware,
-            this.albumsController.publishAlbum,
+            this.albumController.publishAlbum,
         );
         this.router.delete(
             "/:id",
             authMiddleware,
-            this.albumsController.deleteAlbum,
+            this.albumController.deleteAlbum,
         );
     }
 }

@@ -11,7 +11,7 @@ import { ArtistRepository } from "../repositories/artist.repository";
 import { BadRequestError } from "../errors/bad-request-error";
 import { NotFoundError } from "../errors/not-found-error";
 
-export class AlbumsService {
+export class AlbumService {
     private albumRepository: AlbumRepository;
     private artistRepository: ArtistRepository;
 
@@ -70,7 +70,7 @@ export class AlbumsService {
             );
         }
 
-        return await this.albumRepository.publishAlbum(id);
+        return await this.albumRepository.publish(id);
     }
 
     async deleteAlbum(id: string): Promise<void> {

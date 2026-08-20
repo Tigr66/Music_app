@@ -2,7 +2,6 @@ import { Album } from "../../generated/prisma/browser";
 import { getContentWhere } from "../helpers/get-content-where.helper";
 import {
     AlbumWithArtist,
-    AlbumWithCount,
     AlbumWithCountFromPrisma,
     CreateAlbumData,
 } from "../types/album.types";
@@ -10,10 +9,10 @@ import { AuthUser } from "../types/auth.types";
 import { BaseRepository } from "./base.repository";
 
 export class AlbumRepository extends BaseRepository {
-    async create(newAlbum: CreateAlbumData): Promise<Album> {
+    async create(data: CreateAlbumData): Promise<Album> {
         try {
             return await this.prisma.album.create({
-                data: newAlbum,
+                data,
             });
         } catch (e) {
             this.handleError(e, "Ошибка при создании альбома");
@@ -57,14 +56,23 @@ export class AlbumRepository extends BaseRepository {
         }
     }
 
-    async publishAlbum(id: string): Promise<Album> {
+    async getByIdWithCount(
+        id: string,
+    ): Promise<AlbumWithCountFromPrisma | null> {
         try {
-            return await this.prisma.album.update({
+            return await this.prisma.album.findUnique({
                 where: { id },
-                data: { isPublished: true },
+                include: {
+                    _count: {
+                        select: { tracks: true },
+                    },
+                },
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при публикации альбома");
+            this.handleError(
+                e,
+                "Ошибка при получении альбома по id с количеством треков",
+            );
         }
     }
 
@@ -78,6 +86,17 @@ export class AlbumRepository extends BaseRepository {
             });
         } catch (e) {
             this.handleError(e, "Ошибка при получении альбома по id");
+        }
+    }
+
+    async publish(id: string): Promise<Album> {
+        try {
+            return await this.prisma.album.update({
+                where: { id },
+                data: { isPublished: true },
+            });
+        } catch (e) {
+            this.handleError(e, "Ошибка при публикации альбома");
         }
     }
 

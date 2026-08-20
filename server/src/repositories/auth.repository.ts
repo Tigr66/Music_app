@@ -3,10 +3,10 @@ import { CreateUserDto } from "../dto/create-user.dto";
 import { BaseRepository } from "./base.repository";
 
 export class AuthRepository extends BaseRepository {
-    async create(newUser: CreateUserDto): Promise<User> {
+    async create(data: CreateUserDto): Promise<User> {
         try {
             return await this.prisma.user.create({
-                data: newUser,
+                data,
             });
         } catch (e) {
             this.handleError(e, "Ошибка при создании пользователя");
