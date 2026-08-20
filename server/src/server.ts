@@ -2,12 +2,12 @@ import cors from "cors";
 import express from "express";
 import fs from "fs";
 import "reflect-metadata";
-import { ArtistsRoutes } from "./routes/artists.routes";
-import { TracksRoutes } from "./routes/tracks.routes";
-import { AlbumsRoutes } from "./routes/albums.routes";
+import { ArtistsRoutes } from "./routes/artist.routes";
+import { TracksRoutes } from "./routes/track.routes";
+import { AlbumsRoutes } from "./routes/album.routes";
 import { albumsUploads, artistsUploads } from "./config/path";
 import { AuthRoutes } from "./routes/auth.routes";
-import { TrackHistoryRoutes } from "./routes/track_history.routes";
+import { TrackHistoryRoutes } from "./routes/track-history.routes";
 import { ErrorMiddleware } from "./middlewares/error.middleware";
 
 const app = express();

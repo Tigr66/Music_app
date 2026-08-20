@@ -1,5 +1,5 @@
 import { NextFunction, Response } from "express";
-import { ArtistsService } from "../services/artists.service";
+import { ArtistsService } from "../services/artist.service";
 import { AuthRequest } from "../types/auth.types";
 
 export class ArtistsController {

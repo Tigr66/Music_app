@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { validateDto } from "../middlewares/validate-dto.middleware";
 import { CreateHistoryDto } from "../dto/create-history.dto";
-import { TrackHistoryController } from "../controllers/track_history.controllers";
+import { TrackHistoryController } from "../controllers/track-history.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 
 export class TrackHistoryRoutes {

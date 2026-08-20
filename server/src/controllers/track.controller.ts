@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
 import { ITrack } from "../interfaces/track.interface";
-import { TracksService } from "../services/tracks.service";
+import { TracksService } from "../services/track.service";
 import { getYoutubeUrl } from "../utils/get-youtube-url.util";
 import { AuthRequest } from "../types/auth.types";
 

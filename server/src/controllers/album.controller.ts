@@ -1,5 +1,5 @@
 import { NextFunction, Response } from "express";
-import { AlbumsService } from "../services/albums.service";
+import { AlbumsService } from "../services/album.service";
 import { AuthRequest } from "../types/auth.types";
 
 export class AlbumsController {

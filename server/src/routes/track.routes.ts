@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { TracksController } from "../controllers/tracks.controller";
+import { TracksController } from "../controllers/track.controller";
 import { validateDto } from "../middlewares/validate-dto.middleware";
 import { CreateTrackDto } from "../dto/create-track.dto";
 import { authMiddleware } from "../middlewares/auth.middleware";

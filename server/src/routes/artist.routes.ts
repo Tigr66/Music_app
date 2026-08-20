@@ -1,17 +1,17 @@
 import { Router } from "express";
-import { uploadAlbumImage } from "../middlewares/upload.middleware";
+import { uploadArtistImage } from "../middlewares/upload.middleware";
+import { ArtistsController } from "../controllers/artist.controller";
 import { validateDto } from "../middlewares/validate-dto.middleware";
-import { CreateAlbumDto } from "../dto/create-album.dto";
-import { AlbumsController } from "../controllers/albums.controller";
+import { CreateArtistDto } from "../dto/create-artist.dto";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { optionalAuthMiddleware } from "../middlewares/optional-auth.middleware";
 
-export class AlbumsRoutes {
+export class ArtistsRoutes {
     public router: Router;
-    private albumsController: AlbumsController;
+    private artistsController: ArtistsController;
 
     constructor() {
-        this.albumsController = new AlbumsController();
+        this.artistsController = new ArtistsController();
         this.router = Router();
         this.initRoutes();
     }
@@ -20,29 +20,29 @@ export class AlbumsRoutes {
         this.router.post(
             "/",
             authMiddleware,
-            uploadAlbumImage.single("cover"),
-            validateDto(CreateAlbumDto),
-            this.albumsController.createAlbum,
+            uploadArtistImage.single("photo"),
+            validateDto(CreateArtistDto),
+            this.artistsController.createArtist,
         );
         this.router.get(
             "/",
             optionalAuthMiddleware,
-            this.albumsController.getAlbums,
+            this.artistsController.getArtists,
         );
         this.router.get(
             "/:id",
             optionalAuthMiddleware,
-            this.albumsController.getAlbumById,
+            this.artistsController.getArtistById,
         );
         this.router.post(
             "/:id/publish",
             authMiddleware,
-            this.albumsController.publishAlbum,
+            this.artistsController.publishArtist,
         );
         this.router.delete(
             "/:id",
             authMiddleware,
-            this.albumsController.deleteAlbum,
+            this.artistsController.deleteArtist,
         );
     }
 }
