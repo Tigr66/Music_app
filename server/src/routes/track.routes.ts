@@ -1,16 +1,16 @@
 import { Router } from "express";
-import { TracksController } from "../controllers/track.controller";
+import { TrackController } from "../controllers/track.controller";
 import { validateDto } from "../middlewares/validate-dto.middleware";
 import { CreateTrackDto } from "../dto/create-track.dto";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { optionalAuthMiddleware } from "../middlewares/optional-auth.middleware";
 
-export class TracksRoutes {
+export class TrackRoutes {
     public router: Router;
-    private tracksController: TracksController;
+    private trackController: TrackController;
 
     constructor() {
-        this.tracksController = new TracksController();
+        this.trackController = new TrackController();
         this.router = Router();
         this.initRoutes();
     }
@@ -20,22 +20,22 @@ export class TracksRoutes {
             "/",
             authMiddleware,
             validateDto(CreateTrackDto),
-            this.tracksController.createTrack,
+            this.trackController.createTrack,
         );
         this.router.get(
             "/",
             optionalAuthMiddleware,
-            this.tracksController.getTracks,
+            this.trackController.getTracks,
         );
         this.router.post(
             "/:id/publish",
             authMiddleware,
-            this.tracksController.publishTrack,
+            this.trackController.publishTrack,
         );
         this.router.delete(
             "/:id",
             authMiddleware,
-            this.tracksController.deleteTrack,
+            this.trackController.deleteTrack,
         );
     }
 }

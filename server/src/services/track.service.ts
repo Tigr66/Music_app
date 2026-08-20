@@ -1,70 +1,51 @@
-import { getContentWhere } from "../helpers/get-content-where.helper";
-import { ITrack } from "../interfaces/track.interface";
-import { IUser } from "../interfaces/user.interface";
-import { prisma } from "../lib/prisma";
+import { Track } from "../../generated/prisma/client";
+import { NotFoundError } from "../errors/not-found-error";
+import { AlbumRepository } from "../repositories/album.repository";
+import { TrackRepository } from "../repositories/track.repository";
+import { AuthUser } from "../types/auth.types";
+import { CreateTrackData } from "../types/track.types";
 
-export class TracksService {
-    async create(
-        newTrack: Omit<ITrack, "id" | "number" | "isPublished">,
-    ): Promise<ITrack> {
-        const album = await prisma.album.findUnique({
-            where: {
-                id: newTrack.albumId,
-            },
-            include: {
-                _count: {
-                    select: { tracks: true },
-                },
-            },
-        });
+export class TrackService {
+    private trackRepository: TrackRepository;
+    private albumRepository: AlbumRepository;
+
+    constructor() {
+        this.trackRepository = new TrackRepository();
+        this.albumRepository = new AlbumRepository();
+    }
+
+    async create(newTrack: CreateTrackData): Promise<Track> {
+        const album = await this.albumRepository.getByIdWithCount(
+            newTrack.albumId,
+        );
 
         if (!album) {
-            throw new Error("Album not found");
+            throw new NotFoundError("Album not found");
         }
 
-        return await prisma.track.create({
-            data: {
-                title: newTrack.title,
-                duration: newTrack.duration,
-                albumId: newTrack.albumId,
-                youtubeUrl: newTrack.youtubeUrl,
-                number: album._count.tracks + 1,
-                userId: newTrack.userId,
-            },
+        return await this.trackRepository.create({
+            title: newTrack.title,
+            duration: newTrack.duration,
+            albumId: newTrack.albumId,
+            youtubeUrl: newTrack.youtubeUrl,
+            number: album._count.tracks + 1,
+            userId: newTrack.userId,
         });
     }
 
-    async getAll(user?: IUser): Promise<ITrack[]> {
-        return await prisma.track.findMany({
-            orderBy: {
-                number: "asc",
-            },
-            where: getContentWhere(user),
-        });
+    async getAll(user?: AuthUser): Promise<Track[]> {
+        return await this.trackRepository.getAll(user);
     }
 
-    async getAlbumTracks(albumId: number, user?: IUser): Promise<ITrack[]> {
-        return await prisma.track.findMany({
-            where: {
-                albumId,
-                ...getContentWhere(user),
-            },
-            orderBy: {
-                number: "asc",
-            },
-        });
+    async getAlbumTracks(albumId: string, user?: AuthUser): Promise<Track[]> {
+        return await this.trackRepository.getAlbumTracks(albumId, user);
     }
 
-    async publishTrack(id: number): Promise<ITrack> {
-        const track = await prisma.track.findUnique({
-            where: { id },
-            include: {
-                album: true,
-            },
-        });
+    async publishTrack(id: string): Promise<Track> {
+        const track = await this.trackRepository.getByIdWithAlbum(id);
 
         if (!track) {
-            throw new Error("Track not found");
+            throw new NotFoundError("Track not found");
         }
 
         if (!track.album.isPublished) {
@@ -73,25 +54,16 @@ export class TracksService {
             );
         }
 
-        return await prisma.track.update({
-            where: { id },
-            data: {
-                isPublished: true,
-            },
-        });
+        return await this.trackRepository.publish(id);
     }
 
-    async deleteTrack(id: number): Promise<void> {
-        const track = await prisma.track.findUnique({
-            where: { id },
-        });
+    async deleteTrack(id: string): Promise<void> {
+        const track = await this.trackRepository.getById(id);
 
         if (!track) {
-            throw new Error("Track not found");
+            throw new NotFoundError("Track not found");
         }
 
-        await prisma.track.delete({
-            where: { id },
-        });
+        await this.trackRepository.deleteById(id);
     }
 }
