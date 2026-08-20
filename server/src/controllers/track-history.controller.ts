@@ -18,14 +18,10 @@ export class TrackHistoryController {
             const { trackId } = req.body;
             const user = req.user!;
 
-            const result = await this.trackHistoryService.create(
-                Number(trackId),
-                user.id,
-            );
-
-            if (!result) {
-                return res.status(404).json({ error: "Track is not found" });
-            }
+            const result = await this.trackHistoryService.create({
+                trackId,
+                userId: user.id,
+            });
 
             res.status(201).json(result);
         } catch (err) {

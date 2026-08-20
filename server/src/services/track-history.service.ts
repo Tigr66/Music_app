@@ -1,67 +1,48 @@
-import { IHistoryWithDetails } from "../interfaces/history-with-details.interface";
-import { ITrackHistory } from "../interfaces/track_history.interface";
-import { prisma } from "../lib/prisma";
+import { TrackHistory } from "../../generated/prisma/client";
+import { BadRequestError } from "../errors/bad-request-error";
+import { NotFoundError } from "../errors/not-found-error";
+import { TrackHistoryRepository } from "../repositories/track-history.repository";
+import { TrackRepository } from "../repositories/track.repository";
+import {
+    CreateTrackHistoryData,
+    TrackHistoryWithDetails,
+} from "../types/track-history.types";
 
 export class TrackHistoryService {
+    private trackHistoryRepository: TrackHistoryRepository;
+    private trackRepository: TrackRepository;
+
+    constructor() {
+        this.trackHistoryRepository = new TrackHistoryRepository();
+        this.trackRepository = new TrackRepository();
+    }
+
     async create(
-        trackId: number,
-        userId: number,
-    ): Promise<ITrackHistory | null> {
-        const track = await prisma.track.findUnique({
-            where: {
-                id: trackId,
-            },
-        });
+        newHistory: CreateTrackHistoryData,
+    ): Promise<TrackHistory | null> {
+        const track = await this.trackRepository.getById(newHistory.trackId);
 
         if (!track) {
-            return null;
+            throw new NotFoundError("Track is not found");
         }
 
         if (!track.isPublished) {
-            throw new Error("Track is unpublished")
+            throw new BadRequestError("Track is unpublished");
         }
-        return await prisma.trackHistory.create({
-            data: {
-                trackId,
-                userId,
-            },
-        });
+
+        return this.trackHistoryRepository.create(newHistory);
     }
 
-    async get(userId: number): Promise<IHistoryWithDetails[]> {
-        const history = await prisma.trackHistory.findMany({
-            where: {
-                userId,
-            },
-            orderBy: {
-                datetime: "desc",
-            },
-            select: {
-                id: true,
-                datetime: true,
-                track: {
-                    select: {
-                        title: true,
-                        album: {
-                            select: {
-                                artist: {
-                                    select: {
-                                        name: true,
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-            },
-        });
+    async get(userId: string): Promise<TrackHistoryWithDetails[]> {
+        const history =
+            await this.trackHistoryRepository.getUserHistory(userId);
 
-        return history.map((el) => {
+        return history.map((h) => {
             return {
-                id: el.id,
-                artistName: el.track.album.artist.name,
-                trackTitle: el.track.title,
-                datetime: el.datetime,
+                id: h.id,
+                artistName: h.track.album.artist.name,
+                trackTitle: h.track.title,
+                datetime: h.datetime,
             };
         });
     }
