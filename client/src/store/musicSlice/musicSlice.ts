@@ -13,37 +13,19 @@ import {
     getArtistsThunk,
     getArtistThunk,
     getHistoryThunk,
-    loginUserThunk,
-    logoutUserThunk,
     publishAlbumThunk,
     publishArtistThunk,
     publishTrackThunk,
-    registerUserThunk,
 } from "./musicThunks";
 import type { IMusicState } from "../../interfaces/IMusicState";
 import type { IAlbumWithArtist } from "../../interfaces/IAlbumWithArtist";
 import type { ITrack } from "../../interfaces/ITrack";
 import type { IArtist } from "../../interfaces/IArtist";
-import type { IUser } from "../../interfaces/IUser";
-import { jwtDecode } from "jwt-decode";
-
-const token = localStorage.getItem("access_token");
-
-let user: IUser | null = null;
-
-if (token) {
-    try {
-        user = jwtDecode<IUser>(token);
-    } catch {
-        localStorage.removeItem("access_token");
-    }
-}
 
 const initialState: IMusicState = {
     success: null,
     error: null,
     info: null,
-    user,
     currentTrack: null,
     artists: [],
     artistAlbums: [],
@@ -73,9 +55,6 @@ const musicSlice = createSlice({
         },
         clearInfo: (state) => {
             state.info = null;
-        },
-        clearUser: (state) => {
-            state.user = null;
         },
         setCurrentArtist: (state, action: PayloadAction<IArtist | null>) => {
             state.currentArtist = action.payload;
@@ -270,48 +249,6 @@ const musicSlice = createSlice({
                 state.isSending = false;
                 state.error = action.payload || "Error with deleting";
             })
-            .addCase(registerUserThunk.pending, (state) => {
-                state.isSending = true;
-            })
-            .addCase(registerUserThunk.fulfilled, (state) => {
-                state.isSending = false;
-                state.success = "Registration successful. Please log in";
-            })
-            .addCase(registerUserThunk.rejected, (state, action) => {
-                state.isSending = false;
-                state.error = action.payload || "Error with registrate";
-            })
-            .addCase(loginUserThunk.pending, (state) => {
-                state.isSending = true;
-            })
-            .addCase(loginUserThunk.fulfilled, (state, action) => {
-                state.isSending = false;
-                state.user = action.payload;
-                state.success = "Welcome back!";
-                if (action.payload.accessToken) {
-                    localStorage.setItem(
-                        "access_token",
-                        action.payload.accessToken,
-                    );
-                }
-            })
-            .addCase(loginUserThunk.rejected, (state, action) => {
-                state.isSending = false;
-                state.error = action.payload || "Error with login";
-            })
-            .addCase(logoutUserThunk.pending, (state) => {
-                state.isLoggingOut = true;
-            })
-            .addCase(logoutUserThunk.fulfilled, (state, action) => {
-                state.isLoggingOut = false;
-                state.success = action.payload;
-                localStorage.removeItem("access_token");
-                state.user = null;
-            })
-            .addCase(logoutUserThunk.rejected, (state, action) => {
-                state.isLoggingOut = false;
-                state.error = action.payload || "Error with logout";
-            })
             .addCase(addHistoryThunk.pending, (state) => {
                 state.isSending = true;
             })
@@ -344,7 +281,6 @@ export const {
     setCurrentTrack,
     clearSuccess,
     clearInfo,
-    clearUser,
 } = musicSlice.actions;
 
 export default musicSlice.reducer;

@@ -5,10 +5,12 @@ import {
     useSelector,
     type TypedUseSelectorHook,
 } from "react-redux";
+import authSlice from "./authSlice/authSlice";
 
 export const store = configureStore({
     reducer: {
         music: musicSlice,
+        auth: authSlice,
     },
 });
 

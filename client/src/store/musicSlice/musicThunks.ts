@@ -4,8 +4,6 @@ import type { IArtist } from "../../interfaces/IArtist";
 import type { IAlbum } from "../../interfaces/IAlbum";
 import type { ITrack } from "../../interfaces/ITrack";
 import type { IAlbumWithArtist } from "../../interfaces/IAlbumWithArtist";
-import type { IUser } from "../../interfaces/IUser";
-import type { IAuthUser } from "../../interfaces/IAuthUser";
 import type { ITrackHistory } from "../../interfaces/ITrackHistory";
 import { musicApi } from "../../api/musicApi";
 
@@ -235,54 +233,6 @@ export const deleteTrackThunk = createAsyncThunk<
     }
 });
 
-export const registerUserThunk = createAsyncThunk<
-    void,
-    IAuthUser,
-    { rejectValue: string }
->("music-slice/register-user", async (newUser, { rejectWithValue }) => {
-    try {
-        await musicApi.post("/auth/register", newUser);
-    } catch (err) {
-        const error = err as AxiosError<{ error: string }>;
-
-        return rejectWithValue(error.response?.data?.error || "Unknown error");
-    }
-});
-
-export const loginUserThunk = createAsyncThunk<
-    IUser,
-    IAuthUser,
-    { rejectValue: string }
->("music-slice/login-user", async (newUser, { rejectWithValue }) => {
-    try {
-        const result = await musicApi.post("/auth/login", newUser);
-
-        return result.data;
-    } catch (err) {
-        const error = err as AxiosError<{ error: string }>;
-
-        return rejectWithValue(error.response?.data?.error || "Unknown error");
-    }
-});
-
-export const logoutUserThunk = createAsyncThunk<
-    string,
-    void,
-    { rejectValue: string }
->("music-slice/logout-user", async (_, { rejectWithValue }) => {
-    try {
-        const result = await musicApi.post<{ message: string }>(
-            "/auth/logout",
-        );
-
-        return result.data.message;
-    } catch (err) {
-        const error = err as AxiosError<{ error: string }>;
-
-        return rejectWithValue(error.response?.data?.error || "Unknown error");
-    }
-});
-
 export const addHistoryThunk = createAsyncThunk<
     void,
     number,
@@ -312,3 +262,4 @@ export const getHistoryThunk = createAsyncThunk<
         return rejectWithValue(error.response?.data?.error || "Unknown error");
     }
 });
+
