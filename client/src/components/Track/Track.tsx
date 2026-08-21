@@ -1,6 +1,6 @@
 import { Badge, Button, Flex, Typography } from "antd";
 import type { ITrack } from "../../interfaces/ITrack";
-import { formatTime } from "../../utils/formatTime";
+import { formatTime } from "../../utils/format-time";
 const { Text } = Typography;
 import styles from "./Track.module.css";
 import { useAppDispatch, useAppSelector } from "../../store/store";

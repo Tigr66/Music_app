@@ -1,6 +1,6 @@
 import { Button, Card, Flex, Typography } from "antd";
 import type { IArtist } from "../../interfaces/IArtist";
-import { resolveImageUrl } from "../../utils/resolveImageUrl";
+import { resolveImageUrl } from "../../utils/resolve-Image-url";
 import { useNavigate } from "react-router-dom";
 const { Meta } = Card;
 const { Title, Text } = Typography;
@@ -58,8 +58,7 @@ const ArtistCard = ({ artist }: ArtistCardProps) => {
                                     dispatch(publishArtistThunk(artist.id));
                                 }}
                                 style={{ width: "100%" }}
-                            loading={isSending}
-
+                                loading={isSending}
                             >
                                 Publish
                             </Button>
@@ -72,7 +71,6 @@ const ArtistCard = ({ artist }: ArtistCardProps) => {
                             type="primary"
                             style={{ width: "100%" }}
                             loading={isSending}
-
                             danger
                         >
                             Delete

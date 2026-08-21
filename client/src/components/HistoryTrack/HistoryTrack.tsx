@@ -1,6 +1,6 @@
 import type { ITrackHistory } from "../../interfaces/ITrackHistory";
 import { Flex, Typography } from "antd";
-import { formatDate } from "../../utils/formatDate";
+import { formatDate } from "../../utils/format-date";
 const { Title } = Typography;
 import styles from "./HistoryTrack.module.css";
 

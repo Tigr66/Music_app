@@ -3,7 +3,7 @@ import { Button, Form } from "antd";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import type { UploadChangeParam, UploadFile } from "antd/es/upload";
 import { toast } from "react-toastify";
-import { extractFile } from "../../utils/extractFile";
+import { extractFile } from "../../utils/extract-file";
 import {
     addAlbumThunk,
     getArtistsThunk,

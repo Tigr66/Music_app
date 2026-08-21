@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../store/store";
 import type { ArtistFormType } from "../../types/ArtistFormType";
 import type { UploadChangeParam, UploadFile } from "antd/es/upload";
 import { toast } from "react-toastify";
-import { extractFile } from "../../utils/extractFile";
+import { extractFile } from "../../utils/extract-file";
 import { addArtistThunk } from "../../store/musicSlice/musicThunks";
 import AppInput from "../../components/AppInput/AppInput";
 import AppTextArea from "../../components/AppTextArea/AppTextArea";

@@ -1,10 +1,10 @@
 import { Button, Card, Flex, Typography } from "antd";
-import { resolveImageUrl } from "../../utils/resolveImageUrl";
+import { resolveImageUrl } from "../../utils/resolve-Image-url";
 import { useNavigate } from "react-router-dom";
 import type { IAlbum } from "../../interfaces/IAlbum";
 const { Meta } = Card;
 import styles from "./AlbumCard.module.css";
-import { formatDate } from "../../utils/formatDate";
+import { formatDate } from "../../utils/format-date";
 import PublishBadge from "../PublishBadge/PublishBadge";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import {

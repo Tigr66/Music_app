@@ -1,7 +1,7 @@
 import { Flex, Typography } from "antd";
 import { Image } from "antd";
 import { useAppSelector } from "../../store/store";
-import { resolveImageUrl } from "../../utils/resolveImageUrl";
+import { resolveImageUrl } from "../../utils/resolve-Image-url";
 const { Title } = Typography;
 
 const AlbumPreview = () => {

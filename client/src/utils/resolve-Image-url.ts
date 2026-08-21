@@ -1,7 +1,8 @@
-import { musicApi } from "../api/musicApi";
+import { musicApi } from "@/api/musicApi";
 
 export function resolveImageUrl(imageUrl?: string): string | undefined {
     if (!imageUrl) return undefined;
+
     if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://"))
         return imageUrl;
 
