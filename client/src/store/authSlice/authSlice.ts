@@ -44,6 +44,7 @@ const authSlice = createSlice({
             .addCase(registerUserThunk.rejected, (state) => {
                 state.isSending = false;
             })
+
             .addCase(loginUserThunk.pending, (state) => {
                 state.isSending = true;
             })
@@ -58,6 +59,7 @@ const authSlice = createSlice({
             .addCase(loginUserThunk.rejected, (state) => {
                 state.isSending = false;
             })
+            
             .addCase(logoutUserThunk.pending, (state) => {
                 state.isSending = true;
             })

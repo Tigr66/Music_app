@@ -7,12 +7,14 @@ import {
 } from "react-redux";
 import authSlice from "./authSlice/authSlice";
 import artistSlice from "./artistSlice/artistSlice";
+import albumSlice from "./albumSlice/albumSlice";
 
 export const store = configureStore({
     reducer: {
         music: musicSlice,
         auth: authSlice,
         artist: artistSlice,
+        album: albumSlice,
     },
 });
 

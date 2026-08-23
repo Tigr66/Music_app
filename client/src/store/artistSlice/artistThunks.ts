@@ -34,9 +34,9 @@ export const getArtistsThunk = createAsyncThunk<
     }
 });
 
-export const getArtistThunk = createAsyncThunk<
+export const getArtistByIdThunk = createAsyncThunk<
     Artist,
-    number,
+    string,
     { rejectValue: string }
 >("music-slice/get-artist-by-id", async (artistId, { rejectWithValue }) => {
     try {

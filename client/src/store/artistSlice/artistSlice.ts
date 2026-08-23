@@ -4,7 +4,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import {
     getArtistsThunk,
     deleteArtistThunk,
-    getArtistThunk,
+    getArtistByIdThunk,
     publishArtistThunk,
     addArtistThunk,
 } from "./artistThunks";
@@ -35,6 +35,7 @@ const artistSlice = createSlice({
             .addCase(addArtistThunk.rejected, (state) => {
                 state.isSending = false;
             })
+
             .addCase(getArtistsThunk.pending, (state) => {
                 state.isLoading = true;
             })
@@ -45,16 +46,19 @@ const artistSlice = createSlice({
             .addCase(getArtistsThunk.rejected, (state) => {
                 state.isLoading = false;
             })
-            .addCase(getArtistThunk.pending, (state) => {
+
+            .addCase(getArtistByIdThunk.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(getArtistThunk.fulfilled, (state, action) => {
+            .addCase(getArtistByIdThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.currentArtist = action.payload;
             })
-            .addCase(getArtistThunk.rejected, (state) => {
+            .addCase(getArtistByIdThunk.rejected, (state) => {
                 state.isLoading = false;
+                state.currentArtist = null;
             })
+
             .addCase(publishArtistThunk.pending, (state) => {
                 state.isSending = true;
             })
@@ -69,6 +73,7 @@ const artistSlice = createSlice({
             .addCase(publishArtistThunk.rejected, (state) => {
                 state.isSending = false;
             })
+
             .addCase(deleteArtistThunk.pending, (state) => {
                 state.isSending = true;
             })

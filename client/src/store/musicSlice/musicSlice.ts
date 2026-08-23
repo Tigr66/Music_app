@@ -23,22 +23,11 @@ import type { ITrack } from "../../interfaces/ITrack";
 import type { IArtist } from "../../interfaces/IArtist";
 
 const initialState: IMusicState = {
-    success: null,
-    error: null,
-    info: null,
     currentTrack: null,
-    artists: [],
-    artistAlbums: [],
-    albumTracks: [],
     history: [],
-    isLoadingArtist: false,
-    isLoadingArtists: false,
-    isLoadingAlbum: false,
-    isLoadingAlbums: false,
     isLoadingTracks: false,
     isLoadingHistory: false,
     isSending: false,
-    isLoggingOut: false,
     currentArtist: null,
     currentAlbum: null,
 };
@@ -47,81 +36,12 @@ const musicSlice = createSlice({
     name: "music-slice",
     initialState,
     reducers: {
-        setCurrentAlbum: (
-            state,
-            action: PayloadAction<IAlbumWithArtist | null>,
-        ) => {
-            state.currentAlbum = action.payload;
-        },
         setCurrentTrack: (state, action: PayloadAction<ITrack | null>) => {
             state.currentTrack = action.payload;
         },
     },
     extraReducers(builder) {
         builder
-            .addCase(addAlbumThunk.pending, (state) => {
-                state.isSending = true;
-            })
-            .addCase(addAlbumThunk.fulfilled, (state) => {
-                state.isSending = false;
-                state.success = "Successfully added";
-            })
-            .addCase(addAlbumThunk.rejected, (state, action) => {
-                state.isSending = false;
-                state.error = action.payload || "Error adding album";
-            })
-            .addCase(getArtistAlbumsThunk.pending, (state) => {
-                state.isLoadingAlbums = true;
-            })
-            .addCase(getArtistAlbumsThunk.fulfilled, (state, action) => {
-                state.isLoadingAlbums = false;
-                state.artistAlbums = action.payload;
-            })
-            .addCase(getArtistAlbumsThunk.rejected, (state, action) => {
-                state.isLoadingAlbums = false;
-                state.error = action.payload || "Error with getting albums";
-            })
-            .addCase(getAlbumById.pending, (state) => {
-                state.isLoadingAlbum = true;
-            })
-            .addCase(getAlbumById.fulfilled, (state, action) => {
-                state.isLoadingAlbum = false;
-                state.currentAlbum = action.payload;
-            })
-            .addCase(getAlbumById.rejected, (state, action) => {
-                state.isLoadingAlbum = false;
-                state.error = action.payload || "Error with getting album";
-            })
-            .addCase(publishAlbumThunk.pending, (state) => {
-                state.isSending = true;
-            })
-            .addCase(publishAlbumThunk.fulfilled, (state, action) => {
-                state.isSending = false;
-                const index = state.artistAlbums.findIndex(
-                    (a) => a.id === action.payload.id,
-                );
-                if (index === -1) return;
-                state.artistAlbums[index].isPublished = true;
-                state.success = "Successfully published";
-            })
-            .addCase(publishAlbumThunk.rejected, (state, action) => {
-                state.isSending = false;
-                state.error = action.payload || "Error with publishing";
-            })
-            .addCase(deleteAlbumThunk.pending, (state) => {
-                state.isSending = true;
-            })
-            .addCase(deleteAlbumThunk.fulfilled, (state, action) => {
-                state.isSending = false;
-                state.artistAlbums = state.artistAlbums.filter(
-                    (a) => a.id !== action.payload,
-                );
-                state.success = "Successfully deleted";
-            })
-            .addCase(deleteAlbumThunk.rejected, (state, action) => {
-                state.isSending = false;
-                state.error = action.payload || "Error with deleting";
-            })
             .addCase(addTrackThunk.pending, (state) => {
                 state.isSending = true;
             })
