@@ -1,6 +1,7 @@
 import cors from "cors";
 import express from "express";
 import fs from "fs";
+import cookieParser from "cookie-parser";
 import "reflect-metadata";
 
 import { ArtistRoutes } from "./routes/artist.routes";
