@@ -1,5 +1,5 @@
 import type { IAuthState } from "@/types/auth/auth-state.types";
-import type { AuthUser } from "@/types/auth/auth-types";
+import type { AuthUser } from "@/types/auth/auth.types";
 import { createSlice } from "@reduxjs/toolkit/react";
 import { jwtDecode } from "jwt-decode";
 import {

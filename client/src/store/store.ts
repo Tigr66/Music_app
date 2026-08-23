@@ -6,11 +6,13 @@ import {
     type TypedUseSelectorHook,
 } from "react-redux";
 import authSlice from "./authSlice/authSlice";
+import artistSlice from "./artistSlice/artistSlice";
 
 export const store = configureStore({
     reducer: {
         music: musicSlice,
         auth: authSlice,
+        artist: artistSlice,
     },
 });
 

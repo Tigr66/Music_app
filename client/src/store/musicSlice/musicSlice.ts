@@ -47,18 +47,6 @@ const musicSlice = createSlice({
     name: "music-slice",
     initialState,
     reducers: {
-        clearError: (state) => {
-            state.error = null;
-        },
-        clearSuccess: (state) => {
-            state.success = null;
-        },
-        clearInfo: (state) => {
-            state.info = null;
-        },
-        setCurrentArtist: (state, action: PayloadAction<IArtist | null>) => {
-            state.currentArtist = action.payload;
-        },
         setCurrentAlbum: (
             state,
             action: PayloadAction<IAlbumWithArtist | null>,
@@ -71,69 +59,6 @@ const musicSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(addArtistThunk.pending, (state) => {
-                state.isSending = true;
-            })
-            .addCase(addArtistThunk.fulfilled, (state) => {
-                state.isSending = false;
-                state.success = "Successfully added";
-            })
-            .addCase(addArtistThunk.rejected, (state, action) => {
-                state.isSending = false;
-                state.error = action.payload || "Error adding artist";
-            })
-            .addCase(getArtistsThunk.pending, (state) => {
-                state.isLoadingArtists = true;
-            })
-            .addCase(getArtistsThunk.fulfilled, (state, action) => {
-                state.isLoadingArtists = false;
-                state.artists = action.payload;
-            })
-            .addCase(getArtistsThunk.rejected, (state, action) => {
-                state.isLoadingArtists = false;
-                state.error = action.payload || "Error with getting artists";
-            })
-            .addCase(getArtistThunk.pending, (state) => {
-                state.isLoadingArtist = true;
-            })
-            .addCase(getArtistThunk.fulfilled, (state, action) => {
-                state.isLoadingArtist = false;
-                state.currentArtist = action.payload;
-            })
-            .addCase(getArtistThunk.rejected, (state, action) => {
-                state.isLoadingArtist = false;
-                state.error = action.payload || "Error with getting artist";
-            })
-            .addCase(publishArtistThunk.pending, (state) => {
-                state.isSending = true;
-            })
-            .addCase(publishArtistThunk.fulfilled, (state, action) => {
-                state.isSending = false;
-                const index = state.artists.findIndex(
-                    (a) => a.id === action.payload.id,
-                );
-                if (index === -1) return;
-                state.artists[index].isPublished = true;
-                state.success = "Successfully published";
-            })
-            .addCase(publishArtistThunk.rejected, (state, action) => {
-                state.isSending = false;
-                state.error = action.payload || "Error with publishing";
-            })
-            .addCase(deleteArtistThunk.pending, (state) => {
-                state.isSending = true;
-            })
-            .addCase(deleteArtistThunk.fulfilled, (state, action) => {
-                state.isSending = false;
-                state.artists = state.artists.filter(
-                    (a) => a.id !== action.payload,
-                );
-                state.success = "Successfully deleted";
-            })
-            .addCase(deleteArtistThunk.rejected, (state, action) => {
-                state.isSending = false;
-                state.error = action.payload || "Error with deleting";
-            })
             .addCase(addAlbumThunk.pending, (state) => {
                 state.isSending = true;
             })
@@ -143,7 +68,7 @@ const musicSlice = createSlice({
             })
             .addCase(addAlbumThunk.rejected, (state, action) => {
                 state.isSending = false;
-                state.error = action.payload || "Error adding artist";
+                state.error = action.payload || "Error adding album";
             })
             .addCase(getArtistAlbumsThunk.pending, (state) => {
                 state.isLoadingAlbums = true;
@@ -274,13 +199,6 @@ const musicSlice = createSlice({
     },
 });
 
-export const {
-    clearError,
-    setCurrentArtist,
-    setCurrentAlbum,
-    setCurrentTrack,
-    clearSuccess,
-    clearInfo,
-} = musicSlice.actions;
+export const { setCurrentAlbum, setCurrentTrack } = musicSlice.actions;
 
 export default musicSlice.reducer;

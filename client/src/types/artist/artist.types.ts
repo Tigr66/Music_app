@@ -1,8 +1,8 @@
-export interface IArtist {
-    id: number;
+export type Artist = {
+    id: string;
     name: string;
     photo: string;
     info: string;
-    userId: number;
+    userId: string;
     isPublished: boolean;
-}
+};

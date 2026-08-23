@@ -1,4 +1,4 @@
-import type { AuthResponse } from "@/types/auth/auth-types";
+import type { AuthResponse } from "@/types/auth/auth.types";
 import type { AuthFormType } from "@/types/auth/auth-form.types";
 import { musicApi } from "@/api/musicApi";
 import { createAsyncThunk } from "@reduxjs/toolkit";
