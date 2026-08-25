@@ -1,46 +1,15 @@
-import { useEffect } from "react";
+import { AddFormWrapper } from "@/components/form/AddFormWrapper";
 import { Button, Form } from "antd";
-import { useAppDispatch, useAppSelector } from "../../store/store";
-import type { ArtistFormType } from "../../types/ArtistFormType";
-import type { UploadChangeParam, UploadFile } from "antd/es/upload";
-import { toast } from "react-toastify";
-import { extractFile } from "../../utils/extract-file";
-import { addArtistThunk } from "../../store/musicSlice/musicThunks";
-import AppInput from "../../components/AppInput/AppInput";
-import AppTextArea from "../../components/AppTextArea/AppTextArea";
-import AppUpload from "../../components/form/FormUpload/FormUpload";
-import AddFormWrapper from "../../components/AddFormWrapper/AddFormWrapper";
+import { FormInput } from "@/components/form/FormInput";
+import { FormTextArea } from "@/components/form/FormTextArea";
+import { FormUpload } from "@/components/form/FormUpload";
+import { getPhoto } from "@/utils/get-photo";
+import { photoRules } from "@/rules/photo.rules";
+import type { ArtistFormType } from "@/types/artist/artist-form.types";
+import useArtistForm from "./hooks/useArtistForm";
 
 const AddArtistPage = () => {
-    const dispatch = useAppDispatch();
-
-    const [form] = Form.useForm();
-
-    const isSending = useAppSelector((state) => state.music.isSending);
-    const success = useAppSelector((state) => state.music.success);
-
-    const handleAdd = (data: ArtistFormType) => {
-        const formData = new FormData();
-
-        formData.append("name", data.name);
-        formData.append("info", data.info);
-
-        const file = extractFile(data.photo);
-
-        if (file) {
-            formData.append("photo", file);
-        }
-
-        dispatch(addArtistThunk(formData));
-    };
-
-    const getPhoto = (e: UploadChangeParam<UploadFile>) => {
-        return e.fileList;
-    };
-
-    useEffect(() => {
-        if (success) form.resetFields();
-    }, [success]);
+    const { form, handleAdd, isSending } = useArtistForm();
 
     return (
         <AddFormWrapper title="Add Artist">
@@ -48,66 +17,29 @@ const AddArtistPage = () => {
                 form={form}
                 name="basic"
                 layout="vertical"
-                onFinish={(values) => handleAdd(values)}
-                onFinishFailed={() => toast.error("Please complete the form")}
+                onFinish={handleAdd}
                 autoComplete="off"
             >
-                <Form.Item<ArtistFormType>
-                    label="Name"
-                    name="name"
-                    rules={[
-                        {
-                            required: true,
-                            message: "Please input artist name!",
-                        },
-                    ]}
-                >
-                    <AppInput />
-                </Form.Item>
-                <Form.Item<ArtistFormType>
+                <FormInput<ArtistFormType> label="Name" name="name" required />
+
+                <FormTextArea<ArtistFormType>
                     label="Info"
                     name="info"
-                    rules={[
-                        {
-                            required: true,
-                            message: "Please input artist info!",
-                        },
-                    ]}
-                >
-                    <AppTextArea />
-                </Form.Item>
+                    rows={4}
+                    required
+                />
 
-                <Form.Item
-                    name="photo"
+                <FormUpload<ArtistFormType>
                     label="Photo"
+                    name="photo"
                     valuePropName="fileList"
                     getValueFromEvent={getPhoto}
-                    rules={[
-                        {
-                            required: true,
-                            validator: (_, value) => {
-                                if (!value || value.length === 0) {
-                                    return Promise.reject(
-                                        "Please upload photo!",
-                                    );
-                                }
-                                return Promise.resolve();
-                            },
-                        },
-                    ]}
-                >
-                    <AppUpload />
-                </Form.Item>
+                    rules={[...photoRules]}
+                />
 
-                <Form.Item label={null}>
-                    <Button
-                        type="primary"
-                        htmlType="submit"
-                        loading={isSending}
-                    >
-                        Add
-                    </Button>
-                </Form.Item>
+                <Button type="primary" htmlType="submit" loading={isSending}>
+                    Add
+                </Button>
             </Form>
         </AddFormWrapper>
     );

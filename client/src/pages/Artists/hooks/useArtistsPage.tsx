@@ -5,8 +5,9 @@ import { useEffect } from "react";
 const useArtistsPage = () => {
     const dispatch = useAppDispatch();
 
-    const artists = useAppSelector((state) => state.artist.artists);
-    const isLoadingArtists = useAppSelector((state) => state.artist.isLoading);
+    const { artists, isLoading: isLoadingArtists } = useAppSelector(
+        (state) => state.artist,
+    );
 
     useEffect(() => {
         dispatch(getArtistsThunk());

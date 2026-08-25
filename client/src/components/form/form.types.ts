@@ -9,5 +9,6 @@ export interface BaseFormFieldProps<T extends object> {
     required?: boolean;
     rules?: FormItemProps["rules"];
     hidden?: boolean;
+    valuePropName?: FormItemProps["valuePropName"];
     getValueFromEvent?: FormItemProps["getValueFromEvent"];
 }

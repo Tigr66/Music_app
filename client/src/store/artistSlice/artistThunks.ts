@@ -11,6 +11,8 @@ export const addArtistThunk = createAsyncThunk<
 >("music-slice/add-artist", async (data, { rejectWithValue }) => {
     try {
         await musicApi.post(`/artists`, data);
+
+        notifySuccess("Artist added successfully");
     } catch (err) {
         const error = getApiError(err);
         notifyError(error);

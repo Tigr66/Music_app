@@ -12,6 +12,7 @@ const FormUpload = <T extends object>({
     label,
     required,
     rules,
+    valuePropName,
     getValueFromEvent,
     ...uploadProps
 }: FormUploadProps<T>) => {
@@ -24,6 +25,7 @@ const FormUpload = <T extends object>({
             label={label}
             required={required}
             rules={rules}
+            valuePropName={valuePropName}
             getValueFromEvent={getValueFromEvent}
         >
             <Upload
