@@ -1,20 +1,24 @@
 import { createRoot } from "react-dom/client";
-import { Provider } from "react-redux";
-import { store } from "./store/store.ts";
 import { App as AntApp } from "antd";
-import { AppConfigProvider, AppErrorBoundary } from "./config";
+import {
+    AppConfigProvider,
+    AppErrorBoundary,
+    AppStoreProvider,
+} from "./config";
 
 import App from "./App.tsx";
 import React from "react";
 
 createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
-        <Provider store={store}>
+        <AppStoreProvider>
             <AppConfigProvider>
                 <AntApp>
-                    <App />
+                    <AppErrorBoundary>
+                        <App />
+                    </AppErrorBoundary>
                 </AntApp>
             </AppConfigProvider>
-        </Provider>
+        </AppStoreProvider>
     </React.StrictMode>,
 );
