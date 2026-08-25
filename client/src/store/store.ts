@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authSlice from "./authSlice/authSlice";
-import artistSlice from "./artistSlice/artistSlice";
-import albumSlice from "./albumSlice/albumSlice";
-import trackHistorySlice from "./trackHistorySlice/trackHistorySlice";
-import trackSlice from "./trackSlice/trackSlice";
+import authSlice from "./authSlice";
+import artistSlice from "./artistSlice";
+import albumSlice from "./albumSlice";
+import trackHistorySlice from "./trackHistorySlice";
+import trackSlice from "./trackSlice";
 
 export const store = configureStore({
     reducer: {
@@ -14,4 +14,3 @@ export const store = configureStore({
         trackHistory: trackHistorySlice,
     },
 });
-
