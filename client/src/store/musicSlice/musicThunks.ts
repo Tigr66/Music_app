@@ -70,33 +70,3 @@ export const deleteTrackThunk = createAsyncThunk<
     }
 });
 
-export const addHistoryThunk = createAsyncThunk<
-    void,
-    number,
-    { rejectValue: string }
->("music-slice/add-history", async (trackId, { rejectWithValue }) => {
-    try {
-        await musicApi.post("/track_history", { trackId });
-    } catch (err) {
-        const error = err as AxiosError<{ error: string }>;
-
-        return rejectWithValue(error.response?.data?.error || "Unknown error");
-    }
-});
-
-export const getHistoryThunk = createAsyncThunk<
-    ITrackHistory[],
-    void,
-    { rejectValue: string }
->("music-slice/get-history", async (_, { rejectWithValue }) => {
-    try {
-        const result = await musicApi.get("/track_history");
-
-        return result.data;
-    } catch (err) {
-        const error = err as AxiosError<{ error: string }>;
-
-        return rejectWithValue(error.response?.data?.error || "Unknown error");
-    }
-});
-

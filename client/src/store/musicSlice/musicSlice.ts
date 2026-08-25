@@ -94,28 +94,6 @@ const musicSlice = createSlice({
                 state.isSending = false;
                 state.error = action.payload || "Error with deleting";
             })
-            .addCase(addHistoryThunk.pending, (state) => {
-                state.isSending = true;
-            })
-            .addCase(addHistoryThunk.fulfilled, (state) => {
-                state.isSending = false;
-                state.info = "Added to history!";
-            })
-            .addCase(addHistoryThunk.rejected, (state, action) => {
-                state.isSending = false;
-                state.error = action.payload || "Error with add history";
-            })
-            .addCase(getHistoryThunk.pending, (state) => {
-                state.isLoadingHistory = true;
-            })
-            .addCase(getHistoryThunk.fulfilled, (state, action) => {
-                state.isLoadingHistory = false;
-                state.history = action.payload;
-            })
-            .addCase(getHistoryThunk.rejected, (state, action) => {
-                state.isLoadingHistory = false;
-                state.error = action.payload || "Error with getting history";
-            });
     },
 });
 
