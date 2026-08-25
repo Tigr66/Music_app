@@ -2,16 +2,16 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { appRoutes } from "./routes/app-routes";
 
 import MainLayout from "./layouts/MainLayout";
-import MainPage from "./pages/MainPage/MainPage";
 import AlbumsPage from "./pages/AlbumsPage/AlbumsPage";
 import TracksPage from "./pages/TracksPage/TracksPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import TrackHistoryPage from "./pages/TrackHistoryPage/TrackHistoryPage";
-import AddArtistPage from "./pages/AddArtistPage/AddArtistPage";
+import AddArtistPage from "./pages/Artists/AddArtistPage";
 import AddAlbumPage from "./pages/AddAlbumPage/AddAlbumPage";
 import AddTrackPage from "./pages/AddTrackPage/AddTrackPage";
 import RequireAuth from "./routes/guards/RequireAuth";
+import ArtistsPage from "./pages/Artists/ArtistsPage";
 
 import "@/styles/variables.css";
 import "@/styles/base.css";
@@ -23,10 +23,13 @@ const App = () => {
         <BrowserRouter>
             <Routes>
                 <Route element={<MainLayout />}>
-                    <Route path={appRoutes.MAIN_PAGE} element={<MainPage />} />
+                    <Route
+                        path={appRoutes.MAIN_PAGE}
+                        element={<ArtistsPage />}
+                    />
                     <Route
                         path={appRoutes.ARTISTS_PAGE}
-                        element={<MainPage />}
+                        element={<ArtistsPage />}
                     />
                     <Route
                         path={appRoutes.ARTIST_ALBUMS_PAGE}

@@ -1,5 +1,6 @@
 import { FrownOutlined } from "@ant-design/icons";
 import { Result, Typography } from "antd";
+
 const { Title } = Typography;
 
 interface EmptyMessageProps {

@@ -1,10 +1,5 @@
 import { Flex, Typography } from "antd";
 import type React from "react";
-import { useAppSelector } from "../../store/store";
-import { useEffect } from "react";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { appRoutes } from "../../routes/app-routes";
 
 interface AddFormWrapperProps {
     title: string;
@@ -12,17 +7,6 @@ interface AddFormWrapperProps {
 }
 
 const AddFormWrapper = ({ title, children }: AddFormWrapperProps) => {
-    const user = useAppSelector((state) => state.music.user);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (!user) {
-            toast.info("To create please log in");
-            navigate({
-                pathname: appRoutes.LOGIN_PAGE,
-            });
-        }
-    }, []);
 
     return (
         <>
