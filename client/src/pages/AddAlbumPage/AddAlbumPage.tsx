@@ -9,7 +9,7 @@ import {
     getArtistsThunk,
 } from "../../store/musicSlice/musicThunks";
 import AppInput from "../../components/AppInput/AppInput";
-import AppUpload from "../../components/AppUpload/AppUpload";
+import AppUpload from "../../components/form/FormUpload/FormUpload";
 import AddFormWrapper from "../../components/AddFormWrapper/AddFormWrapper";
 import type { AlbumFormType } from "../../types/AlbumFormType";
 import AppSelect from "../../components/AppSelect/AppSelect";

@@ -8,7 +8,7 @@ import { extractFile } from "../../utils/extract-file";
 import { addArtistThunk } from "../../store/musicSlice/musicThunks";
 import AppInput from "../../components/AppInput/AppInput";
 import AppTextArea from "../../components/AppTextArea/AppTextArea";
-import AppUpload from "../../components/AppUpload/AppUpload";
+import AppUpload from "../../components/form/FormUpload/FormUpload";
 import AddFormWrapper from "../../components/AddFormWrapper/AddFormWrapper";
 
 const AddArtistPage = () => {
