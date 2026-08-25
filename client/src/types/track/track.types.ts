@@ -1,10 +1,10 @@
-export interface ITrack {
-    id: number;
+export type Track = {
+    id: string;
     title: string;
     duration: number;
-    albumId: number;
+    albumId: string;
     youtubeUrl: string;
     number: number;
-    userId: number;
+    userId: string;
     isPublished: boolean;
-}
+};

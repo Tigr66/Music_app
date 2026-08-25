@@ -1,7 +1,7 @@
 export type TrackFormType = {
     title: string;
-    artistId: number;
-    albumId: number;
+    artistId: string;
+    albumId: string;
     duration: number;
     youtubeUrl: string;
 };
