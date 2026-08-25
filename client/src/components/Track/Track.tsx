@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../store/store";
 import { CaretRightOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { appRoutes } from "../../routes/appRoutes";
+import { appRoutes } from "../../routes/app-routes";
 import {
     addHistoryThunk,
     deleteTrackThunk,

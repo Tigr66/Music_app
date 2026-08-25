@@ -17,7 +17,7 @@ import {
     UserAddOutlined,
     UserOutlined,
 } from "@ant-design/icons";
-import { appRoutes } from "../routes/appRoutes";
+import { appRoutes } from "../routes/app-routes";
 import AppHeader from "../components/AppHeader/AppHeader";
 import styles from "./MainLayout.module.css";
 import { logoutUserThunk } from "../store/musicSlice/musicThunks";
@@ -106,7 +106,9 @@ const MainLayout = () => {
                             <NavLink
                                 to={appRoutes.TRACK_HISTORY_PAGE}
                                 className={styles.sidebar_link}
-                                onClick={(e) => isLoggingOut && e.preventDefault()}
+                                onClick={(e) =>
+                                    isLoggingOut && e.preventDefault()
+                                }
                             >
                                 <HistoryOutlined />{" "}
                                 {!collapsed && "Track history"}
@@ -114,21 +116,27 @@ const MainLayout = () => {
                             <NavLink
                                 to={appRoutes.ADD_ARTIST_PAGE}
                                 className={styles.sidebar_link}
-                                onClick={(e) => isLoggingOut && e.preventDefault()}
+                                onClick={(e) =>
+                                    isLoggingOut && e.preventDefault()
+                                }
                             >
                                 <UserAddOutlined /> {!collapsed && "Add artist"}
                             </NavLink>
                             <NavLink
                                 to={appRoutes.ADD_ALBUM_PAGE}
                                 className={styles.sidebar_link}
-                                onClick={(e) => isLoggingOut && e.preventDefault()}
+                                onClick={(e) =>
+                                    isLoggingOut && e.preventDefault()
+                                }
                             >
                                 <FolderOutlined /> {!collapsed && "Add album"}
                             </NavLink>
                             <NavLink
                                 to={appRoutes.ADD_TRACK_PAGE}
                                 className={styles.sidebar_link}
-                                onClick={(e) => isLoggingOut && e.preventDefault()}
+                                onClick={(e) =>
+                                    isLoggingOut && e.preventDefault()
+                                }
                             >
                                 <CustomerServiceOutlined />{" "}
                                 {!collapsed && "Add track"}

@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { appRoutes } from "./routes/appRoutes";
+import { appRoutes } from "./routes/app-routes";
 import MainLayout from "./layouts/MainLayout";
 import MainPage from "./pages/MainPage/MainPage";
 import AlbumsPage from "./pages/AlbumsPage/AlbumsPage";
@@ -10,6 +10,7 @@ import TrackHistoryPage from "./pages/TrackHistoryPage/TrackHistoryPage";
 import AddArtistPage from "./pages/AddArtistPage/AddArtistPage";
 import AddAlbumPage from "./pages/AddAlbumPage/AddAlbumPage";
 import AddTrackPage from "./pages/AddTrackPage/AddTrackPage";
+import RequireAuth from "./routes/guards/RequireAuth";
 import "./App.css";
 
 const App = () => {
@@ -38,22 +39,24 @@ const App = () => {
                         path={appRoutes.REGISTER_PAGE}
                         element={<RegisterPage />}
                     />
-                    <Route
-                        path={appRoutes.TRACK_HISTORY_PAGE}
-                        element={<TrackHistoryPage />}
-                    />
-                    <Route
-                        path={appRoutes.ADD_ARTIST_PAGE}
-                        element={<AddArtistPage />}
-                    />
-                    <Route
-                        path={appRoutes.ADD_ALBUM_PAGE}
-                        element={<AddAlbumPage />}
-                    />
-                    <Route
-                        path={appRoutes.ADD_TRACK_PAGE}
-                        element={<AddTrackPage />}
-                    />
+                    <Route element={<RequireAuth />}>
+                        <Route
+                            path={appRoutes.TRACK_HISTORY_PAGE}
+                            element={<TrackHistoryPage />}
+                        />
+                        <Route
+                            path={appRoutes.ADD_ARTIST_PAGE}
+                            element={<AddArtistPage />}
+                        />
+                        <Route
+                            path={appRoutes.ADD_ALBUM_PAGE}
+                            element={<AddAlbumPage />}
+                        />
+                        <Route
+                            path={appRoutes.ADD_TRACK_PAGE}
+                            element={<AddTrackPage />}
+                        />
+                    </Route>
                 </Route>
             </Routes>
         </BrowserRouter>

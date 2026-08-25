@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { useEffect } from "react";
-import { appRoutes } from "../../routes/appRoutes";
+import { appRoutes } from "../../routes/app-routes";
 import { toast } from "react-toastify";
 import { getHistoryThunk } from "../../store/musicSlice/musicThunks";
 import { Flex } from "antd";

@@ -4,7 +4,7 @@ import { useAppSelector } from "../../store/store";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { appRoutes } from "../../routes/appRoutes";
+import { appRoutes } from "../../routes/app-routes";
 
 interface AddFormWrapperProps {
     title: string;

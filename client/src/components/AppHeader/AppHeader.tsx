@@ -1,6 +1,6 @@
 import { Layout } from "antd";
 import { Link } from "react-router-dom";
-import { appRoutes } from "../../routes/appRoutes";
+import { appRoutes } from "../../routes/app-routes";
 const { Header } = Layout;
 import styles from "./AppHeader.module.css";
 
