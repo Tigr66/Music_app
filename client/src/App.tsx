@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { appRoutes } from "./routes/app-routes";
+
 import MainLayout from "./layouts/MainLayout";
 import MainPage from "./pages/MainPage/MainPage";
 import AlbumsPage from "./pages/AlbumsPage/AlbumsPage";
@@ -11,7 +12,11 @@ import AddArtistPage from "./pages/AddArtistPage/AddArtistPage";
 import AddAlbumPage from "./pages/AddAlbumPage/AddAlbumPage";
 import AddTrackPage from "./pages/AddTrackPage/AddTrackPage";
 import RequireAuth from "./routes/guards/RequireAuth";
-import "./App.css";
+
+import "@/styles/variables.css";
+import "@/styles/base.css";
+import "@/styles/global.css";
+import "@/styles/antd-overrides.css";
 
 const App = () => {
     return (
