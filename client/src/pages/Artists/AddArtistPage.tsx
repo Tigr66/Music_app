@@ -13,7 +13,7 @@ const AddArtistPage = () => {
 
     return (
         <AddFormWrapper title="Add Artist">
-            <Form
+            <Form<ArtistFormType>
                 form={form}
                 name="basic"
                 layout="vertical"

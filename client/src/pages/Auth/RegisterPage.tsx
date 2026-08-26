@@ -1,5 +1,5 @@
 import { Flex } from "antd";
-import AuthForm from "../../components/AuthForm/AuthForm";
+import AuthForm from "./components/AuthForm/AuthForm";
 
 const RegisterPage = () => {
     return (

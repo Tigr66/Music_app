@@ -1,27 +1,21 @@
-import { Button, Card, Flex, Typography } from "antd";
-import type { IArtist } from "../../interfaces/IArtist";
-import { resolveImageUrl } from "../../utils/resolve-Image-url";
-import { useNavigate } from "react-router-dom";
+import { Card, Typography } from "antd";
+import { PublishBadge } from "@/components/PublishBadge";
+import { resolveImageUrl } from "@/utils/resolve-Image-url";
+import { AdminCardActions } from "@/components/AdminCardActions";
+import type { Artist } from "@/types/artist/artist.types";
+import useArtistCard from "@/pages/Artists/hooks/useArtistCard";
+import styles from "./ArtistCard.module.css";
+
 const { Meta } = Card;
 const { Title, Text } = Typography;
-import styles from "./ArtistCard.module.css";
-import PublishBadge from "../PublishBadge/PublishBadge";
-import { useAppDispatch, useAppSelector } from "../../store/store";
-import {
-    deleteArtistThunk,
-    publishArtistThunk,
-} from "../../store/musicSlice/musicThunks";
 
 interface ArtistCardProps {
-    artist: IArtist;
+    artist: Artist;
 }
 
 const ArtistCard = ({ artist }: ArtistCardProps) => {
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-
-    const user = useAppSelector((state) => state.music.user);
-    const isSending = useAppSelector((state) => state.music.isSending);
+    const { user, isSending, navigate, handlePublish, handleDelete } =
+        useArtistCard(artist);
 
     return (
         <PublishBadge isPublished={artist.isPublished}>
@@ -48,34 +42,14 @@ const ArtistCard = ({ artist }: ArtistCardProps) => {
                     }
                     description={<Text>{artist.info}</Text>}
                 />
+                
                 {user?.role === "ADMIN" && (
-                    <Flex vertical gap={10} style={{ padding: 10 }}>
-                        {!artist.isPublished && (
-                            <Button
-                                type="primary"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    dispatch(publishArtistThunk(artist.id));
-                                }}
-                                style={{ width: "100%" }}
-                                loading={isSending}
-                            >
-                                Publish
-                            </Button>
-                        )}
-                        <Button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                dispatch(deleteArtistThunk(artist.id));
-                            }}
-                            type="primary"
-                            style={{ width: "100%" }}
-                            loading={isSending}
-                            danger
-                        >
-                            Delete
-                        </Button>
-                    </Flex>
+                    <AdminCardActions
+                        onPublish={handlePublish}
+                        onDelete={handleDelete}
+                        isPublished={artist.isPublished}
+                        isSending={isSending}
+                    />
                 )}
             </Card>
         </PublishBadge>

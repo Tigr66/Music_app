@@ -1,9 +1,9 @@
 import { Flex } from "antd";
-import AuthForm from "../../components/AuthForm/AuthForm";
+import AuthForm from "./components/AuthForm/AuthForm";
 
 const LoginPage = () => {
     return (
-        <Flex justify="center" align="center" style={{height: "100%"}}>
+        <Flex justify="center" align="center" style={{ height: "100%" }}>
             <AuthForm isLogin={true} />
         </Flex>
     );
