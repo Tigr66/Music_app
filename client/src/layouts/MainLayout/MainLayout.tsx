@@ -2,24 +2,29 @@ import { Layout } from "antd";
 import { Outlet } from "react-router-dom";
 import { Bounce, ToastContainer } from "react-toastify";
 import { AppHeader } from "./components/AppHeader";
+import { useScreen } from "@/hooks/useScreens";
+import { AppDrawer } from "./components/AppDrawer";
+import { AppSider } from "./components/AppSider";
+import { useState } from "react";
 import styles from "./MainLayout.module.css";
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 
 const MainLayout = () => {
+    const { isDesktop } = useScreen();
+
+    const [open, setOpen] = useState<boolean>(false);
+
     return (
         <Layout className={styles.main_layout}>
-            <Sider
-                collapsible
-                collapsed={collapsed}
-                onCollapse={(value) => setCollapsed(value)}
-                className={styles.sider}
-                trigger={null}
-                width={collapsed ? 30 : 220}
-            ></Sider>
+            {isDesktop ? (
+                <AppSider />
+            ) : (
+                <AppDrawer open={open} onClose={() => setOpen(false)} />
+            )}
 
             <Layout style={{ background: "transparent" }}>
-                <AppHeader />
+                <AppHeader onMenuClick={() => setOpen(!open)} />
 
                 <Content className={styles.content}>
                     <ToastContainer

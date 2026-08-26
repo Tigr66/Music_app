@@ -13,3 +13,15 @@
     color: #dcdadb;
     text-align: center;
 }
+
+.menu_button {
+    height: 56px;
+    width: max-content;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #dcdadb;
+    transition: 0.15s;
+    display: inline-block;
+    font-size: 3em;
+}
