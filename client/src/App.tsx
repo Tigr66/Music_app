@@ -1,17 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { appRoutes } from "./routes/app-routes";
 
-import MainLayout from "./layouts/MainLayout";
-import AlbumsPage from "./pages/AlbumsPage/AlbumsPage";
-import TracksPage from "./pages/TracksPage/TracksPage";
-import LoginPage from "./pages/LoginPage/LoginPage";
-import RegisterPage from "./pages/RegisterPage/RegisterPage";
-import TrackHistoryPage from "./pages/TrackHistoryPage/TrackHistoryPage";
-import AddArtistPage from "./pages/Artists/AddArtistPage";
-import AddAlbumPage from "./pages/AddAlbumPage/AddAlbumPage";
-import AddTrackPage from "./pages/AddTrackPage/AddTrackPage";
+import { MainLayout } from "./layouts/MainLayout";
+import { LoginPage, RegisterPage } from "./pages/Auth";
+import { AddArtistPage, ArtistsPage } from "./pages/Artists";
+// import AlbumsPage from "./pages/AlbumsPage/AlbumsPage";
+// import TracksPage from "./pages/TracksPage/TracksPage";
+// import AddAlbumPage from "./pages/AddAlbumPage/AddAlbumPage";
+// import AddTrackPage from "./pages/AddTrackPage/AddTrackPage";
 import RequireAuth from "./routes/guards/RequireAuth";
-import ArtistsPage from "./pages/Artists/ArtistsPage";
 
 import "@/styles/variables.css";
 import "@/styles/base.css";
@@ -31,14 +28,14 @@ const App = () => {
                         path={appRoutes.ARTISTS_PAGE}
                         element={<ArtistsPage />}
                     />
-                    <Route
+                    {/* <Route
                         path={appRoutes.ARTIST_ALBUMS_PAGE}
                         element={<AlbumsPage />}
                     />
                     <Route
                         path={appRoutes.ALBUMS_TRACKS_PAGE}
                         element={<TracksPage />}
-                    />
+                    /> */}
                     <Route
                         path={appRoutes.LOGIN_PAGE}
                         element={<LoginPage />}
@@ -48,22 +45,22 @@ const App = () => {
                         element={<RegisterPage />}
                     />
                     <Route element={<RequireAuth />}>
-                        <Route
+                        {/* <Route
                             path={appRoutes.TRACK_HISTORY_PAGE}
                             element={<TrackHistoryPage />}
-                        />
+                        /> */}
                         <Route
                             path={appRoutes.ADD_ARTIST_PAGE}
                             element={<AddArtistPage />}
                         />
-                        <Route
+                        {/* <Route
                             path={appRoutes.ADD_ALBUM_PAGE}
                             element={<AddAlbumPage />}
                         />
                         <Route
                             path={appRoutes.ADD_TRACK_PAGE}
                             element={<AddTrackPage />}
-                        />
+                        /> */}
                     </Route>
                 </Route>
             </Routes>

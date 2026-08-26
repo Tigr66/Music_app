@@ -1,6 +1,6 @@
 import axios, { type InternalAxiosRequestConfig } from "axios";
 import { store } from "../store/store";
-import { logoutUserThunk } from "../store/musicSlice/musicThunks";
+import { logoutUserThunk } from "@/store/authSlice/authThunks";
 
 const BASE_URL: string = "http://localhost:8000";
 

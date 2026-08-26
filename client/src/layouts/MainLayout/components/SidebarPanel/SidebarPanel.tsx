@@ -7,8 +7,8 @@ import {
 } from "@ant-design/icons";
 import { navItems } from "./nav-items";
 import { logoutUserThunk } from "@/store/authSlice/authThunks";
-import styles from "./MainLayout.module.css";
-import SidebarItem from "../SidebarItem/SidebarItem";
+import { SidebarItem } from "../SidebarItem";
+import styles from "./SidebarPanel.module.css";
 
 const { Title } = Typography;
 
