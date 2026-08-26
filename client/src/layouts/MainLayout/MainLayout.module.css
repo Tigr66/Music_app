@@ -1,0 +1,34 @@
+.main_layout {
+    max-height: 100vh;
+    background: radial-gradient(circle, #1f1d1b 0%, #100e0d 100%);
+}
+
+.content {
+    flex: 1;
+    position: relative;
+    padding: 20px;
+    max-height: 100vh;
+    overflow-y: scroll;
+}
+
+.content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content::-webkit-scrollbar-track {
+    background: radial-gradient(circle, #1f1d1b 0%, #100e0d 100%);
+}
+.content::-webkit-scrollbar-thumb {
+    background-color: #2a2422;
+    border-radius: 10px;
+}
+
+.sider {
+    background: rgba(20, 18, 16, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}

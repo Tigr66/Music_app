@@ -1,0 +1,16 @@
+.sidebar_link {
+    padding: 10px 12px;
+    color: #dcdadb;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.2s;
+    font-size: 24px;
+    width: 100%;
+    text-align: center;
+}
+
+.sidebar_link:hover,
+.active {
+    background: rgba(255, 255, 255, 0.08);
+    color: #2196f3;
+}

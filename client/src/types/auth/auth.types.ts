@@ -1,5 +1,7 @@
 export type UserRole = "USER" | "ADMIN";
 
+export type AccessRole = UserRole | "GUEST";
+
 export type AuthUser = {
     id: string;
     username: string;

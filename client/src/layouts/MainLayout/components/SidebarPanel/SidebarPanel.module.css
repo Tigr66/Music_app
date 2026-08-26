@@ -1,0 +1,48 @@
+.sider-nav {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding: 10px;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.18) transparent;
+}
+
+.sidebar_button {
+    padding: 10px 12px;
+    color: #dcdadb;
+    border-radius: 8px;
+    transition: 0.2s;
+    width: 100%;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+.sidebar_button:disabled {
+    cursor: not-allowed;
+}
+
+.sidebar_button:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #2196f3;
+}
+
+.toggle_button {
+    width: 100%;
+    height: 5%;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    color: #dcdadb;
+    margin-top: auto;
+    cursor: pointer;
+}
+
+.toggle-mobile {
+    font-size: 18px;
+    margin: 0;
+}
