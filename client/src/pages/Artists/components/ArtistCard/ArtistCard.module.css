@@ -2,7 +2,6 @@
     background-color: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    width: 320px;
 }
 
 .artist_card:hover {
@@ -15,4 +14,11 @@
     object-fit: cover;
     min-height: 320px;
     max-height: 320px;
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .artist_card_image {
+        min-height: 220px;
+        max-height: 220px;
+    }
 }

@@ -42,7 +42,7 @@ const ArtistCard = ({ artist }: ArtistCardProps) => {
                     }
                     description={<Text>{artist.info}</Text>}
                 />
-                
+
                 {user?.role === "ADMIN" && (
                     <AdminCardActions
                         onPublish={handlePublish}

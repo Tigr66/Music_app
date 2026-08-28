@@ -1,8 +1,9 @@
-import { Flex, Typography } from "antd";
+import { Typography } from "antd";
 import { ArtistCard } from "./components/ArtistCard";
 import { Spinner } from "@/components/Spinner";
 import { EmptyMessage } from "@/components/EmptyMessage";
 import useArtistsPage from "./hooks/useArtistsPage";
+import styles from "./styles/ArtistsPage.module.css";
 
 const { Title } = Typography;
 
@@ -15,11 +16,11 @@ const ArtistsPage = () => {
             {isLoadingArtists ? (
                 <Spinner title="Loading artists" />
             ) : artists.length ? (
-                <Flex wrap gap="small">
+                <div className={styles.artists_container}>
                     {artists.map((a) => (
                         <ArtistCard artist={a} key={a.id} />
                     ))}
-                </Flex>
+                </div>
             ) : (
                 <EmptyMessage message="There's no any artists at the moment" />
             )}

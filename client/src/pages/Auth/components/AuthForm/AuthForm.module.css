@@ -8,3 +8,13 @@
 .auth_form_button {
     width: 100%;
 }
+
+@media (max-width: 575px) {
+    .auth_window {
+        width: 290px;
+    }
+
+    .auth_window > * {
+        max-width: 100%;
+    }
+}
