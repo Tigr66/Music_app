@@ -1,6 +1,5 @@
 import { Layout } from "antd";
 import { Outlet } from "react-router-dom";
-import { Bounce, ToastContainer } from "react-toastify";
 import { AppHeader } from "./components/AppHeader";
 import { useScreen } from "@/hooks/useScreens";
 import { AppDrawer } from "./components/AppDrawer";
@@ -27,19 +26,6 @@ const MainLayout = () => {
                 <AppHeader onMenuClick={() => setOpen(!open)} />
 
                 <Content className={styles.content}>
-                    <ToastContainer
-                        position="top-right"
-                        autoClose={5000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick={false}
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                        theme="colored"
-                        transition={Bounce}
-                    />
                     <Outlet />
                 </Content>
             </Layout>
