@@ -6,7 +6,6 @@ async function main() {
             username: "tigrgareev",
             password:
                 "$2b$10$DS6myfA16yZ.pGvkSyqNsuHEwet56jCev48VVnzqEEZaEPwouVhYK",
-            token: "pnm0R_eFcZF5QPunVTca0",
             role: "USER",
         },
     });
@@ -16,7 +15,6 @@ async function main() {
             username: "super_user",
             password:
                 "$2b$10$YwviWw9MhgkFo2au6kEk4OWvisbwEeWln7renojqrb9bBzaSv61q2",
-            token: null,
             role: "ADMIN",
         },
     });
