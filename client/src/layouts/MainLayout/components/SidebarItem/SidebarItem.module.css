@@ -1,16 +1,25 @@
 .sidebar_link {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+
     padding: 10px 12px;
-    color: #dcdadb;
+    color: var(--txt3);
     text-decoration: none;
     border-radius: 8px;
     transition: 0.2s;
     font-size: 24px;
-    width: 100%;
     text-align: center;
+    width: 100%;
+}
+
+.sidebar_link.collapsed {
+    justify-content: center;
+    gap: 0;
 }
 
 .sidebar_link:hover,
 .active {
     background: rgba(255, 255, 255, 0.08);
-    color: #2196f3;
+    color: var(--txt2);
 }

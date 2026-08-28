@@ -10,16 +10,16 @@ import styles from "./MainLayout.module.css";
 const { Content } = Layout;
 
 const MainLayout = () => {
-    const { isDesktop } = useScreen();
+    const { isMobile } = useScreen();
 
     const [open, setOpen] = useState<boolean>(false);
 
     return (
         <Layout className={styles.main_layout}>
-            {isDesktop ? (
-                <AppSider />
-            ) : (
+            {isMobile ? (
                 <AppDrawer open={open} onClose={() => setOpen(false)} />
+            ) : (
+                <AppSider />
             )}
 
             <Layout style={{ background: "transparent" }}>

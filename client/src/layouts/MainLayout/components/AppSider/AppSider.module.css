@@ -1,6 +1,4 @@
-.app-sider {
+.app_sider {
     background: rgba(20, 18, 16, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border-right: 1px solid rgba(255, 255, 255, 0.08);
 }

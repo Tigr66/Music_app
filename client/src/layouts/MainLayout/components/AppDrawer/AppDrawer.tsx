@@ -1,5 +1,6 @@
 import { Drawer } from "antd";
 import { SidebarPanel } from "../SidebarPanel";
+import { useScreen } from "@/hooks/useScreens";
 import styles from "./AppDrawer.module.css";
 
 interface AppDrawerProps {
@@ -8,14 +9,20 @@ interface AppDrawerProps {
 }
 
 const AppDrawer = ({ open, onClose }: AppDrawerProps) => {
+    const { isMobile  } = useScreen();
+
+    const size = isMobile ? "85%" : "40%";
+
     return (
         <Drawer
             placement="left"
             open={open}
             onClose={onClose}
-            size="85%"
+            size={size}
             closeIcon={false}
-            className={styles.app_drawer}
+            classNames={{
+                body: styles.app_drawer,
+            }}
         >
             <SidebarPanel onToggle={onClose} mobile />
         </Drawer>

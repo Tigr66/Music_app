@@ -16,7 +16,7 @@ const AppSider = () => {
             trigger={null}
             width={210}
             collapsedWidth={80}
-            className={styles.sider}
+            className={styles.app_sider}
         >
             <SidebarPanel
                 collapsed={collapsed}

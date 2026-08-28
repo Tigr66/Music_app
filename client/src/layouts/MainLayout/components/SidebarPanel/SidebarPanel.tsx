@@ -1,4 +1,4 @@
-import { Avatar, Flex, Typography } from "antd";
+import { Avatar, Flex, Tooltip, Typography } from "antd";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
     LoadingOutlined,
@@ -28,14 +28,38 @@ const SidebarPanel = ({ collapsed, onToggle, mobile }: SidebarPanelProps) => {
     );
 
     return (
-        <Flex align="center" vertical>
+        <Flex className={styles.sider_inner} vertical>
             {user && (
                 <Flex
                     vertical
                     justify="center"
                     align="center"
-                    style={{ paddingTop: 10 }}
+                    className={styles.sider_header}
                 >
+                    {!collapsed && (
+                        <Flex
+                            justify="flex-start"
+                            className={styles.logout_container}
+                        >
+                            <Tooltip
+                                title="Logout"
+                                placement="right"
+                                open={!mobile ? undefined : false}
+                            >
+                                <button
+                                    onClick={() => dispatch(logoutUserThunk())}
+                                    disabled={isSending}
+                                    className={styles.sidebar_logout}
+                                >
+                                    {isSending ? (
+                                        <LoadingOutlined />
+                                    ) : (
+                                        <LogoutOutlined />
+                                    )}
+                                </button>
+                            </Tooltip>
+                        </Flex>
+                    )}
                     <Avatar
                         size={collapsed ? 48 : 72}
                         icon={<UserOutlined />}
@@ -45,7 +69,7 @@ const SidebarPanel = ({ collapsed, onToggle, mobile }: SidebarPanelProps) => {
                 </Flex>
             )}
 
-            <Flex className="sider-nav" align="center" vertical>
+            <Flex className={styles.sider_nav} align="center" vertical>
                 {filterItems.map((item) => (
                     <SidebarItem
                         key={item.path}
@@ -56,17 +80,6 @@ const SidebarPanel = ({ collapsed, onToggle, mobile }: SidebarPanelProps) => {
                     />
                 ))}
             </Flex>
-
-            {user && (
-                <button
-                    onClick={() => dispatch(logoutUserThunk())}
-                    disabled={isSending}
-                    className={styles.sidebar_button}
-                >
-                    <LogoutOutlined /> {!collapsed && "Logout"}{" "}
-                    {isSending && <LoadingOutlined />}
-                </button>
-            )}
 
             <button
                 className={[

@@ -11,7 +11,7 @@ import type { NavItem } from "@/types/navigation/navigation.types";
 export const navItems: NavItem[] = [
     {
         path: appRoutes.TRACK_HISTORY_PAGE,
-        label: "Track history",
+        label: "History",
         icon: HistoryOutlined,
         roles: ["ADMIN", "USER"],
     },

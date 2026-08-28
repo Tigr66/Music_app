@@ -1,14 +1,14 @@
 .main_layout {
-    max-height: 100vh;
-    background: radial-gradient(circle, #1f1d1b 0%, #100e0d 100%);
+    height: 100vh;
+    background: var(--bg1);
 }
 
 .content {
     flex: 1;
+    height: 100vh;
     position: relative;
-    padding: 20px;
-    max-height: 100vh;
     overflow-y: scroll;
+    padding: 10px;
 }
 
 .content::-webkit-scrollbar {
@@ -16,9 +16,9 @@
 }
 
 .content::-webkit-scrollbar-track {
-    background: radial-gradient(circle, #1f1d1b 0%, #100e0d 100%);
+    background: var(--bg1);
 }
 .content::-webkit-scrollbar-thumb {
-    background-color: #2a2422;
+    background-color: var(--bg3);
     border-radius: 10px;
 }

@@ -31,7 +31,7 @@ const SidebarItem = ({
                     [
                         styles.sidebar_link,
                         isActive ? styles.active : "",
-                        // collapsed ? styles.collapsed : "",
+                        collapsed ? styles.collapsed : "",
                     ].join(" ")
                 }
             >

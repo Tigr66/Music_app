@@ -11,11 +11,11 @@ interface AppHeaderProps {
 }
 
 const AppHeader = ({ onMenuClick }: AppHeaderProps) => {
-    const { isDesktop } = useScreen();
+    const { isMobile } = useScreen();
 
     return (
         <Header className={styles.app_header}>
-            {!isDesktop && (
+            { isMobile && (
                 <button onClick={onMenuClick} className={styles.menu_button}>
                     ☰
                 </button>

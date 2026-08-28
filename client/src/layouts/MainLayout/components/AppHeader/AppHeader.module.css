@@ -1,6 +1,7 @@
 .app_header {
-    background-color: rgba(255, 255, 255, 0.03);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: var(--bg4);
+    border-bottom: 1px solid var(--border1);
+    gap: 10px;
 
     display: flex;
     justify-content: center;
@@ -15,13 +16,22 @@
 }
 
 .menu_button {
-    height: 56px;
-    width: max-content;
+    font-size: 36px;
+    color: #dcdadb;
+    display: inline-block;
     border: none;
     background: transparent;
     cursor: pointer;
-    color: #dcdadb;
-    transition: 0.15s;
-    display: inline-block;
-    font-size: 3em;
+    transition: all 0.5s;
+    width: max-content;
+}
+
+.menu_button:active {
+    transform: scale(0.4);
+}
+
+@media (max-width: 768px) {
+    .header_link {
+        font-size: 28px;
+    }
 }

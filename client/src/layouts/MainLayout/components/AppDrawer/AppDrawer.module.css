@@ -1,0 +1,7 @@
+.app_drawer {
+    background-color: var(--bg2);
+}
+
+:global(.ant-drawer) .app_drawer {
+    padding: 0;
+}

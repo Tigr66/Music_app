@@ -1,3 +1,12 @@
 :root {
     --txt1: #fff;
+    --txt2: #2196f3;
+    --txt3: #dcdadb;
+
+    --bg1: radial-gradient(circle, #1f1d1b 0%, #100e0d 100%);
+    --bg2: #1f1d1b;
+    --bg3: #2a2422;
+    --bg4: rgba(255, 255, 255, 0.03);
+
+    --border1: rgba(255, 255, 255, 0.08);
 }
