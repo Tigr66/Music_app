@@ -1,10 +1,7 @@
-import { AddFormWrapper } from "@/components/form/AddFormWrapper";
 import { Button, Form } from "antd";
-import { FormInput } from "@/components/form/FormInput";
-import { FormTextArea } from "@/components/form/FormTextArea";
-import { FormUpload } from "@/components/form/FormUpload";
 import { getPhoto } from "@/utils/get-photo";
 import { photoRules } from "@/rules/photo.rules";
+import { AddFormWrapper, FormInput, FormTextArea, FormUpload } from "@/components/form";
 import type { ArtistFormType } from "@/types/artist/artist-form.types";
 import useArtistForm from "./hooks/useArtistForm";
 

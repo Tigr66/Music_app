@@ -1,13 +1,13 @@
 import { Input } from "antd";
-import { FormField } from "./FormField";
 import type { BaseFormFieldProps } from "./form.types";
+import FormField from "./FormField";
 
 const { TextArea } = Input;
 
 type FormTextAreaProps<T extends object> = BaseFormFieldProps<T> &
     Omit<React.ComponentProps<typeof Input.TextArea>, "name">;
 
-export const FormTextArea = <T extends object>({
+const FormTextArea = <T extends object>({
     name,
     label,
     required,
@@ -29,3 +29,5 @@ export const FormTextArea = <T extends object>({
         </FormField>
     );
 };
+
+export default FormTextArea;

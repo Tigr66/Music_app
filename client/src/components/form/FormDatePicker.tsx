@@ -1,12 +1,12 @@
 import { DatePicker } from "antd";
-import { FormField } from "./FormField";
+import FormField from "./FormField";
 import type { DatePickerProps } from "antd";
 import type { BaseFormFieldProps } from "./form.types";
 
 type FormDatePickerProps<T extends object> = BaseFormFieldProps<T> &
     Omit<DatePickerProps, "name">;
 
-export const FormDatePicker = <T extends object>({
+const FormDatePicker = <T extends object>({
     name,
     label,
     required,
@@ -26,3 +26,5 @@ export const FormDatePicker = <T extends object>({
         </FormField>
     );
 };
+
+export default FormDatePicker;

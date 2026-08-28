@@ -1,14 +1,14 @@
 import { Input } from "antd";
 import type { InputProps } from "antd";
-import { FormField } from "./FormField";
 import type { BaseFormFieldProps } from "./form.types";
+import FormField from "./FormField";
 
 type FormInputProps<T extends object> = BaseFormFieldProps<T> &
     Omit<InputProps, "name"> & {
         password?: boolean;
     };
 
-export const FormInput = <T extends object>({
+const FormInput = <T extends object>({
     name,
     label,
     required,
@@ -35,3 +35,5 @@ export const FormInput = <T extends object>({
         </FormField>
     );
 };
+
+export default FormInput;

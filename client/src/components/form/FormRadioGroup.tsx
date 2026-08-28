@@ -1,11 +1,11 @@
 import { Radio, type RadioGroupProps } from "antd";
 import type { BaseFormFieldProps } from "./form.types";
-import { FormField } from "./FormField";
+import FormField from "./FormField";
 
 type FormRadioGroupProps<T extends object> = BaseFormFieldProps<T> &
     Omit<RadioGroupProps, "name">;
 
-export const FormRadioGroup = <T extends object>({
+const FormRadioGroup = <T extends object>({
     name,
     label,
     required,
@@ -23,3 +23,5 @@ export const FormRadioGroup = <T extends object>({
         </FormField>
     );
 };
+
+export default FormRadioGroup;

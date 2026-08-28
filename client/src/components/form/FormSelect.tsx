@@ -1,11 +1,11 @@
 import { Select } from "antd";
-import { FormField } from "./FormField";
 import type { SelectProps } from "antd";
 import type { BaseFormFieldProps } from "./form.types";
+import FormField from "./FormField";
 
 type FormSelectProps<T extends object> = BaseFormFieldProps<T> & SelectProps;
 
-export const FormSelect = <T extends object>({
+const FormSelect = <T extends object>({
     name,
     label,
     required,
@@ -23,3 +23,5 @@ export const FormSelect = <T extends object>({
         </FormField>
     );
 };
+
+export default FormSelect;

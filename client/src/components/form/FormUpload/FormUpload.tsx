@@ -1,8 +1,8 @@
 import type { UploadProps } from "antd";
 import { Upload, Image } from "antd";
-import { FormField } from "../FormField";
-import useFormUpload from "./useFormUpload";
 import type { BaseFormFieldProps } from "../form.types";
+import useFormUpload from "./useFormUpload";
+import FormField from "../FormField";
 
 type FormUploadProps<T extends object> = BaseFormFieldProps<T> &
     Omit<UploadProps, "name">;

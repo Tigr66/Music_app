@@ -11,7 +11,7 @@ type FormFieldProps<T extends object> = BaseFormFieldProps<T> &
         children: ReactNode;
     };
 
-export const FormField = <T extends object>({
+const FormField = <T extends object>({
     name,
     label,
     required,
@@ -40,3 +40,5 @@ export const FormField = <T extends object>({
         </Form.Item>
     );
 };
+
+export default FormField;

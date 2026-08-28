@@ -1,6 +1,6 @@
 import { Button, Flex, Form, Typography } from "antd";
 import { Link } from "react-router-dom";
-import { FormInput } from "@/components/form/FormInput";
+import { FormInput } from "@/components/form";
 import { appRoutes } from "@/routes/app-routes";
 import type { AuthFormType } from "@/types/auth/auth-form.types";
 import useAuthForm from "@/pages/Auth/hooks/useAuthForm";

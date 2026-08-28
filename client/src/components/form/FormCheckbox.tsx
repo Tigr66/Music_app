@@ -1,12 +1,12 @@
 import { Checkbox } from "antd";
-import { FormField } from "./FormField";
+import FormField from "./FormField";
 import type { CheckboxProps } from "antd";
 import type { BaseFormFieldProps } from "./form.types";
 
 type FormCheckboxProps<T extends object> = BaseFormFieldProps<T> &
     Omit<CheckboxProps, "name">;
 
-export const FormCheckbox = <T extends object>({
+const FormCheckbox = <T extends object>({
     name,
     label,
     required,
@@ -28,3 +28,5 @@ export const FormCheckbox = <T extends object>({
         </FormField>
     );
 };
+
+export default FormCheckbox;

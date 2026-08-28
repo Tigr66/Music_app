@@ -3,13 +3,14 @@ import { appRoutes } from "./routes/app-routes";
 
 import { MainLayout } from "./layouts/MainLayout";
 import { AppToastContainer } from "./components/AppToastContainer";
+
 import { LoginPage, RegisterPage } from "./pages/Auth";
 import { AddArtistPage, ArtistsPage } from "./pages/Artists";
 // import AlbumsPage from "./pages/AlbumsPage/AlbumsPage";
 // import TracksPage from "./pages/TracksPage/TracksPage";
 // import AddAlbumPage from "./pages/AddAlbumPage/AddAlbumPage";
 // import AddTrackPage from "./pages/AddTrackPage/AddTrackPage";
-import RequireAuth from "./routes/guards/RequireAuth";
+import { RequireAuth } from "./routes/guards";
 
 import "@/styles/variables.css";
 import "@/styles/base.css";
