@@ -1,0 +1,15 @@
+.add_form_wrapper {
+    width: 50%;
+}
+
+@media (max-width: 991px) {
+    .add_form_wrapper {
+        width: 70%;
+    }
+}
+
+@media (max-width: 767px) {
+    .add_form_wrapper {
+        width: 100%;
+    }
+}

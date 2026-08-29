@@ -1,7 +1,12 @@
 import { Button, Form } from "antd";
 import { getPhoto } from "@/utils/get-photo";
 import { photoRules } from "@/rules/photo.rules";
-import { AddFormWrapper, FormInput, FormTextArea, FormUpload } from "@/components/form";
+import {
+    AddFormWrapper,
+    FormInput,
+    FormTextArea,
+    FormUpload,
+} from "@/components/form";
 import type { ArtistFormType } from "@/types/artist/artist-form.types";
 import useArtistForm from "./hooks/useArtistForm";
 
@@ -34,7 +39,12 @@ const AddArtistPage = () => {
                     rules={[...photoRules]}
                 />
 
-                <Button type="primary" htmlType="submit" loading={isSending}>
+                <Button
+                    type="primary"
+                    htmlType="submit"
+                    className="form_button"
+                    loading={isSending}
+                >
                     Add
                 </Button>
             </Form>

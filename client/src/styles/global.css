@@ -1,0 +1,9 @@
+.form_button {
+    width: max-content;
+}
+
+@media (max-width: 767px) {
+    .form_button {
+        width: 100%;
+    }
+}

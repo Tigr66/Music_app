@@ -34,6 +34,7 @@ const FormUpload = <T extends object>({
                 maxCount={1}
                 onPreview={handlePreview}
                 listType="picture-card"
+                accept="image/jpeg"
             >
                 + Upload
             </Upload>
