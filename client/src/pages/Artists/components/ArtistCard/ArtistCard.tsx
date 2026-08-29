@@ -14,7 +14,7 @@ interface ArtistCardProps {
 }
 
 const ArtistCard = ({ artist }: ArtistCardProps) => {
-    const { user, isSending, navigate, handlePublish, handleDelete } =
+    const { onClickCard, user, isSending, handlePublish, handleDelete } =
         useArtistCard(artist);
 
     return (
@@ -22,9 +22,7 @@ const ArtistCard = ({ artist }: ArtistCardProps) => {
             <Card
                 hoverable
                 className={styles.artist_card}
-                onClick={() => {
-                    navigate({ pathname: `/artists/${artist.id}/albums` });
-                }}
+                onClick={onClickCard}
                 cover={
                     <img
                         draggable={false}
@@ -49,6 +47,7 @@ const ArtistCard = ({ artist }: ArtistCardProps) => {
                         onDelete={handleDelete}
                         isPublished={artist.isPublished}
                         isSending={isSending}
+                        vertical
                     />
                 )}
             </Card>

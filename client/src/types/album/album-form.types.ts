@@ -2,6 +2,6 @@ import type { UploadFile } from "antd";
 
 export type AlbumFormType = {
     title: string;
-    artistId: number;
+    artistId: string;
     cover: UploadFile[];
 };

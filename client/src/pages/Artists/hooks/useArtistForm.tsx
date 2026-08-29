@@ -2,10 +2,13 @@ import { addArtistThunk } from "@/store/artistSlice/artistThunks";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { extractFile } from "@/utils/extract-file";
 import { Form } from "antd";
+import { useNavigate } from "react-router-dom";
+import { appRoutes } from "@/routes/app-routes";
 import type { ArtistFormType } from "@/types/artist/artist-form.types";
 
 const useArtistForm = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const [form] = Form.useForm();
 
@@ -14,10 +17,12 @@ const useArtistForm = () => {
     const handleAdd = async (data: ArtistFormType) => {
         const formData = new FormData();
 
-        formData.append("name", data.name);
-        formData.append("info", data.info);
+        const { name, info, photo } = data;
 
-        const file = extractFile(data.photo);
+        formData.append("name", name);
+        formData.append("info", info);
+
+        const file = extractFile(photo);
 
         if (file) {
             formData.append("photo", file);
@@ -26,6 +31,8 @@ const useArtistForm = () => {
         await dispatch(addArtistThunk(formData)).unwrap();
 
         form.resetFields();
+
+        navigate(appRoutes.ARTISTS_PAGE);
     };
 
     return {
