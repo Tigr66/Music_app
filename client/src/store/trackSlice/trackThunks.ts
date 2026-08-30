@@ -9,7 +9,7 @@ export const addTrackThunk = createAsyncThunk<
     void,
     TrackFormType,
     { rejectValue: string }
->("music-slice/add-track", async (data, { rejectWithValue }) => {
+>("track-slice/add-track", async (data, { rejectWithValue }) => {
     try {
         await musicApi.post(`/tracks`, data);
 
@@ -25,7 +25,7 @@ export const getAlbumTracksThunk = createAsyncThunk<
     Track[],
     number,
     { rejectValue: string }
->("music-slice/get-tracks", async (albumId, { rejectWithValue }) => {
+>("track-slice/get-tracks", async (albumId, { rejectWithValue }) => {
     try {
         const result = await musicApi.get("/tracks", {
             params: {
@@ -45,7 +45,7 @@ export const publishTrackThunk = createAsyncThunk<
     Track,
     string,
     { rejectValue: string }
->("music-slice/publish-track", async (trackId, { rejectWithValue }) => {
+>("track-slice/publish-track", async (trackId, { rejectWithValue }) => {
     try {
         const result = await musicApi.post(`/tracks/${trackId}/publish`);
 
@@ -63,7 +63,7 @@ export const deleteTrackThunk = createAsyncThunk<
     string,
     string,
     { rejectValue: string }
->("music-slice/delete-track", async (trackId, { rejectWithValue }) => {
+>("track-slice/delete-track", async (trackId, { rejectWithValue }) => {
     try {
         await musicApi.delete(`/tracks/${trackId}`);
 

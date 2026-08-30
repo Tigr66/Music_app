@@ -8,7 +8,7 @@ export const addAlbumThunk = createAsyncThunk<
     void,
     FormData,
     { rejectValue: string }
->("music-slice/add-album", async (data, { rejectWithValue }) => {
+>("album-slice/add-album", async (data, { rejectWithValue }) => {
     try {
         await musicApi.post(`/albums`, data);
 
@@ -24,7 +24,7 @@ export const getArtistAlbumsThunk = createAsyncThunk<
     Album[],
     string,
     { rejectValue: string }
->("music-slice/get-albums", async (artistId, { rejectWithValue }) => {
+>("album-slice/get-albums", async (artistId, { rejectWithValue }) => {
     try {
         const result = await musicApi.get("/albums", {
             params: {
@@ -44,7 +44,7 @@ export const getAlbumByIdThunk = createAsyncThunk<
     AlbumWithArtist,
     string,
     { rejectValue: string }
->("music-slice/get-album-by-id", async (albumId, { rejectWithValue }) => {
+>("album-slice/get-album-by-id", async (albumId, { rejectWithValue }) => {
     try {
         const result = await musicApi.get(`/albums/${albumId}`);
 
@@ -60,7 +60,7 @@ export const publishAlbumThunk = createAsyncThunk<
     Album,
     string,
     { rejectValue: string }
->("music-slice/publish-album", async (albumId, { rejectWithValue }) => {
+>("album-slice/publish-album", async (albumId, { rejectWithValue }) => {
     try {
         const result = await musicApi.post(`/albums/${albumId}/publish`);
 
@@ -78,7 +78,7 @@ export const deleteAlbumThunk = createAsyncThunk<
     string,
     string,
     { rejectValue: string }
->("music-slice/delete-album", async (albumId, { rejectWithValue }) => {
+>("album-slice/delete-album", async (albumId, { rejectWithValue }) => {
     try {
         await musicApi.delete(`/albums/${albumId}`);
 

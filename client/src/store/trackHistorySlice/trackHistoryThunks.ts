@@ -8,7 +8,7 @@ export const addHistoryThunk = createAsyncThunk<
     void,
     string,
     { rejectValue: string }
->("music-slice/add-history", async (trackId, { rejectWithValue }) => {
+>("history-slice/add-history", async (trackId, { rejectWithValue }) => {
     try {
         await musicApi.post("/track-histories", { trackId });
 
@@ -24,7 +24,7 @@ export const getHistoryThunk = createAsyncThunk<
     TrackHistory[],
     void,
     { rejectValue: string }
->("music-slice/get-history", async (_, { rejectWithValue }) => {
+>("history-slice/get-history", async (_, { rejectWithValue }) => {
     try {
         const result = await musicApi.get("/track-histories");
 
