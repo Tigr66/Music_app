@@ -10,7 +10,7 @@ export const addHistoryThunk = createAsyncThunk<
     { rejectValue: string }
 >("music-slice/add-history", async (trackId, { rejectWithValue }) => {
     try {
-        await musicApi.post("/track_history", { trackId });
+        await musicApi.post("/track-histories", { trackId });
 
         notifyInfo("Added to history!");
     } catch (err) {
@@ -26,7 +26,7 @@ export const getHistoryThunk = createAsyncThunk<
     { rejectValue: string }
 >("music-slice/get-history", async (_, { rejectWithValue }) => {
     try {
-        const result = await musicApi.get("/track_history");
+        const result = await musicApi.get("/track-histories");
 
         return result.data;
     } catch (err) {

@@ -1,0 +1,5 @@
+.history_container {
+    padding: 16px;
+    border-radius: 16px;
+    background-color: var(--bg4);
+}

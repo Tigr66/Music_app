@@ -7,6 +7,7 @@ import { AppToastContainer } from "./components/AppToastContainer";
 import { LoginPage, RegisterPage } from "./pages/Auth";
 import { AddArtistPage, ArtistsPage } from "./pages/Artists";
 import { AddAlbumPage, AlbumsPage } from "./pages/Albums";
+import { TrackHistoryPage } from "./pages/TrackHistory";
 // import TracksPage from "./pages/TracksPage/TracksPage";
 // import AddTrackPage from "./pages/AddTrackPage/AddTrackPage";
 import { RequireAuth } from "./routes/guards";
@@ -48,10 +49,10 @@ const App = () => {
                             element={<RegisterPage />}
                         />
                         <Route element={<RequireAuth />}>
-                            {/* <Route
-                            path={appRoutes.TRACK_HISTORY_PAGE}
-                            element={<TrackHistoryPage />}
-                        /> */}
+                            <Route
+                                path={appRoutes.TRACK_HISTORY_PAGE}
+                                element={<TrackHistoryPage />}
+                            />
                             <Route
                                 path={appRoutes.ADD_ARTIST_PAGE}
                                 element={<AddArtistPage />}

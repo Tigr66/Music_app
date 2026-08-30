@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { addHistoryThunk, getHistoryThunk } from "./trackHistoryThunks";
 
 const initialState: ITrackHistoryState = {
-    trackHistories: [],
+    trackHistory: [],
     isSending: false,
     isLoading: false,
 };
@@ -26,8 +26,9 @@ const trackHistorySlice = createSlice({
             .addCase(getHistoryThunk.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(getHistoryThunk.fulfilled, (state) => {
+            .addCase(getHistoryThunk.fulfilled, (state, action) => {
                 state.isLoading = false;
+                state.trackHistory = action.payload;
             })
             .addCase(getHistoryThunk.rejected, (state) => {
                 state.isLoading = false;
