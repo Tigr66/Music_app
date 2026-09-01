@@ -1,18 +1,16 @@
 import { Modal } from "antd";
-import { useAppDispatch, useAppSelector } from "../../store/store";
-import { setCurrentTrack } from "../../store/musicSlice/musicSlice";
 import { CloseOutlined } from "@ant-design/icons";
+import useYoutubeModal from "@/pages/Tracks/hooks/useYoutubeModal";
 
 const YoutubeModal = () => {
-    const dispatch = useAppDispatch();
-    const track = useAppSelector((state) => state.music.currentTrack);
+    const { track, onCancel } = useYoutubeModal();
 
     return (
         <Modal
             title={track ? track.title : ""}
             open={track !== null}
             closeIcon={<CloseOutlined style={{ color: "#dcdadb" }} />}
-            onCancel={() => dispatch(setCurrentTrack(null))}
+            onCancel={onCancel}
             footer={null}
             destroyOnHidden
         >

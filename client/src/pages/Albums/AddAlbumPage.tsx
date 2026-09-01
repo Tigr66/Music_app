@@ -31,9 +31,6 @@ const AddAlbumPage = () => {
                     options={artists.map((a) => {
                         return { label: a.name, value: a.id };
                     })}
-                    optionRender={(option) => (
-                        <span style={{ color: "#151312" }}>{option.label}</span>
-                    )}
                     showSearch={{
                         optionFilterProp: "label",
                     }}

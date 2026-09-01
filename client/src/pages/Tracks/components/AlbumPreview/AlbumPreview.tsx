@@ -1,11 +1,12 @@
+import { useAppSelector } from "@/store/hooks";
+import { resolveImageUrl } from "@/utils/resolve-Image-url";
 import { Flex, Typography } from "antd";
 import { Image } from "antd";
-import { useAppSelector } from "../../store/store";
-import { resolveImageUrl } from "../../utils/resolve-Image-url";
+
 const { Title } = Typography;
 
 const AlbumPreview = () => {
-    const currentAlbum = useAppSelector((state) => state.music.currentAlbum);
+    const currentAlbum = useAppSelector((state) => state.album.currentAlbum);
 
     return currentAlbum ? (
         <Flex gap={30}>

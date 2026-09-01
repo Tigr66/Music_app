@@ -3,11 +3,11 @@ import { notifyError, notifySuccess } from "@/services/notify.service";
 import { getApiError } from "@/utils/get-api-error";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import type { Track } from "@/types/track/track.types";
-import type { TrackFormType } from "@/types/track/track-form.types";
+import type { CreateTrackType } from "@/types/track/track-form.types";
 
 export const addTrackThunk = createAsyncThunk<
     void,
-    TrackFormType,
+    CreateTrackType,
     { rejectValue: string }
 >("track-slice/add-track", async (data, { rejectWithValue }) => {
     try {
@@ -23,7 +23,7 @@ export const addTrackThunk = createAsyncThunk<
 
 export const getAlbumTracksThunk = createAsyncThunk<
     Track[],
-    number,
+    string,
     { rejectValue: string }
 >("track-slice/get-tracks", async (albumId, { rejectWithValue }) => {
     try {

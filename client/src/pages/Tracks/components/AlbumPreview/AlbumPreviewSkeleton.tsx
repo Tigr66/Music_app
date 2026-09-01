@@ -1,4 +1,5 @@
 import { Flex, Skeleton } from "antd";
+
 const { Image } = Skeleton;
 
 const AlbumPreviewSkeleton = () => {

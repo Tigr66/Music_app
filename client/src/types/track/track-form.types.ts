@@ -5,3 +5,5 @@ export type TrackFormType = {
     duration: number;
     youtubeUrl: string;
 };
+
+export type CreateTrackType = Omit<TrackFormType, "artistId">;
