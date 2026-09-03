@@ -17,7 +17,7 @@ const AdminCardActions = ({
 }: AdminCardActionsProps) => {
     return (
         <Flex vertical={vertical} gap={10} style={{ padding: 10 }}>
-            {isPublished && (
+            {!isPublished && (
                 <Button
                     type="primary"
                     onClick={(e) => {
