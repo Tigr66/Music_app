@@ -10,6 +10,7 @@ export class JwtService {
     constructor() {
         const secretAccess = process.env.JWT_ACCESS_SECRET;
         const refreshSecret = process.env.JWT_REFRESH_SECRET;
+        
         if (!secretAccess) {
             throw new InternalServerError(
                 "There is no secret key for the access token",
@@ -40,7 +41,7 @@ export class JwtService {
         }
     }
 
-    verifyRefreshToken(token: string): AuthUser | null {
+    verifyRefreshToken(token: string): AuthUser {
         try {
             return jwt.verify(token, this.refreshSecret) as AuthUser;
         } catch {

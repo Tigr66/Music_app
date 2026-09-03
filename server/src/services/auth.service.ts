@@ -27,8 +27,10 @@ export class AuthService {
             throw new ConflictError("User with this username is already exist");
         }
 
-        const salt = await bcrypt.genSalt(this.saltRounds);
-        const hashedPassword = await bcrypt.hash(newUser.password, salt);
+        const hashedPassword = await bcrypt.hash(
+            newUser.password,
+            this.saltRounds,
+        );
 
         const created = await this.authRepository.create({
             username: newUser.username,
@@ -65,9 +67,14 @@ export class AuthService {
 
         const accessToken = this.jwtService.setAccessToken(payload);
 
+        const hashedRefreshToken = await bcrypt.hash(
+            refreshToken,
+            this.saltRounds,
+        );
+
         const updatedUser = await this.authRepository.updateRefreshToken(
             loginUser.id,
-            refreshToken,
+            hashedRefreshToken,
         );
 
         return {
@@ -80,9 +87,17 @@ export class AuthService {
     }
 
     async refreshAccessToken(refreshToken: string): Promise<string> {
-        const user = await this.authRepository.getByRefreshToken(refreshToken);
+        const refreshPayload = this.jwtService.verifyRefreshToken(refreshToken);
 
-        if (!user) {
+        const user = await this.authRepository.getById(refreshPayload.id);
+
+        if (!user || !user.refreshToken) {
+            throw new BadRequestError("Invalid refresh token");
+        }
+
+        const isMatch = await bcrypt.compare(refreshToken, user.refreshToken);
+
+        if (!isMatch) {
             throw new BadRequestError("Invalid refresh token");
         }
 
