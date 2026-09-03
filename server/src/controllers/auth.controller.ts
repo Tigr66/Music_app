@@ -75,16 +75,16 @@ export class AuthController {
         next: NextFunction,
     ) => {
         try {
-            const { refreshToken } = req.cookies;
+            const { refresh_token } = req.cookies;
 
-            if (!refreshToken) {
+            if (!refresh_token) {
                 return res
                     .status(401)
                     .json({ error: "No refresh token provided" });
             }
 
             const newAccessToken =
-                await this.authService.refreshAccessToken(refreshToken);
+                await this.authService.refreshAccessToken(refresh_token);
 
             res.status(200).json({ accessToken: newAccessToken });
         } catch (err) {
