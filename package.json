@@ -1,7 +1,7 @@
 {
     "name": "music_app",
     "version": "1.0.0",
-    "description": "API для работы с артистами, альбомами, треками и пользователями",
+    "description": "Приложение для работы с артистами, альбомами, треками и пользователями",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
