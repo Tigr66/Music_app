@@ -2,9 +2,11 @@ import { notifyError } from "@/services/notify.service";
 import { logoutUserThunk } from "@/store/authSlice/authThunks";
 import { store } from "@/store/store";
 import { getApiError } from "@/utils/get-api-error";
+import { refreshRequest } from "./requests/refresh-request";
+import { tokenQueue } from "@/utils/token-queue";
 import axios, { type InternalAxiosRequestConfig } from "axios";
 
-const BASE_URL: string =
+export const BASE_URL: string =
     import.meta.env.VITE_MUSIC_API_URL || "http://localhost:8000";
 
 export const musicApi = axios.create({
@@ -30,14 +32,7 @@ musicApi.interceptors.response.use(
 
             if (error.response?.status !== 401) return Promise.reject(error);
 
-            const response = await axios.post(
-                `${BASE_URL}/auth/refresh`,
-                {},
-                {
-                    withCredentials: true,
-                },
-            );
-            const newAccessToken = response.data.accessToken;
+            const newAccessToken = await tokenQueue(() => refreshRequest());  
 
             localStorage.setItem("access_token", newAccessToken);
 
