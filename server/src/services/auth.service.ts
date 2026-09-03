@@ -96,4 +96,10 @@ export class AuthService {
 
         return accessToken;
     }
+
+    async logout(userId?: string): Promise<void> {
+        if (!userId) return;
+
+        await this.authRepository.clearRefreshToken(userId);
+    }
 }

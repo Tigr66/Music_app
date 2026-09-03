@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { validateDto } from "../middlewares/validate-dto.middleware";
 import { CreateUserDto } from "../dto/create-user.dto";
-import { authMiddleware } from "../middlewares/auth.middleware";
 import { LoginUserDto } from "../dto/login-user.dto";
 import { AuthController } from "../controllers/auth.controller";
 import { loginLimiter, registerLimiter } from "../config/rate-limit";
+import { optionalAuthMiddleware } from "../middlewares/optional-auth.middleware";
 
 export class AuthRoutes {
     public router: Router;
@@ -29,11 +29,11 @@ export class AuthRoutes {
             validateDto(LoginUserDto),
             this.authController.loginUser,
         );
-        this.router.post("/logout", this.authController.logoutUser);
         this.router.post(
-            "/refresh",
-            authMiddleware,
-            this.authController.refreshAccessToken,
+            "/logout",
+            optionalAuthMiddleware,
+            this.authController.logoutUser,
         );
+        this.router.post("/refresh", this.authController.refreshAccessToken);
     }
 }

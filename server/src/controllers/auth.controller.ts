@@ -52,12 +52,17 @@ export class AuthController {
     };
 
     logoutUser = async (
-        _: AuthRequest,
+        req: AuthRequest,
         res: Response,
         next: NextFunction,
     ) => {
         try {
+            const user = req.user;
+
+            await this.authService.logout(user?.id);
+
             res.clearCookie("refresh_token");
+
             res.status(200).json({ message: "Logged out successfully" });
         } catch (err) {
             next(err);

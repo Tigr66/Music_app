@@ -42,15 +42,29 @@ export class AuthRepository extends BaseRepository {
         }
     }
 
-    getByRefreshToken(refreshToken: string): Promise<User | null> {
+    async getByRefreshToken(refreshToken: string): Promise<User | null> {
         try {
-            return this.prisma.user.findUnique({
+            return await this.prisma.user.findUnique({
                 where: { refreshToken },
             });
         } catch (e) {
             this.handleError(
                 e,
                 "Ошибка при получении пользователя по refresh token",
+            );
+        }
+    }
+
+    async clearRefreshToken(userId: string): Promise<User> {
+        try {
+            return await this.prisma.user.update({
+                where: { id: userId },
+                data: { refreshToken: null },
+            });
+        } catch (e) {
+            this.handleError(
+                e,
+                "Ошибка при очистке refresh token пользователя",
             );
         }
     }
