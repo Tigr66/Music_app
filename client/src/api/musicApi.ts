@@ -2,7 +2,7 @@ import axios, { type InternalAxiosRequestConfig } from "axios";
 import { store } from "../store/store";
 import { logoutUserThunk } from "@/store/authSlice/authThunks";
 
-const BASE_URL: string = "http://localhost:8000";
+const BASE_URL: string = import.meta.env.VITE_MUSIC_API_URL || "http://localhost:8000";
 
 export const musicApi = axios.create({
     baseURL: BASE_URL,
