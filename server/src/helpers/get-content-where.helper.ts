@@ -1,6 +1,6 @@
-import { IUser } from "../interfaces/user.interface";
+import { User } from "../../generated/prisma/client";
 
-export const getContentWhere = (user?: IUser) => {
+export const getContentWhere = (user?: User) => {
     if (!user) return { isPublished: true };
 
     if (user.role === "ADMIN") return {};
