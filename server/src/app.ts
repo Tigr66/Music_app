@@ -25,6 +25,8 @@ export const setupApp = () => {
     fs.mkdirSync(artistsUploads, { recursive: true });
     fs.mkdirSync(albumsUploads, { recursive: true });
 
+    app.use(cookieParser());
+
     app.use(express.json());
 
     app.use(
