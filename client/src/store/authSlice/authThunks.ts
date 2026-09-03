@@ -39,10 +39,13 @@ export const loginUserThunk = createAsyncThunk<
     }
 });
 
-export const logoutUserThunk = createAsyncThunk<void, void>(
+export const logoutUserThunk = createAsyncThunk<void, boolean | undefined>(
     "auth/logout-user",
-    async () => {
+    async (notify = true) => {
         await musicApi.post<{ message: string }>("/auth/logout");
-        notifySuccess("Logged out successfully");
+
+        if (notify) {
+            notifySuccess("Logged out successfully");
+        }
     },
 );

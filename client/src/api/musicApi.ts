@@ -1,8 +1,11 @@
-import axios, { type InternalAxiosRequestConfig } from "axios";
-import { store } from "../store/store";
+import { notifyError } from "@/services/notify.service";
 import { logoutUserThunk } from "@/store/authSlice/authThunks";
+import { store } from "@/store/store";
+import { getApiError } from "@/utils/get-api-error";
+import axios, { type InternalAxiosRequestConfig } from "axios";
 
-const BASE_URL: string = import.meta.env.VITE_MUSIC_API_URL || "http://localhost:8000";
+const BASE_URL: string =
+    import.meta.env.VITE_MUSIC_API_URL || "http://localhost:8000";
 
 export const musicApi = axios.create({
     baseURL: BASE_URL,
@@ -41,8 +44,13 @@ musicApi.interceptors.response.use(
             originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
             return musicApi(originalRequest);
+            
         } catch (refreshError) {
-            store.dispatch(logoutUserThunk());
+            const error = getApiError(refreshError);
+
+            notifyError(error);
+            store.dispatch(logoutUserThunk(false));
+
             return Promise.reject(refreshError);
         }
     },
