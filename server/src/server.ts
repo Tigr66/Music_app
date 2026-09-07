@@ -1,8 +1,11 @@
 import { setupApp } from "./app";
+import { initMinio } from "./lib/minio";
 
 const PORT = 8000;
 
-const bootstrap = () => {
+const bootstrap = async () => {
+    await initMinio();
+
     const app = setupApp();
 
     app.listen(PORT, () => {
