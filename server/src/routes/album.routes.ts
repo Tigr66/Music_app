@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { uploadAlbumImage } from "../middlewares/upload.middleware";
+import { uploadImage } from "../middlewares/upload.middleware";
 import { validateDto } from "../middlewares/validate-dto.middleware";
 import { CreateAlbumDto } from "../dto/create-album.dto";
 import { AlbumController } from "../controllers/album.controller";
@@ -20,7 +20,7 @@ export class AlbumRoutes {
         this.router.post(
             "/",
             authMiddleware,
-            uploadAlbumImage.single("cover"),
+            uploadImage.single("cover"),
             validateDto(CreateAlbumDto),
             this.albumController.createAlbum,
         );

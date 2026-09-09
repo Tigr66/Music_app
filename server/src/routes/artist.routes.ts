@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { uploadArtistImage } from "../middlewares/upload.middleware";
+import { uploadImage } from "../middlewares/upload.middleware";
 import { ArtistController } from "../controllers/artist.controller";
 import { validateDto } from "../middlewares/validate-dto.middleware";
 import { CreateArtistDto } from "../dto/create-artist.dto";
@@ -20,7 +20,7 @@ export class ArtistRoutes {
         this.router.post(
             "/",
             authMiddleware,
-            uploadArtistImage.single("photo"),
+            uploadImage.single("photo"),
             validateDto(CreateArtistDto),
             this.artistController.createArtist,
         );
