@@ -44,23 +44,23 @@ export class StorageService {
     }
 
     async delete(fileData: DeleteFileData): Promise<void> {
+        const bucketName = fileData.bucketName ?? this.bucketName;
+
+        const exists = await this.exists({
+            bucketName,
+            objectName: fileData.objectName,
+        });
+
+        if (!exists) {
+            return;
+        }
+
         try {
-            const bucketName = fileData.bucketName ?? this.bucketName;
-
-            const exists = await this.exists({
-                bucketName,
-                objectName: fileData.objectName,
-            });
-
-            if (!exists) {
-                return;
-            }
-
             await this.minioClient.removeObject(
                 bucketName,
                 fileData.objectName,
             );
-        } catch (error) {
+        } catch {
             throw new InternalServerError("Failed to delete file from storage");
         }
     }
