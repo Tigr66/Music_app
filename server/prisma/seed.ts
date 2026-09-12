@@ -1,9 +1,10 @@
 import { initMinio } from "../src/lib/minio";
 import { prisma } from "../src/lib/prisma";
 import { StorageService } from "../src/services/storage.service";
+import path from "path";
+import bcrypt from "bcrypt";
 
 const hashPassword = (password: string) => {
-    const bcrypt = require("bcrypt");
     return bcrypt.hashSync(password, 10);
 };
 
@@ -33,21 +34,21 @@ async function main() {
             key: "drake",
             name: "Drake",
             info: "Canadian rapper and singer",
-            photoPath: "../uploads/artists/drake.jpg",
+            photoPath: "uploads/artists/drake.jpg",
             userId: tigrgareev.id,
         },
         {
             key: "travis",
             name: "Travis Scott",
             info: "American rapper and producer",
-            photoPath: "../uploads/artists/travis_scott.jpg",
+            photoPath: "uploads/artists/travis_scott.jpg",
             userId: tigrgareev.id,
         },
         {
             key: "nirvana",
             name: "Nirvana",
             info: "American rock band",
-            photoPath: "../uploads/artists/nirvana.jpg",
+            photoPath: "uploads/artists/nirvana.jpg",
             userId: tigrgareev.id,
         },
     ];
@@ -58,7 +59,7 @@ async function main() {
         const { key, photoPath, ...data } = artist;
 
         const photoKey = await storageService.uploadFromPath({
-            filePath: photoPath,
+            filePath: path.resolve(process.cwd(), artist.photoPath),
             contentType: "image/jpeg",
             folder: "artists",
         });
@@ -79,7 +80,7 @@ async function main() {
             key: "scorpion",
             artistKey: "drake",
             title: "Scorpion",
-            coverPath: "../uploads/albums/scorpion.jpg",
+            coverPath: "uploads/albums/scorpion.jpg",
             publishedAt: "2018-06-29",
             userId: tigrgareev.id,
         },
@@ -87,7 +88,7 @@ async function main() {
             key: "utopia",
             artistKey: "travis",
             title: "Utopia",
-            coverPath: "../uploads/albums/utopia.jpg",
+            coverPath: "uploads/albums/utopia.jpg",
             publishedAt: "2023-07-28",
             userId: tigrgareev.id,
         },
@@ -95,7 +96,7 @@ async function main() {
             key: "astroworld",
             artistKey: "travis",
             title: "Astroworld",
-            coverPath: "../uploads/albums/astroworld.jpg",
+            coverPath: "uploads/albums/astroworld.jpg",
             publishedAt: "2018-08-03",
             userId: super_user.id,
         },
@@ -103,7 +104,7 @@ async function main() {
             key: "in_utero",
             artistKey: "nirvana",
             title: "In Utero",
-            coverPath: "../uploads/albums/in_utero.jpg",
+            coverPath: "uploads/albums/in_utero.jpg",
             publishedAt: "1993-09-13",
             userId: super_user.id,
         },
@@ -115,7 +116,7 @@ async function main() {
         const { key, coverPath, artistKey, publishedAt, ...data } = album;
 
         const coverKey = await storageService.uploadFromPath({
-            filePath: coverPath,
+            filePath: path.resolve(process.cwd(), album.coverPath),
             contentType: "image/jpeg",
             folder: "albums",
         });
