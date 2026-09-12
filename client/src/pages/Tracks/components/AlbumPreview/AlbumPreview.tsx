@@ -1,5 +1,4 @@
 import { useAppSelector } from "@/store/hooks";
-import { resolveImageUrl } from "@/utils/resolve-Image-url";
 import { Flex, Typography } from "antd";
 import { Image } from "antd";
 
@@ -14,7 +13,7 @@ const AlbumPreview = () => {
                 width={400}
                 height={400}
                 alt={currentAlbum.title}
-                src={resolveImageUrl(currentAlbum.cover)}
+                src={currentAlbum.cover}
                 style={{ borderRadius: 8 }}
                 preview={false}
             />

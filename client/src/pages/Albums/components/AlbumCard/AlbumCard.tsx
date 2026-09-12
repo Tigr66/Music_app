@@ -1,11 +1,10 @@
 import { PublishBadge } from "@/components/PublishBadge";
 import { Card, Flex, Typography } from "antd";
-import { resolveImageUrl } from "@/utils/resolve-Image-url";
 import { AdminCardActions } from "@/components/AdminCardActions";
+import { formatDate } from "@/utils/format-date";
 import type { Album } from "@/types/album/album.types";
 import useAlbumCard from "@/pages/Albums/hooks/useAlbumCard";
 import styles from "./AlbumCard.module.css";
-import { formatDate } from "@/utils/format-date";
 
 const { Meta } = Card;
 const { Title, Text } = Typography;
@@ -29,7 +28,7 @@ const AlbumCard = ({ album }: AlbumCardProps) => {
                         draggable={false}
                         className={styles.album_card_image}
                         alt={album.title}
-                        src={resolveImageUrl(album.cover)}
+                        src={album.cover}
                     />
                 }
             >

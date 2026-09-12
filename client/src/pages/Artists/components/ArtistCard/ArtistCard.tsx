@@ -1,6 +1,5 @@
 import { Card, Typography } from "antd";
 import { PublishBadge } from "@/components/PublishBadge";
-import { resolveImageUrl } from "@/utils/resolve-Image-url";
 import { AdminCardActions } from "@/components/AdminCardActions";
 import type { Artist } from "@/types/artist/artist.types";
 import useArtistCard from "@/pages/Artists/hooks/useArtistCard";
@@ -28,7 +27,7 @@ const ArtistCard = ({ artist }: ArtistCardProps) => {
                         draggable={false}
                         className={styles.artist_card_image}
                         alt={artist.name}
-                        src={resolveImageUrl(artist.photo)}
+                        src={artist.photo}
                     />
                 }
             >
