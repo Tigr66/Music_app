@@ -96,12 +96,14 @@ Authorization: Bearer <access-token>
 
 Возвращается созданный артист с полями `id`, `name`, `info`, `photo`, `userId` и `isPublished`.
 
+Поле `photo` содержит готовый presigned URL для доступа к изображению в MinIO.
+
 ```json
 {
     "id": "550e8400-e29b-41d4-a716-446655440000",
     "name": "Drake",
     "info": "Canadian rapper and singer",
-    "photo": "/uploads/artists/87hdgwg-3e98-4445-a499-cf444e204a72.jpg",
+    "photo": "http://localhost:9000/music/artists/87hdgwg-3e98-4445-a499-cf444e204a72.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Expires=3600&X-Amz-Signature=example",
     "userId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
     "isPublished": false
 }
@@ -125,7 +127,7 @@ Authorization: Bearer <access-token>
         "id": "550e8400-e29b-41d4-a716-446655440000",
         "name": "Drake",
         "info": "Canadian rapper and singer",
-        "photo": "/uploads/artists/484b47a1-be98-4195-a499-cf444e20ea72.jpg",
+        "photo": "http://localhost:9000/music/artists/484b47a1-be98-4195-a499-cf444e20ea72.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Expires=3600&X-Amz-Signature=example",
         "userId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
         "isPublished": true
     }
@@ -149,7 +151,7 @@ Authorization: Bearer <access-token>
     "id": "550e8400-e29b-41d4-a716-446655440000",
     "name": "Drake",
     "info": "Canadian rapper and singer",
-    "photo": "/uploads/artists/484b47a1-be98-4195-a499-cf444e20ea72.jpg",
+    "photo": "http://localhost:9000/music/artists/484b47a1-be98-4195-a499-cf444e20ea72.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Expires=3600&X-Amz-Signature=example",
     "userId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
     "isPublished": true
 }
@@ -188,7 +190,7 @@ Authorization: Bearer <access-token>
     "id": "550e8400-e29b-41d4-a716-446655440000",
     "name": "Drake",
     "info": "Canadian rapper and singer",
-    "photo": "/uploads/artists/484b47a1-be98-4195-a499-cf444e20ea72.jpg",
+    "photo": "http://localhost:9000/music/artists/484b47a1-be98-4195-a499-cf444e20ea72.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Expires=3600&X-Amz-Signature=example",
     "userId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
     "isPublished": true
 }
@@ -223,13 +225,15 @@ Authorization: Bearer <access-token>
 
 Возвращается созданный альбом с полями `id`, `title`, `artistId`, `publishedAt`, `cover`, `userId` и `isPublished`.
 
+Поле `cover` содержит готовый presigned URL для доступа к обложке в MinIO.
+
 ```json
 {
     "id": "550e8400-e29b-41d4-a716-446655440000",
     "title": "Album Name",
     "artistId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
     "publishedAt": "2026-01-01T00:00:00.000Z",
-    "cover": "/uploads/albums/V7mQk2aP9xLrT0uZs8dNfJ.jpg",
+    "cover": "http://localhost:9000/music/albums/V7mQk2aP9xLrT0uZs8dNfJ.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Expires=3600&X-Amz-Signature=example",
     "userId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
     "isPublished": false
 }
@@ -263,7 +267,7 @@ Authorization: Bearer <access-token>
         "title": "Album Name",
         "artistId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
         "publishedAt": "2026-01-01T00:00:00.000Z",
-        "cover": "/uploads/albums/V7mQk2aP9xLrT0uZs8dNfJ.jpg",
+        "cover": "http://localhost:9000/music/albums/V7mQk2aP9xLrT0uZs8dNfJ.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Expires=3600&X-Amz-Signature=example",
         "userId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
         "isPublished": true,
         "count": 10
@@ -289,14 +293,14 @@ Authorization: Bearer <access-token>
     "title": "Album Name",
     "artistId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
     "publishedAt": "2026-01-01T00:00:00.000Z",
-    "cover": "/uploads/albums/V7mQk2aP9xLrT0uZs8dNfJ.jpg",
+    "cover": "http://localhost:9000/music/albums/V7mQk2aP9xLrT0uZs8dNfJ.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Expires=3600&X-Amz-Signature=example",
     "userId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
     "isPublished": true,
     "artist": {
         "id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
         "name": "Drake",
         "info": "Canadian rapper and singer",
-        "photo": "/uploads/artists/87hdgwg-3e98-4445-a499-cf444e204a72.jpg",
+        "photo": "http://localhost:9000/music/artists/87hdgwg-3e98-4445-a499-cf444e204a72.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Expires=3600&X-Amz-Signature=example",
         "userId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
         "isPublished": true
     }
@@ -337,7 +341,7 @@ Authorization: Bearer <access-token>
     "title": "Album Name",
     "artistId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
     "publishedAt": "2026-01-01T00:00:00.000Z",
-    "cover": "/uploads/albums/V7mQk2aP9xLrT0uZs8dNfJ.jpg",
+    "cover": "http://localhost:9000/music/albums/V7mQk2aP9xLrT0uZs8dNfJ.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Expires=3600&X-Amz-Signature=example",
     "userId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
     "isPublished": true
 }
@@ -666,12 +670,32 @@ npm install
 
 ```
 
-## 2. Настроить `.env` (В папке server)
+## 2. Настроить переменные окружения
+
+### Server
+
+Создать файл `server/.env`:
+
+MinIO используется для хранения изображений артистов и обложек альбомов. API возвращает для них готовые presigned URL.
 
 ```env
 DATABASE_URL="postgresql://johndoe:randompassword@localhost:5432/mydb?schema=public"
 JWT_ACCESS_SECRET="your-access-secret"
 JWT_REFRESH_SECRET="your-refresh-secret"
+
+MINIO_ENDPOINT="localhost"
+MINIO_PORT="9000"
+MINIO_ACCESS_KEY="your-access-key"
+MINIO_SECRET_KEY="your-secret-key"
+MINIO_BUCKET="name"
+```
+
+### Client
+
+Создать файл `client/.env`:
+
+```env
+VITE_MUSIC_API_URL=http://localhost:8000
 ```
 
 ## 3. Сгенерировать Prisma Client (В папке server)
