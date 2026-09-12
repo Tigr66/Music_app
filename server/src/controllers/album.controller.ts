@@ -30,7 +30,7 @@ export class AlbumController {
                 title,
                 artistId: artistId,
                 publishedAt: publishedAt ? new Date(publishedAt) : new Date(),
-                cover: `/uploads/albums/${cover.filename}`,
+                cover,
                 userId: user.id,
             };
 

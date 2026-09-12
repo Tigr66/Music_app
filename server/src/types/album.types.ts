@@ -1,6 +1,10 @@
 import { Album, Artist } from "../../generated/prisma/client";
 
-export type CreateAlbumData = Omit<Album, "id" | "isPublished">;
+export type CreateAlbumData = Omit<Album, "id" | "isPublished" | "cover"> & {
+    cover: Express.Multer.File;
+};
+
+export type CreateAlbumRepositoryInput = Omit<Album, "id" | "isPublished">;
 
 export type UpdateAlbumData = Partial<Omit<Album, "id" | "artistId">>;
 

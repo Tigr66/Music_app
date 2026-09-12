@@ -1,4 +1,3 @@
-import { removeFile } from "../utils/remove-file.util";
 import { Album } from "../../generated/prisma/client";
 import { AuthUser } from "../types/auth.types";
 import {
@@ -10,14 +9,19 @@ import { AlbumRepository } from "../repositories/album.repository";
 import { ArtistRepository } from "../repositories/artist.repository";
 import { BadRequestError } from "../errors/bad-request-error";
 import { NotFoundError } from "../errors/not-found-error";
+import { StorageService } from "./storage.service";
 
 export class AlbumService {
     private albumRepository: AlbumRepository;
     private artistRepository: ArtistRepository;
+    private storageService: StorageService;
+    private folder: string;
 
     constructor() {
         this.albumRepository = new AlbumRepository();
         this.artistRepository = new ArtistRepository();
+        this.storageService = new StorageService();
+        this.folder = "albums";
     }
 
     async create(newAlbum: CreateAlbumData): Promise<Album> {
@@ -27,11 +31,40 @@ export class AlbumService {
             throw new Error("Artist not found");
         }
 
-        return await this.albumRepository.create(newAlbum);
+        const coverKey = await this.storageService.upload({
+            folder: this.folder,
+            buffer: newAlbum.cover.buffer,
+            contentType: newAlbum.cover.mimetype,
+        });
+
+        try {
+            return await this.albumRepository.create({
+                ...newAlbum,
+                cover: coverKey,
+            });
+        } catch (error) {
+            await this.storageService.delete({
+                objectName: coverKey,
+            });
+
+            throw error;
+        }
     }
 
     async getAll(user?: AuthUser): Promise<Album[]> {
-        return await this.albumRepository.getAll(user);
+        const albums = await this.albumRepository.getAll(user);
+
+        return await Promise.all(
+            albums.map(async (album) => {
+                const cover = await this.storageService.getUrl({
+                    objectName: album.cover,
+                });
+                return {
+                    ...album,
+                    cover,
+                };
+            }),
+        );
     }
 
     async getArtistAlbums(
@@ -43,7 +76,7 @@ export class AlbumService {
             user,
         );
 
-        return albums.map((a) => {
+        const albumsWithCount = albums.map((a) => {
             const { _count, ...album } = a;
 
             return {
@@ -51,10 +84,35 @@ export class AlbumService {
                 count: _count.tracks,
             };
         });
+
+        return await Promise.all(
+            albumsWithCount.map(async (album) => {
+                const cover = await this.storageService.getUrl({
+                    objectName: album.cover,
+                });
+                return {
+                    ...album,
+                    cover,
+                };
+            }),
+        );
     }
 
     async getById(id: string): Promise<AlbumWithArtist | null> {
-        return await this.albumRepository.getById(id);
+        const album = await this.albumRepository.getById(id);
+
+        if (!album) {
+            return null;
+        }
+
+        const cover = await this.storageService.getUrl({
+            objectName: album.cover,
+        });
+
+        return {
+            ...album,
+            cover,
+        };
     }
 
     async publishAlbum(id: string): Promise<Album> {
@@ -80,8 +138,10 @@ export class AlbumService {
             throw new NotFoundError("Album not found");
         }
 
-        await removeFile(album.cover);
-
         await this.albumRepository.deleteById(id);
+
+        await this.storageService.delete({
+            objectName: album.cover,
+        });
     }
 }
