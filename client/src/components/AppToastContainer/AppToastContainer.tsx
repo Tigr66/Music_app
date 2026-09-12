@@ -6,12 +6,10 @@ const AppToastContainer = () => {
             position="top-right"
             autoClose={5000}
             hideProgressBar={false}
-            closeOnClick={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
+            closeOnClick
             theme="colored"
             transition={Bounce}
+            draggable
         />
     );
 };
