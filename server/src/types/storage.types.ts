@@ -9,3 +9,8 @@ export type DeleteFileData = {
     bucketName?: string;
     objectName: string;
 };
+
+export type GetFileUrlData = {
+    bucketName?: string;
+    objectName: string;
+};

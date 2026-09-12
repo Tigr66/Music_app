@@ -1,6 +1,10 @@
 import * as Minio from "minio";
 import { minioClient } from "../lib/minio";
-import { DeleteFileData, UploadFileData } from "../types/storage.types";
+import {
+    DeleteFileData,
+    GetFileUrlData,
+    UploadFileData,
+} from "../types/storage.types";
 import { minioConfig } from "../config/minio.config";
 import { InternalServerError } from "../errors/internal-server-error";
 import { randomUUID } from "crypto";
@@ -9,10 +13,12 @@ import { fileExtensions } from "../config/file-extensions.config";
 export class StorageService {
     private minioClient: Minio.Client;
     private bucketName: string;
+    private presignedUrlExpiration: number;
 
     constructor() {
         this.minioClient = minioClient;
         this.bucketName = minioConfig.bucket;
+        this.presignedUrlExpiration = minioConfig.presignedUrlExpiration;
     }
 
     async upload(file: UploadFileData): Promise<string> {
@@ -62,6 +68,18 @@ export class StorageService {
             );
         } catch {
             throw new InternalServerError("Failed to delete file from storage");
+        }
+    }
+
+    async getUrl(fileData: GetFileUrlData): Promise<string> {
+        try {
+            return await this.minioClient.presignedGetObject(
+                fileData.bucketName ?? this.bucketName,
+                fileData.objectName,
+                this.presignedUrlExpiration,
+            );
+        } catch {
+            throw new InternalServerError("Failed to generate file URL");
         }
     }
 
