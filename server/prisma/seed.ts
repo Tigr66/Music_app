@@ -1,3 +1,4 @@
+import { initMinio } from "../src/lib/minio";
 import { prisma } from "../src/lib/prisma";
 import { StorageService } from "../src/services/storage.service";
 
@@ -9,6 +10,8 @@ const hashPassword = (password: string) => {
 const storageService = new StorageService();
 
 async function main() {
+    await initMinio();
+
     const tigrgareev = await prisma.user.create({
         data: {
             username: "tigrgareev",
