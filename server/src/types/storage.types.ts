@@ -5,6 +5,13 @@ export type UploadFileData = {
     contentType: string;
 };
 
+export type UploadFileFromPathData = {
+    bucketName?: string;
+    folder?: string;
+    filePath: string;
+    contentType: string;
+};
+
 export type DeleteFileData = {
     bucketName?: string;
     objectName: string;
