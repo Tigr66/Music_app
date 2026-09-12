@@ -11,7 +11,7 @@ export class ArtistRepository extends BaseRepository {
                 data,
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при создании артиста");
+            this.handleError(e, "Error while creating artist");
         }
     }
 
@@ -21,7 +21,7 @@ export class ArtistRepository extends BaseRepository {
                 where: getContentWhere(user),
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при получении всех артистов");
+            this.handleError(e, "Error while fetching all artists");
         }
     }
 
@@ -34,7 +34,7 @@ export class ArtistRepository extends BaseRepository {
                 },
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при получении артиста");
+            this.handleError(e, "Error while fetching artist with albums");
         }
     }
 
@@ -44,7 +44,7 @@ export class ArtistRepository extends BaseRepository {
                 where: { id },
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при получении артиста по id");
+            this.handleError(e, "Error while fetching artist by id");
         }
     }
 
@@ -57,7 +57,7 @@ export class ArtistRepository extends BaseRepository {
                 },
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при публикации артиста");
+            this.handleError(e, "Error while publishing artist");
         }
     }
 
@@ -67,7 +67,7 @@ export class ArtistRepository extends BaseRepository {
                 where: { id },
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при удалении артиста");
+            this.handleError(e, "Error while deleting artist by id");
         }
     }
 }

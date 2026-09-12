@@ -15,12 +15,12 @@ export abstract class BaseRepository {
         if (e instanceof Prisma.PrismaClientKnownRequestError) {
             if (e.code === "P2002") {
                 throw new ConflictError(
-                    "Запись с такими данными уже существует",
+                    "Record with such data already exists",
                 );
             }
 
             if (e.code === "P2025") {
-                throw new NotFoundError("Запись с таким id не найдена");
+                throw new NotFoundError("Record with such id not found");
             }
         }
 

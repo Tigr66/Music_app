@@ -9,7 +9,7 @@ export class AuthRepository extends BaseRepository {
                 data,
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при создании пользователя");
+            this.handleError(e, "Error while creating user");
         }
     }
 
@@ -25,7 +25,7 @@ export class AuthRepository extends BaseRepository {
         } catch (e) {
             this.handleError(
                 e,
-                "Ошибка при обновлении refresh token пользователя",
+                "Error while updating user's refresh token",
             );
         }
     }
@@ -38,7 +38,7 @@ export class AuthRepository extends BaseRepository {
 
             return user;
         } catch (e) {
-            this.handleError(e, "Ошибка при получении пользователя по id");
+            this.handleError(e, "Error while fetching user by username");
         }
     }
 
@@ -48,7 +48,7 @@ export class AuthRepository extends BaseRepository {
                 where: { id },
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при получении пользователя по id");
+            this.handleError(e, "Error while fetching user by id");
         }
     }
 
@@ -61,7 +61,7 @@ export class AuthRepository extends BaseRepository {
         } catch (e) {
             this.handleError(
                 e,
-                "Ошибка при очистке refresh token пользователя",
+                "Error while clearing user's refresh token",
             );
         }
     }

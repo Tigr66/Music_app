@@ -14,7 +14,7 @@ export class TrackRepository extends BaseRepository {
                 data,
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при создании трека");
+            this.handleError(e, "Error while creating track");
         }
     }
 
@@ -24,7 +24,7 @@ export class TrackRepository extends BaseRepository {
                 where: { id },
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при получении трека по id");
+            this.handleError(e, "Error while fetching track by id");
         }
     }
 
@@ -37,7 +37,7 @@ export class TrackRepository extends BaseRepository {
                 },
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при получении трека по id");
+            this.handleError(e, "Error while fetching track by id");
         }
     }
 
@@ -51,7 +51,7 @@ export class TrackRepository extends BaseRepository {
                 where: getContentWhere(user),
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при получении всех треков");
+            this.handleError(e, "Error while fetching all tracks");
         }
     }
 
@@ -67,7 +67,7 @@ export class TrackRepository extends BaseRepository {
                 },
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при получении треков альбома");
+            this.handleError(e, "Error while fetching album tracks");
         }
     }
 
@@ -80,7 +80,7 @@ export class TrackRepository extends BaseRepository {
                 },
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при публикации трека");
+            this.handleError(e, "Error while publishing track");
         }
     }
 
@@ -90,7 +90,7 @@ export class TrackRepository extends BaseRepository {
                 where: { id },
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при удалении трека");
+            this.handleError(e, "Error while deleting track by id");
         }
     }
 }

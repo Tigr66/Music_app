@@ -9,7 +9,7 @@ export class TrackHistoryRepository extends BaseRepository {
                 data,
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при создании истории трека");
+            this.handleError(e, "Error while creating track history");
         }
     }
 
@@ -42,7 +42,7 @@ export class TrackHistoryRepository extends BaseRepository {
                 },
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при получении истории пользователя");
+            this.handleError(e, "Error while fetching user's track history");
         }
     }
 }

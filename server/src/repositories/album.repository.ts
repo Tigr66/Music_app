@@ -3,19 +3,19 @@ import { getContentWhere } from "../helpers/get-content-where.helper";
 import {
     AlbumWithArtist,
     AlbumWithCountFromPrisma,
-    CreateAlbumData,
+    CreateAlbumRepositoryInput,
 } from "../types/album.types";
 import { AuthUser } from "../types/auth.types";
 import { BaseRepository } from "./base.repository";
 
 export class AlbumRepository extends BaseRepository {
-    async create(data: CreateAlbumData): Promise<Album> {
+    async create(data: CreateAlbumRepositoryInput): Promise<Album> {
         try {
             return await this.prisma.album.create({
                 data,
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при создании альбома");
+            this.handleError(e, "Error while creating album");
         }
     }
 
@@ -28,7 +28,7 @@ export class AlbumRepository extends BaseRepository {
                 where: getContentWhere(user),
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при получении всех альбомов");
+            this.handleError(e, "Error while fetching all albums");
         }
     }
 
@@ -52,7 +52,7 @@ export class AlbumRepository extends BaseRepository {
                 },
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при получении альбомов артиста");
+            this.handleError(e, "Error while fetching artist's albums");
         }
     }
 
@@ -71,7 +71,7 @@ export class AlbumRepository extends BaseRepository {
         } catch (e) {
             this.handleError(
                 e,
-                "Ошибка при получении альбома по id с количеством треков",
+                "Error while fetching album by id with track count",
             );
         }
     }
@@ -85,7 +85,7 @@ export class AlbumRepository extends BaseRepository {
                 },
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при получении альбома по id");
+            this.handleError(e, "Error while fetching album by id");
         }
     }
 
@@ -96,7 +96,7 @@ export class AlbumRepository extends BaseRepository {
                 data: { isPublished: true },
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при публикации альбома");
+            this.handleError(e, "Error while publishing album");
         }
     }
 
@@ -106,7 +106,7 @@ export class AlbumRepository extends BaseRepository {
                 where: { id },
             });
         } catch (e) {
-            this.handleError(e, "Ошибка при удалении альбома по id");
+            this.handleError(e, "Error while deleting album by id");
         }
     }
 }
