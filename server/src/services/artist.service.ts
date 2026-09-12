@@ -3,25 +3,67 @@ import { NotFoundError } from "../errors/not-found-error";
 import { ArtistRepository } from "../repositories/artist.repository";
 import { CreateArtistData } from "../types/artist.types";
 import { AuthUser } from "../types/auth.types";
-import { removeFile } from "../utils/remove-file.util";
+import { StorageService } from "./storage.service";
 
 export class ArtistService {
     private artistRepository: ArtistRepository;
+    private storageService: StorageService;
+    private folder: string;
 
     constructor() {
         this.artistRepository = new ArtistRepository();
+        this.storageService = new StorageService();
+        this.folder = "artists";
     }
 
     async create(newArtist: CreateArtistData): Promise<Artist> {
-        return await this.artistRepository.create(newArtist);
+        const photoKey = await this.storageService.upload({
+            folder: this.folder,
+            buffer: newArtist.photo.buffer,
+            contentType: newArtist.photo.mimetype,
+        });
+
+        try {
+            return await this.artistRepository.create({
+                ...newArtist,
+                photo: photoKey,
+            });
+        } catch (error) {
+            await this.storageService.delete({
+                objectName: photoKey,
+            });
+
+            throw error;
+        }
     }
 
     async getAll(user?: AuthUser): Promise<Artist[]> {
-        return await this.artistRepository.getAll(user);
+        const artists = await this.artistRepository.getAll(user);
+        return await Promise.all(
+            artists.map(async (artist) => {
+                const photo = await this.storageService.getUrl({
+                    objectName: artist.photo,
+                });
+                return { ...artist, photo };
+            }),
+        );
     }
 
     async getById(id: string): Promise<Artist | null> {
-        return await this.artistRepository.getById(id);
+        const artist = await this.artistRepository.getById(id);
+
+        if (!artist) {
+            return null;
+        }
+
+        const photo = await this.storageService.getUrl({
+            objectName: artist.photo,
+        });
+
+        return {
+            ...artist,
+            photo,
+        };
     }
 
     async publishArtist(id: string): Promise<Artist> {
@@ -41,10 +83,18 @@ export class ArtistService {
             throw new NotFoundError("Artist not found");
         }
 
-        await removeFile(artist.photo);
-        
-        await Promise.all(artist.albums.map((a) => removeFile(a.cover)));
-
         await this.artistRepository.deleteById(id);
+
+        await this.storageService.delete({
+            objectName: artist.photo,
+        });
+
+        await Promise.all(
+            artist.albums.map((album) =>
+                this.storageService.delete({
+                    objectName: album.cover,
+                }),
+            ),
+        );
     }
 }

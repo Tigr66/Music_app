@@ -1,11 +1,11 @@
 import { Artist } from "../../generated/prisma/client";
 import { getContentWhere } from "../helpers/get-content-where.helper";
-import { ArtistWithAlbums, CreateArtistData } from "../types/artist.types";
+import { ArtistWithAlbums, CreateArtistRepositoryInput } from "../types/artist.types";
 import { AuthUser } from "../types/auth.types";
 import { BaseRepository } from "./base.repository";
 
 export class ArtistRepository extends BaseRepository {
-    async create(data: CreateArtistData): Promise<Artist> {
+    async create(data: CreateArtistRepositoryInput): Promise<Artist> {
         try {
             return await this.prisma.artist.create({
                 data,

@@ -1,6 +1,6 @@
-import { User } from "../../generated/prisma/client";
+import { AuthUser } from "../types/auth.types";
 
-export const getContentWhere = (user?: User) => {
+export const getContentWhere = (user?: AuthUser) => {
     if (!user) return { isPublished: true };
 
     if (user.role === "ADMIN") return {};

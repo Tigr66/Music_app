@@ -28,7 +28,7 @@ export class ArtistController {
             const newArtist = {
                 name,
                 info,
-                photo: `/uploads/artists/${photo.filename}`,
+                photo,
                 userId: user.id,
             };
 
