@@ -1,11 +1,18 @@
 import { prisma } from "../src/lib/prisma";
+import { StorageService } from "../src/services/storage.service";
+
+const hashPassword = (password: string) => {
+    const bcrypt = require("bcrypt");
+    return bcrypt.hashSync(password, 10);
+};
+
+const storageService = new StorageService();
 
 async function main() {
     const tigrgareev = await prisma.user.create({
         data: {
             username: "tigrgareev",
-            password:
-                "$2b$10$DS6myfA16yZ.pGvkSyqNsuHEwet56jCev48VVnzqEEZaEPwouVhYK",
+            password: hashPassword("tigrgareev"),
             role: "USER",
         },
     });
@@ -13,34 +20,31 @@ async function main() {
     const super_user = await prisma.user.create({
         data: {
             username: "super_user",
-            password:
-                "$2b$10$YwviWw9MhgkFo2au6kEk4OWvisbwEeWln7renojqrb9bBzaSv61q2",
+            password: hashPassword("super_user"),
             role: "ADMIN",
         },
     });
-
-    // Пароли такие же как и username для проверки
 
     const ARTISTS = [
         {
             key: "drake",
             name: "Drake",
             info: "Canadian rapper and singer",
-            photo: "/uploads/artists/484b47a1-be98-4195-a499-cf444e20ea72.jpg",
+            photoPath: "../uploads/artists/drake.jpg",
             userId: tigrgareev.id,
         },
         {
             key: "travis",
             name: "Travis Scott",
             info: "American rapper and producer",
-            photo: "/uploads/artists/9e1210a2-472b-4a2b-b6e4-31d98842e70b.jpg",
+            photoPath: "../uploads/artists/travis_scott.jpg",
             userId: tigrgareev.id,
         },
         {
             key: "nirvana",
             name: "Nirvana",
             info: "American rock band",
-            photo: "/uploads/artists/ad80e08339c8cf5a005d267aab74ef64.jpg",
+            photoPath: "../uploads/artists/nirvana.jpg",
             userId: tigrgareev.id,
         },
     ];
@@ -48,11 +52,18 @@ async function main() {
     const artistMap: Record<string, string> = {};
 
     for (const artist of ARTISTS) {
-        const { key, ...data } = artist;
+        const { key, photoPath, ...data } = artist;
+
+        const photoKey = await storageService.uploadFromPath({
+            filePath: photoPath,
+            contentType: "image/jpeg",
+            folder: "artists",
+        });
 
         const created = await prisma.artist.create({
             data: {
                 ...data,
+                photo: photoKey,
                 isPublished: true,
             },
         });
@@ -65,7 +76,7 @@ async function main() {
             key: "scorpion",
             artistKey: "drake",
             title: "Scorpion",
-            cover: "/uploads/albums/309b36b3-de80-4129-9043-33a9c0ea44bc.jpg",
+            coverPath: "../uploads/albums/scorpion.jpg",
             publishedAt: "2018-06-29",
             userId: tigrgareev.id,
         },
@@ -73,7 +84,7 @@ async function main() {
             key: "utopia",
             artistKey: "travis",
             title: "Utopia",
-            cover: "/uploads/albums/6e0a7aea-e49f-4b01-844a-2b52b2f6f162.jpg",
+            coverPath: "../uploads/albums/utopia.jpg",
             publishedAt: "2023-07-28",
             userId: tigrgareev.id,
         },
@@ -81,7 +92,7 @@ async function main() {
             key: "astroworld",
             artistKey: "travis",
             title: "Astroworld",
-            cover: "/uploads/albums/6513a1f1079b2faddd422c10260d44b8.jpg",
+            coverPath: "../uploads/albums/astroworld.jpg",
             publishedAt: "2018-08-03",
             userId: super_user.id,
         },
@@ -89,7 +100,7 @@ async function main() {
             key: "in_utero",
             artistKey: "nirvana",
             title: "In Utero",
-            cover: "/uploads/albums/a3295dd270a855acd8b89b8fbc3dba2e.jpg",
+            coverPath: "../uploads/albums/in_utero.jpg",
             publishedAt: "1993-09-13",
             userId: super_user.id,
         },
@@ -98,11 +109,18 @@ async function main() {
     const albumsMap: Record<string, string> = {};
 
     for (const album of ALBUMS) {
-        const { key, artistKey, publishedAt, ...data } = album;
+        const { key, coverPath, artistKey, publishedAt, ...data } = album;
+
+        const coverKey = await storageService.uploadFromPath({
+            filePath: coverPath,
+            contentType: "image/jpeg",
+            folder: "albums",
+        });
 
         const created = await prisma.album.create({
             data: {
                 ...data,
+                cover: coverKey,
                 artistId: artistMap[artistKey]!,
                 publishedAt: new Date(publishedAt),
                 isPublished: true,
