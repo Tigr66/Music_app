@@ -15,13 +15,13 @@ export class AlbumService {
     private albumRepository: AlbumRepository;
     private artistRepository: ArtistRepository;
     private storageService: StorageService;
-    private folder: string;
+    
+    private readonly folder: string = "albums";
 
     constructor() {
         this.albumRepository = new AlbumRepository();
         this.artistRepository = new ArtistRepository();
         this.storageService = new StorageService();
-        this.folder = "albums";
     }
 
     async create(newAlbum: CreateAlbumData): Promise<Album> {

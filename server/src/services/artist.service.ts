@@ -8,12 +8,12 @@ import { StorageService } from "./storage.service";
 export class ArtistService {
     private artistRepository: ArtistRepository;
     private storageService: StorageService;
-    private folder: string;
+    
+    private readonly folder: string = "artists";
 
     constructor() {
         this.artistRepository = new ArtistRepository();
         this.storageService = new StorageService();
-        this.folder = "artists";
     }
 
     async create(newArtist: CreateArtistData): Promise<Artist> {

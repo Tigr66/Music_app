@@ -12,8 +12,8 @@ import { fileExtensions } from "../config/file-extensions.config";
 
 export class StorageService {
     private minioClient: Minio.Client;
-    private bucketName: string;
-    private presignedUrlExpiration: number;
+    private readonly bucketName: string;
+    private readonly presignedUrlExpiration: number;
 
     constructor() {
         this.minioClient = minioClient;
