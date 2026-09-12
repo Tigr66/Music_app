@@ -15,7 +15,7 @@ export class AlbumService {
     private albumRepository: AlbumRepository;
     private artistRepository: ArtistRepository;
     private storageService: StorageService;
-    
+
     private readonly folder: string = "albums";
 
     constructor() {
@@ -109,8 +109,16 @@ export class AlbumService {
             objectName: album.cover,
         });
 
+        const artistPhoto = await this.storageService.getUrl({
+            objectName: album.artist.photo,
+        });
+
         return {
             ...album,
+            artist: {
+                ...album.artist,
+                photo: artistPhoto,
+            },
             cover,
         };
     }
